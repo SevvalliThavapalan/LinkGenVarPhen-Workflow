@@ -21,7 +21,7 @@ will suffice to generate oligos. It is important that the input Excel table cont
 ## Streamlit based webapplication
 The web app implementation using Streamlit allows the oligo design without installation (recommended for datasets smaller than 200 MB).
 As above the input table has to have the same format as shown above. You can choose between different provided genomes as well as upload 
-your own genomes. The genomes need to be gene bank files (.gb). 
+your own genomes. The genomes need to be gene bank files (.gb). For more deatils visit the web application (LINK).
 
 
 ## Clinical *E. coli* isolates and metabolic mutations
