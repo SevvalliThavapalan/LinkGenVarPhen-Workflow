@@ -5,3 +5,4 @@ This repository contains the original scripts for designing oligos as well as th
 This webapplication incorporates the original scripts to design CREATE oligos, allowing useres to upload and design oligos for their own mutations.  
 
 ## CREATE oligo design
+The original method was developed by [Garst et. al](https://www.nature.com/articles/nbt.3718)
