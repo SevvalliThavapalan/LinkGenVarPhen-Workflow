@@ -16,3 +16,5 @@ will work to generate oligos. It is important that the input table containing th
 | aaeA      | T5S      | 5        |
 | aaeA      | L102Q    | 102      |
 | aaeA      | K189E    | 189      |
+
+## Streamlit based webapplication
