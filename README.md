@@ -2,4 +2,6 @@
 
 Here you can find all relevant scripts and information for the computational part of the paper XXX.
 This repository contains the original scripts for designing oligos as well as the relevant scripts for a streamlit based webapplication.
-This webapplication incorporates the original scripts to design CREATE oligos, allowing useres to upload and design oligos for their own mutations.
+This webapplication incorporates the original scripts to design CREATE oligos, allowing useres to upload and design oligos for their own mutations.  
+
+## CREATE oligo design
