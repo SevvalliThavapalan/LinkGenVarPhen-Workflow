@@ -10,7 +10,7 @@ and changed for our requirements and another study was published by our group an
 The folder **CREATE oligo Design** contains the scripts and amn example data set. The genome
 of *E. coli* BW25113 is incorparated into the scripts. If you want to use a different genome you need to change the input in the code of 
 the script **CREATE_oligos.py**. We recommend using these scripts if you deal with a huge list of mutations (more than 200MB). Otherwise the webapplication
-will work to generate oligos. It is important that the input table containing the mutations has the following format: 
+will suffice to generate oligos. It is important that the input table containing the mutations has the following format: 
 
 | Gene | Mutation | Position |
 |:---------:|:--------:|:--------:|
@@ -19,3 +19,5 @@ will work to generate oligos. It is important that the input table containing th
 | aaeA      | K189E    | 189      |
 
 ## Streamlit based webapplication
+
+## Clinical *E. coli* isolates and metabolic mutations
