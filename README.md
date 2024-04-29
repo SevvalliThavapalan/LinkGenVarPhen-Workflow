@@ -23,5 +23,6 @@ The web app implementation using Streamlit allows the oligo design without insta
 As above the input table has to have the same format as shown above. You can choose between different provided genomes as well as upload 
 your own genomes. The genomes need to be gene bank files (.gb). For more deatils visit the web application (LINK).
 
-
 ## Clinical *E. coli* isolates and metabolic mutations
+The dataset used in this study was obtained from the NCBI Pathogens Database. The name of the gene assembly files utilized to find metabolic mutations can
+be found in the **Clinical isolates** folder. 
