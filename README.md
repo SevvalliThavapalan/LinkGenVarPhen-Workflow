@@ -9,7 +9,7 @@ The original method was developed by [Garst et. al](https://www.nature.com/artic
 and changed for our requirements and another study was published by our group and can be found [here](https://www.embopress.org/doi/full/10.15252/msb.202311596).
 The folder **CREATE sgRNAs and repair templates Design** contains the scripts and amn example data set. The genome
 of *E. coli* BW25113 is incorparated into the scripts. If you want to use a different genome you need to change the input in the code of 
-the script **CREATE_sgRNAs and repair templatess.py**. We recommend using these scripts if you deal with a huge list of mutations (more than 200 MB). Otherwise the web application
+the script **CREATE_sgRNAs.py**. We recommend using these scripts if you deal with a huge list of mutations (more than 200 MB). Otherwise the web application
 will suffice to generate sgRNAs and repair templatess. It is important that the input Excel table containing the mutations has the following format: 
 
 | Gene | Mutation | Position |
