@@ -7,7 +7,7 @@ all relevant information for the computational parts:
 
 
 ## Designing sgRNA-insert pairs
-The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original Python scripts. The web appliation is more user firendly, as no prior bioinformatic knowledge and 
+The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original Python scripts. The web appliation is more user friendly, as no prior bioinformatic knowledge and 
 installations are neccessary. You can find the web application *here*. All instruction on how to use the individual tabs and functions can be found on the website.
 
 ### Overview of the functions in the web application
@@ -40,7 +40,7 @@ This interactive tab allows users to choose individual columns to visualize. Sum
 All relevant python scripts are also available in the **Design sgRNA-insert pairs** folder, if you prefer to run the individual functions locally on you computer.
 
 ## Data processing
-After sequencing is performed, the resulting fastq files should be processed. Here is a recommended workflow we developed. If you prefer other tools and methods you are free to use them.  
+After sequencing is performed, the resulting fastq files should be processed. Here is a recommended workflow we developed. If you prefer other tools and methods you are free to use them. This part needs to be done locally as Stremlits data limit of 200 MB will not be enough to process large sets of sequencing data.
  ### 1. Preprocessing and preparations
 1. Nanopore sequencing: If nanopore sequencing was used, we recommed concatinating the sequencing files of each barcode into one file. 
 2. Illumina sequencing: Here the paired end reads need to be merged. Tools such as *FLASH* can be utilized to perform this.
