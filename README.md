@@ -1,7 +1,7 @@
 # CRISPRFlow
 A CRISPR-assisted recombineering workFlow for high throughput genome editing in bacteria. The workflow consists of computational and laboratory parts. Here you can find 
 all relevant information for the computational parts: 
-1.Design of sgRNA-insert pairs
+1. Design of sgRNA-insert pairs
 2. Data processing and visualization
 
 ## Functions of the web application
