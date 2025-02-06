@@ -1,6 +1,6 @@
 # CRISPRFlow
 This repository contains relevant code and scripts for the publication: **CRISPRFlow: A CRISPR-assisted recombineering workFlow for high throughput genome editing in bacteria**. 
-The workflow consists of computational and laboratory parts. Here you can find 
+The workflow consists of computational and laboratory parts. In this repisotory we brought together
 all relevant information for the computational parts: 
 1. Design of sgRNA-insert pairs
 2. Data processing and visualization
@@ -37,7 +37,7 @@ This interactive tab allows users to choose individual columns to visualize. Sum
 
 #### Note
 
-All relevant python scripts are also available in the **XXX** folder, if you prefer to run the individual functions locally on you computer.
+All relevant python scripts are also available in the **Design sgRNA-insert pairs** folder, if you prefer to run the individual functions locally on you computer.
 
 ## Data processing
 After sequencing is performed, the resulting fastq files should be processed. Here is a recommended workflow we developed. If you prefer other tools and methods you are free to use them.  
