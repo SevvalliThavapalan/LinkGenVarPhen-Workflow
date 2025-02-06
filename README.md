@@ -56,7 +56,7 @@ After trimming and filtering, the sequenced reads are aligned to the earlier men
 ### 4. Mismatch filtering 
 Mismatch filtering is recommended so that only high quality reads are retained for the final read count table. The Python script takes the aligned files and the generated sgRNA- insert pair as input and generates a read count table assigned to each sgRNA-insert, a detailed description of the filtered reads as well as a filtered alignment file. Some parameters for the filtering steps can be adjusted in the script if needed. Detailed descriptions can be found in the publication as well as in the Data Proccessing folder.
 
-### Programs and versions
+### Most important programs and versions
 
 | Name   | Version      |
 |--------|------------  |
@@ -64,7 +64,7 @@ Mismatch filtering is recommended so that only high quality reads are retained f
 |Minimap2| 2.28-r1209   |
 |Python  |3.10.4        |
 |Samtools|1.10          |
-Streamlit|1.30.0        | 
+|Streamlit|1.30.0        | 
 
 
 
