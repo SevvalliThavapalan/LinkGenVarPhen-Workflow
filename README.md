@@ -34,8 +34,18 @@ in the genome, the off-target sequence, and the number of found mismatches.
 The visualization tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
 This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
 
+## Data Processing
+After sequencing is performed, the resulting fastq files should be processed. 
+ ### 1. Preprocessing and preparations
+1. Nanopore sequencing: If nanopore sequencing was used, we recommed concatinating the sequencing files of each barcode into one file. 
+2. Illumina sequencing: Here the paired end reads need to be merged. Tools such as *FLASH* can be utilized to perform this.
+
+If you use the web application you will get a file containing all reference sgRNA-insert pairs in a fasta file. This file is important in the later steps of the data processing.
+
+
+
 #### Note
 
-All relevant python scripts are also available in the **XXX** folder, if you prefer to run all the functions locally on you computer. 
- 
+All relevant python scripts are also available in the **XXX** folder, if you prefer to run the individual functions locally on you computer. 
+
 
