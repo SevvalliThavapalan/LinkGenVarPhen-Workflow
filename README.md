@@ -8,7 +8,7 @@ all relevant information for the computational parts:
 
 ## Designing sgRNA-insert pairs
 The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original Python scripts. The web appliation is more user firendly, as no prior bioinformatic knowledge and 
-installations are neccessary.  You can find the web apllication *here*. All instruction on how to use the individual tabs and functions can be found on the website.
+installations are neccessary.  You can find the web application *here*. All instruction on how to use the individual tabs and functions can be found on the website.
 
 ### Overview of the functions in the web application
 
@@ -18,6 +18,12 @@ installations are neccessary.  You can find the web apllication *here*. All inst
 | Perform mutagenesis on a protein sequence           | Protein sequence, gene name|
 | Off-target finder for potential binding sites       | List of protospacers, genome file (.gb)|
 | Visualization for read count tables                 | Readcount table  |
+
+### Mutagenesis on a protein sequence
+This function allow the mutagenesis of a single protein sequence. Each amino acid  in the sequence is mutated to all other amino acids. The output table can 
+be used as input for the sgRNA-insert pair design.
+
+### Off- target finder for potential binding sites
 
 
 
