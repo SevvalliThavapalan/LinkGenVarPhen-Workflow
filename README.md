@@ -35,7 +35,7 @@ The visualization tab allows to gain a first look into the sequenced reads, afte
 This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
 
 ## Data Processing
-After sequencing is performed, the resulting fastq files should be processed. 
+After sequencing is performed, the resulting fastq files should be processed. Here is a recommended workflow we developed. If you prefer other tools and methods you are free to use them.  
  ### 1. Preprocessing and preparations
 1. Nanopore sequencing: If nanopore sequencing was used, we recommed concatinating the sequencing files of each barcode into one file. 
 2. Illumina sequencing: Here the paired end reads need to be merged. Tools such as *FLASH* can be utilized to perform this.
@@ -43,6 +43,7 @@ After sequencing is performed, the resulting fastq files should be processed.
 If you use the web application you will get a file containing all reference sgRNA-insert pairs in a fasta file. This file is important in the later steps of the data processing.
 
 ### 2. Trimming and filtering of sequencing reads using cutadapt
+During the experimental procedure primers are added before sequencing. These primers need to be removed before the alignment of the reads can be done. If the sub-library spacer is not utilized or needed, we recommend trimming that sequence as well. Cutadapt can also be used to filter short reads for higher quality reads. Detailed commands can be found in the method section of the publication as well as in the Data Processing folder.
 
 
 
