@@ -20,10 +20,12 @@ installations are neccessary.  You can find the web application *here*. All inst
 | Visualization for read count tables                 | Readcount table  |
 
 ### Mutagenesis on a protein sequence
-This function allow the mutagenesis of a single protein sequence. Each amino acid  in the sequence is mutated to all other amino acids. The output table can 
+This function allows the mutagenesis of a single protein sequence. Each amino acid  in the sequence is mutated to all other amino acids. The output table can 
 be used as input for the sgRNA-insert pair design.
 
 ### Off- target finder for potential binding sites
-
+We recommend using this function to find the most suited sgRNA-insert pair for specific mutations. The design tab in the web application provides a table with all protospacers. This 
+table can be used as input to find potentail off-targets. The application finds all regions in the genome with up to four mismatches and results the original base pairing region, the position 
+in the genome, the off-target sequence, and the number of found mismatches.
 
 
