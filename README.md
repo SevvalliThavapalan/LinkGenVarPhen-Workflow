@@ -7,10 +7,10 @@ all relevant information for the computational parts:
 
 
 ## Designing sgRNA-insert pairs
-The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original python scripts. The web appliation is more user firendly, as no prior bioinformatic knowledge and 
-installations are neccessary.  You can find the web apllication *here*. All instruction on how to use the individual tabs and functions can be fount on the website.
+The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original Python scripts. The web appliation is more user firendly, as no prior bioinformatic knowledge and 
+installations are neccessary.  You can find the web apllication *here*. All instruction on how to use the individual tabs and functions can be found on the website.
 
-## Functions of the web application
+### Overview of the functions in the web application
 
 | Feature                                             | Input|
 |-----------------------------------------------------| --------|
