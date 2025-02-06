@@ -1,5 +1,5 @@
 # CRISPRFlow
-This repository contains relevant code and scripts for the publication: **CRISPRFlow A CRISPR-assisted recombineering workFlow for high throughput genome editing in bacteria**. 
+This repository contains relevant code and scripts for the publication: **CRISPRFlow: A CRISPR-assisted recombineering workFlow for high throughput genome editing in bacteria**. 
 The workflow consists of computational and laboratory parts. Here you can find 
 all relevant information for the computational parts: 
 1. Design of sgRNA-insert pairs
@@ -44,6 +44,9 @@ If you use the web application you will get a file containing all reference sgRN
 
 ### 2. Trimming and filtering of sequencing reads using cutadapt
 During the experimental procedure primers are added before sequencing. These primers need to be removed before the alignment of the reads can be done. If the sub-library spacer is not utilized or needed, we recommend trimming that sequence as well. Cutadapt can also be used to filter short reads for higher quality reads. Detailed commands can be found in the method section of the publication as well as in the Data Processing folder.
+
+### 3. Aligning sequenced reads with minimap2
+After trimming and filtering, the sequenced reads are aligned to the earlier mentioned fasta file containing the  refernece sgRNA-insert pairs. We decided to use minimap2, but you are free to use other available tools if you want.  
 
 
 
