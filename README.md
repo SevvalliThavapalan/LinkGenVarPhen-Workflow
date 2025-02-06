@@ -6,4 +6,12 @@ all relevant information for the computational parts:
 
 ## Functions of the web application
 
+| Feature                                             | Progress|
+|-----------------------------------------------------| --------|
+| Design sgRNA-insert pairs for targeted aa mutations | ✅      |
+| Perform mutagenesis on a protein sequence           | ✅      |
+| Off-target finder for potential binding sites       | ✅      |
+| Visualization for read count tables                 | ✅      |
+
+
 
