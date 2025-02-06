@@ -17,7 +17,7 @@ installations are neccessary. You can find the web application *here*. All instr
 | Design sgRNA-insert pairs for targeted aa mutations | List of aa mutation, genome file (.gb)  |
 | Perform mutagenesis on a protein sequence           | Protein sequence, gene name|
 | Off-target finder for potential binding sites       | List of protospacers, genome file (.gb)|
-| Visualization of read count tables                 | Readcount table  |
+| Visualization of read count tables                  | Readcount table  |
 
 The following functions are optional features with the intention of improving the workflow.
 
@@ -33,3 +33,9 @@ in the genome, the off-target sequence, and the number of found mismatches.
 ### Visualization of read count tables
 The visualization tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
 This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
+
+#### Note
+
+All relevant python scripts are also available in the **XXX** folder, if you prefer to run all the functions locally on you computer. 
+ 
+
