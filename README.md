@@ -46,7 +46,10 @@ If you use the web application you will get a file containing all reference sgRN
 During the experimental procedure primers are added before sequencing. These primers need to be removed before the alignment of the reads can be done. If the sub-library spacer is not utilized or needed, we recommend trimming that sequence as well. Cutadapt can also be used to filter short reads for higher quality reads. Detailed commands can be found in the method section of the publication as well as in the Data Processing folder.
 
 ### 3. Aligning sequenced reads with minimap2
-After trimming and filtering, the sequenced reads are aligned to the earlier mentioned fasta file containing the  refernece sgRNA-insert pairs. We decided to use minimap2, but you are free to use other available tools if you want.  
+After trimming and filtering, the sequenced reads are aligned to the earlier mentioned fasta file containing the  refernece sgRNA-insert pairs. We decided to use minimap2, but you are free to use other available tools if you want. The resulting alignment file can be used to create a read count table for downstream data analysis and visualization.
+
+### 4. Mismatch filtering 
+Mismatch filtering is recommended so that only high quality reads are retained for the final read count table. The Python script takes the aligned files and the generated sgRNA- insert pair as input and generates a read count table assigned to each sgRNA-insert, a detailed description of the filtered reads as well as a filtered alignment file. Some parameters for the filtering steps can be adjusted in the script if needed. Detailed descriptions can be found in the publication as well as in the Data Proccessing folder. 
 
 
 
