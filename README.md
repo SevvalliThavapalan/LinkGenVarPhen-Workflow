@@ -42,6 +42,8 @@ After sequencing is performed, the resulting fastq files should be processed.
 
 If you use the web application you will get a file containing all reference sgRNA-insert pairs in a fasta file. This file is important in the later steps of the data processing.
 
+### 2. Trimming and filtering of sequencing reads using cutadapt
+
 
 
 #### Note
