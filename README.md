@@ -6,12 +6,12 @@ all relevant information for the computational parts:
 
 ## Functions of the web application
 
-| Feature                                             | Progress|
+| Feature                                             | Input|
 |-----------------------------------------------------| --------|
-| Design sgRNA-insert pairs for targeted aa mutations | ✅      |
-| Perform mutagenesis on a protein sequence           | ✅      |
-| Off-target finder for potential binding sites       | ✅      |
-| Visualization for read count tables                 | ✅      |
+| Design sgRNA-insert pairs for targeted aa mutations | List of aa mutation, genome file .gb  |
+| Perform mutagenesis on a protein sequence           | Protein sequence, gene name|
+| Off-target finder for potential binding sites       | List of protospacers, genome file .gb|
+| Visualization for read count tables                 | Readcount table  |
 
 
 
