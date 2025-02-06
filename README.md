@@ -34,7 +34,12 @@ in the genome, the off-target sequence, and the number of found mismatches.
 The visualization tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
 This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
 
-## Data Processing
+
+#### Note
+
+All relevant python scripts are also available in the **XXX** folder, if you prefer to run the individual functions locally on you computer.
+
+## Data processing
 After sequencing is performed, the resulting fastq files should be processed. Here is a recommended workflow we developed. If you prefer other tools and methods you are free to use them.  
  ### 1. Preprocessing and preparations
 1. Nanopore sequencing: If nanopore sequencing was used, we recommed concatinating the sequencing files of each barcode into one file. 
@@ -49,12 +54,10 @@ During the experimental procedure primers are added before sequencing. These pri
 After trimming and filtering, the sequenced reads are aligned to the earlier mentioned fasta file containing the  refernece sgRNA-insert pairs. We decided to use minimap2, but you are free to use other available tools if you want. The resulting alignment file can be used to create a read count table for downstream data analysis and visualization.
 
 ### 4. Mismatch filtering 
-Mismatch filtering is recommended so that only high quality reads are retained for the final read count table. The Python script takes the aligned files and the generated sgRNA- insert pair as input and generates a read count table assigned to each sgRNA-insert, a detailed description of the filtered reads as well as a filtered alignment file. Some parameters for the filtering steps can be adjusted in the script if needed. Detailed descriptions can be found in the publication as well as in the Data Proccessing folder. 
+Mismatch filtering is recommended so that only high quality reads are retained for the final read count table. The Python script takes the aligned files and the generated sgRNA- insert pair as input and generates a read count table assigned to each sgRNA-insert, a detailed description of the filtered reads as well as a filtered alignment file. Some parameters for the filtering steps can be adjusted in the script if needed. Detailed descriptions can be found in the publication as well as in the Data Proccessing folder.
 
 
 
-#### Note
 
-All relevant python scripts are also available in the **XXX** folder, if you prefer to run the individual functions locally on you computer. 
 
 
