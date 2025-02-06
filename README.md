@@ -8,7 +8,7 @@ all relevant information for the computational parts:
 
 ## Designing sgRNA-insert pairs
 The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original Python scripts. The web appliation is more user firendly, as no prior bioinformatic knowledge and 
-installations are neccessary.  You can find the web application *here*. All instruction on how to use the individual tabs and functions can be found on the website.
+installations are neccessary. You can find the web application *here*. All instruction on how to use the individual tabs and functions can be found on the website.
 
 ### Overview of the functions in the web application
 
@@ -17,10 +17,12 @@ installations are neccessary.  You can find the web application *here*. All inst
 | Design sgRNA-insert pairs for targeted aa mutations | List of aa mutation, genome file (.gb)  |
 | Perform mutagenesis on a protein sequence           | Protein sequence, gene name|
 | Off-target finder for potential binding sites       | List of protospacers, genome file (.gb)|
-| Visualization for read count tables                 | Readcount table  |
+| Visualization of read count tables                 | Readcount table  |
+
+The following functions are optional features with the intention of improving the workflow.
 
 ### Mutagenesis on a protein sequence
-This function allows the mutagenesis of a single protein sequence. Each amino acid  in the sequence is mutated to all other amino acids. The output table can 
+This function allows the mutagenesis of a single protein sequence. Each amino acid in the sequence is mutated to all other amino acids. The output table can 
 be used as input for the sgRNA-insert pair design.
 
 ### Off- target finder for potential binding sites
@@ -28,4 +30,6 @@ We recommend using this function to find the most suited sgRNA-insert pair for s
 table can be used as input to find potentail off-targets. The application finds all regions in the genome with up to four mismatches and results the original base pairing region, the position 
 in the genome, the off-target sequence, and the number of found mismatches.
 
-
+### Visualization of read count tables
+The visualization tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
+This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
