@@ -59,7 +59,7 @@ Mismatch filtering is recommended so that only high quality reads are retained f
 ### Programs and versions
 
 | Name   | Version      |
-|--------|              |
+|--------|------------  |
 |Cutadapt|4.9           |
 |Minimap2| 2.28-r1209   |
 |Python  |3.10.4        |
