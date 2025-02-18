@@ -25,4 +25,9 @@ We used cutadapt 4.9 to remove primer sequences at the beginning and end of each
 ```
 cutadapt.exe -e 0.3 -g  Forward primer sequence  -a Reverse primer sequence -O 5 --cores 4 -n 2 --untrimmed-output $path to untrimmed output file -o $path to trimmed output file $path to input file
 ```
-For more details about individual parameters and options check out the documentation of [cutadapt](https://cutadapt.readthedocs.io/en/stable/).
+For more details about individual parameters and options check out the documentation of [cutadapt](https://cutadapt.readthedocs.io/en/stable/). After trimming the primer sequences we recommend filtering reads which are too short or too long. This can be done using cutadapt. -m defines the minimal required length and -M defines the maximal length. 
+```
+cutadapt.exe -m 175 -M 500 -o <path to output file> --cores 4 <path to input file>
+```
+
+### 4. Aligning reads against reference sgRNA-insert pairs using minimap2
