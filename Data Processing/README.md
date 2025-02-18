@@ -39,7 +39,7 @@ minimap2 -a -x sr -A 2 -B 6 -O 5,56 -E 4,1 -z 400,50 -t 4 <reference fasta file>
 For more detail on the parameters have a look into our publication or the documentation of minimap2. **Important:** You will need a reference fasta file before aligning the reads. See step 1 for details.
 
 ### 5. Filtering reads
-Aligned reads can be analyzed and filtered using a custom python script. It will filter out reads following a set of parameters we defined and will return the filtered reads and a read count table. Here all reads are mapped to the initial list of sgRNA-insert pairs.
+Aligned reads can be analyzed and filtered using a custom python script. It will filter out reads following a set of parameters we defined and will return the filtered reads and a read count table. Here all reads are mapped to the initial list of sgRNA-insert pairs. Besides a read count table a detailed analysis of the filtered reads is generated and saved to a file. Because of that a path and prefix for the output files in necessary, indicated by the -o option.
 
 ```
 py analyze_aligned_files.py -i <input .sam file> -r <reference sgRNA-insert table> -o <path to output files>
