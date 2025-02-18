@@ -25,3 +25,4 @@ We used cutadapt 4.9 to remove primer sequences at the beginning and end of each
 ```
 cutadapt.exe -e 0.3 -g  Forward primer sequence  -a Reverse primer sequence -O 5 --cores 4 -n 2 --untrimmed-output $path to untrimmed output file -o $path to trimmed output file $path to input file
 ```
+For more details about individual parameters and options check out the documentation of [cutadapt](https://cutadapt.readthedocs.io/en/stable/).
