@@ -40,7 +40,7 @@ For more detail on the parameters have a look into our publication or the docume
 
 ### 5. Filtering reads
 Aligned reads can be analyzed and filtered using a custom python script. It will filter out reads following a set of parameters we defined and will return the filtered reads and a read count table. Here all reads are mapped to the initial list of sgRNA-insert pairs. Besides a read count table a detailed analysis of the filtered reads is generated and saved to a file. Because of that a path and prefix for the output files in necessary, indicated by the -o option.
-
 ```
 py analyze_aligned_files.py -i <input .sam file> -r <reference sgRNA-insert table> -o <path to output files>
 ```
+The resulting read count table can be used to perform data analysis and visualization. The web application can be utilized to gain a first insight into the data, by reintroducing the read count table into the visualization tab.
