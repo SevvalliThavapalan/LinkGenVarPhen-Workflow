@@ -45,4 +45,7 @@ py analyze_aligned_files.py -i <input .sam file> -r <reference fasta file> -o <p
 
 
 ### 6. Merging read count tables
-The generated read count tables can be mapped back to the initial sgRNA - insert table. If you have more than one sample, conditions or replicates you can combine them all togethter to make the results more concise and clear. The resulting table can be used to perform data analysis and visualization. The web application can be utilized to gain a first insight into the data, by reintroducing the read count table into the visualization tab.
+The generated read count tables can be mapped back to the initial sgRNA - insert table. If you have more than one sample, conditions or replicates you can combine them all together to make the results more concise and clear, as python script allows multiple input tables. The resulting table can be used to perform data analysis and visualization. The web application can be utilized to gain a first insight into the data, by reintroducing the read count table into the visualization tab.
+```
+py merge_read_count_files.py -r <reference sgRNA-insert table> -o <path to output file> -i <read count table 1> <read count table 2> ...
+```
