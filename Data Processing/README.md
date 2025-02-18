@@ -1,6 +1,5 @@
 # Data Processing
 Due to the data limit of 200 MB of Streamlit, we recommend that the processing of the sequencing reads is done locally.
-
 Details can also be found in the method section of the publication.
 
 #### Note
@@ -39,8 +38,11 @@ minimap2 -a -x sr -A 2 -B 6 -O 5,56 -E 4,1 -z 400,50 -t 4 <reference fasta file>
 For more detail on the parameters have a look into our publication or the documentation of minimap2. **Important:** You will need a reference fasta file before aligning the reads. See step 1 for details.
 
 ### 5. Filtering reads
-Aligned reads can be analyzed and filtered using a custom python script. It will filter out reads following a set of parameters we defined and will return the filtered reads and a read count table. Here all reads are mapped to the initial list of sgRNA-insert pairs. Besides a read count table a detailed analysis of the filtered reads is generated and saved to a file. Because of that a path and prefix for the output files in necessary, indicated by the -o option.
+Aligned reads can be analyzed and filtered using a custom python script. It will filter out reads following a set of parameters we defined and will return the filtered reads and a read count table. . Besides a read count table a detailed analysis of the filtered reads is generated and saved to a file. Because of that a path and prefix for the output files in necessary, indicated by the -o option.
 ```
-py analyze_aligned_files.py -i <input .sam file> -r <reference sgRNA-insert table> -o <path to output files>
+py analyze_aligned_files.py -i <input .sam file> -r <reference fasta file> -o <path to output files>
 ```
-The resulting read count table can be used to perform data analysis and visualization. The web application can be utilized to gain a first insight into the data, by reintroducing the read count table into the visualization tab.
+
+
+### 6. Merging read count tables
+The generated read count tables can be mapped back to the initial sgRNA - insert table. If you have more than one sample, conditions or replicates you can combine them all togethter to make the results more concise and clear. The resulting table can be used to perform data analysis and visualization. The web application can be utilized to gain a first insight into the data, by reintroducing the read count table into the visualization tab.
