@@ -5,7 +5,8 @@ Details can also be found in the method section of the publication.
 
 #### Note
 
-All scripts and tools used here are one possible way to process the data. Feel free to use your own scripts and tools if you prefer.
+All scripts and tools used here are one possible way to process the data. Feel free to use your own scripts and tools if you prefer. Here the most important parts 
+of each processing step is covered. If you want more deatils please look into the documentation of each tool.
 
 ### 1.  Prepare all relevant files
 
@@ -31,3 +32,8 @@ cutadapt.exe -m 175 -M 500 -o <path to output file> --cores 4 <path to input fil
 ```
 
 ### 4. Aligning reads against reference sgRNA-insert pairs using minimap2
+[Minimap2](https://github.com/lh3/minimap2) is a commandline tool to align sequencing reads for various purposes. We used the follwing command to align the sequenced reads to the reference sgRNA-insert pair:
+```
+minimap2 -a -x sr -A 2 -B 6 -O 5,56 -E 4,1 -z 400,50 -t 4 <reference fasta file> <input fastq file> > <path to output file>
+```
+For more detail on the parameters have a look into our publication or the documentation of minimap2. **Important:** You will need a reference fasta file before aligning the reads. See step 1 for details.
