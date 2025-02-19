@@ -170,7 +170,7 @@ def insert_target_mutations(final_dict, mut_dict, example_gene):
 
 def get_files():
 	parser = argparse.ArgumentParser(description='')
-	parser.add_argument('-i', '--input', help="Excel file with mutations", required=True, nargs="+")
+	parser.add_argument('-i', '--input', help="File with mutations", required=True, nargs="+")
 	parser.add_argument('-o', '--output', help='path to outfile', required=True , nargs="+")
 	
 	args = parser.parse_args()
@@ -220,7 +220,7 @@ def main():
 # load genome and mutation list
     infiles = get_files()
     out_path = infiles["output"][0]
-    mutation_df =  pd.read_excel(infiles['input'][0])
+    mutation_df =  pd.read_csv(infiles['input'][0])
     #mutation_df = pd.read_excel("combined_mutations_pur.xlsx")
     oligo_df = []
     nucleotide_sequences = "BW25113.gb" #gene bank file
