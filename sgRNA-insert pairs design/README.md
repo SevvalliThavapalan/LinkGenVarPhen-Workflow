@@ -11,7 +11,7 @@ An example table for the input mutation table can be found in the folder Example
 
 ## Generate reference files
 This script generates two files out of the sgRNA-insert pair table. First, a reference fasta file is generated which is necessary to perform sequence alignment during the data processing step. Second, a list of base piring regions is provided, which can be used to find potential off-targets.
-````
+```
 py generate_reference_files.py -i <file containing sgRNA-insert pairs in csv> -f <path to output fasta file> -p <path to output base pairing file >
 ```
 ## Mutagenesis
