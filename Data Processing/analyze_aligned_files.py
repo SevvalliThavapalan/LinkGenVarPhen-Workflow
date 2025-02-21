@@ -9,7 +9,9 @@ import pandas as pd
 
 def parse_arguments():
     """
-    
+    Parse command-line arguments for the script.
+    Returns:
+        argparse.Namespace: Parsed command-line arguments.
     """
     parser = argparse.ArgumentParser(description="Analyze aligned files.")
     parser.add_argument("-r", "--reference", required=True, help="Path to the reference FASTA file")
@@ -18,8 +20,12 @@ def parse_arguments():
     return parser.parse_args()
 
 def parse_fasta(fasta_file):
+    """
+    Parse the FASTA file and return a dictionary of reference sequences.
+    The dictionary keys are the sequence IDs and the values are the sequences.
+    """
     ref_sequences = {}
-    reffile = open(fasta_file, 'r')
+    reffile = open(fasta_file, 'r', encoding='utf-8')
     for record in SeqIO.parse(reffile, "fasta"):
         ref_sequences[record.id] = str(record.seq)
     return ref_sequences
@@ -33,16 +39,21 @@ def parse_cigar(cigar):
     return [(int(length), op) for length, op in re.findall(r'(\d+)([MIDNSHP=X])', cigar)]
 
 def find_mutations_and_indels(read, ref_sequence, ref_start_pos):
+    """
+    Find mutations and indels in the read compared to the reference sequence.
+    Returns a list of tuples (position, reference base, read base) for each mutation or indel.
+    """
     cigar = read[5]
     read_seq = read[9]
     read_pos = 0
     ref_pos = ref_start_pos
-    mutations_and_indels = []   
+    mutations_and_indels = []
     for length, op in parse_cigar(cigar):
         if op == 'M':  # Match or mismatch
             for i in range(length):
                 if ref_sequence[ref_pos - 1] != read_seq[read_pos]:
-                    mutations_and_indels.append((ref_pos, ref_sequence[ref_pos - 1], read_seq[read_pos]))
+                    mutations_and_indels.append((ref_pos,
+                                                 ref_sequence[ref_pos - 1], read_seq[read_pos]))
                 ref_pos += 1
                 read_pos += 1
         elif op == 'I':  # Insertion to the reference
@@ -58,7 +69,8 @@ def find_mutations_and_indels(read, ref_sequence, ref_start_pos):
             elif op == 'X':
                 for i in range(length):
                     if ref_sequence[ref_pos - 1] != read_seq[read_pos]:
-                        mutations_and_indels.append((ref_pos, ref_sequence[ref_pos - 1], read_seq[read_pos]))
+                        mutations_and_indels.append((ref_pos,
+                                                     ref_sequence[ref_pos - 1], read_seq[read_pos]))
                     ref_pos += 1
                     read_pos += 1
             else:
@@ -72,46 +84,59 @@ def has_consecutive_mutations_or_indels(mutations_and_indels):
     Check if there are more than two/three consecutive mutations or indels.
     """
     if len(mutations_and_indels) < 2:    #adapt
-        return False  
+        return False
     for i in range(1, len(mutations_and_indels)):
         if mutations_and_indels[i][0] == mutations_and_indels[i - 1][0] + 1:
-            return True       
+            return True
     return False
 
 def parse_sam(file_path):
+    """
+    Parse the SAM file and return a dictionary of reads grouped by reference sequence name.
+    The dictionary keys are the reference sequence names and the values are lists of reads.
+    Each read is a tuple (fields, start_pos), where fields is a list of fields and start_pos is the 1-based start position.
+    """
     reads_by_rname = {}
-    header_lines = []  
-    with open(file_path, 'r') as file:
+    header_lines = []
+    with open(file_path, 'r', encoding='utf-8') as file:
         for line in file:
             if line.startswith('@'):
                 header_lines.append(line)
                 continue
             fields = line.strip().split('\t')
             rname = fields[2]  # Reference sequence name
-            pos = int(fields[3])  # 1-based leftmost mapping position           
+            pos = int(fields[3])  # 1-based leftmost mapping position
             if rname not in reads_by_rname:
-                reads_by_rname[rname] = []               
+                reads_by_rname[rname] = []
             reads_by_rname[rname].append((fields, pos))
     return reads_by_rname, header_lines
 
 
 def summarize_mutations_and_indels(grouped_reads, ref_sequences):
-    mutation_indel_summary = defaultdict(lambda: defaultdict(set))  # Store sets of read identifiers  
+    """
+    Summarize mutations and indels in the reads compared to the reference sequences.
+    Returns a dictionary of dictionaries, where the first key is the reference sequence name,
+    the second key is the position, and the value is a set of read identifiers.
+    """
+    mutation_indel_summary = defaultdict(lambda: defaultdict(set))  # Store sets of read identifiers
     for rname, reads in grouped_reads.items():
         if rname not in ref_sequences:
             print(f"Reference sequence for {rname} not provided.")
             continue      
-        ref_sequence = ref_sequences[rname]     
+        ref_sequence = ref_sequences[rname]
         for read, start_pos in reads:
             read_id = read[0]  # Assuming the read ID is the first field in SAM format
-            mutations_and_indels = find_mutations_and_indels(read, ref_sequence, start_pos)          
+            mutations_and_indels = find_mutations_and_indels(read, ref_sequence, start_pos)
             for mutation_or_indel in mutations_and_indels:
                 position = mutation_or_indel[0]
-                mutation_indel_summary[rname][position].add(read_id)  # Store unique read IDs              
+                mutation_indel_summary[rname][position].add(read_id)  # Store unique read IDs
     return mutation_indel_summary
 
 def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
-
+    """
+    Filter reads based on various criteria.
+    Returns a dictionary of reads grouped by reference sequence name.
+    """
     filtered_reads_by_rname = defaultdict(list)
     short = 0
     large_indel = 0
@@ -122,7 +147,8 @@ def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
 
 
     filtered_summary = {
-        rname: {pos: reads for pos, reads in positions.items() if len(reads) > 3} # remove if Mutation can be found in 3 reads or more
+        rname: {pos: reads for pos, reads in positions.items()
+                if len(reads) > 3} # remove if Mutation can be found in 3 reads or more
         for rname, positions in mutation_indel_summary.items()
     }
 
@@ -145,7 +171,8 @@ def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
                 continue
 
             mutations_and_indels = find_mutations_and_indels(read, ref_sequences[rname], start_pos)
-            last_58_mutations_indels = [mut for mut in mutations_and_indels if mut[0] >= start_pos + alignment_length - 58]
+            last_58_mutations_indels = [mut for mut in mutations_and_indels
+                                        if mut[0] >= start_pos + alignment_length - 58]
             if len(last_58_mutations_indels) >= 5:
                 cas_proto += 1
                 continue
@@ -158,18 +185,26 @@ def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
                 consecutive_mutation += 1
                 continue
 
-            if not any(read_id in filtered_summary[rname].get(pos, set()) for pos in filtered_summary.get(rname, {})):
-                filtered_reads_by_rname[rname].append(read)  
+            if not any(read_id in filtered_summary[rname].get(pos, set()) 
+                       for pos in filtered_summary.get(rname, {})):
+                filtered_reads_by_rname[rname].append(read)
 
     return filtered_reads_by_rname, short, large_indel, consecutive_mutation, cas_proto, skipped
 
 def count_remaining_reads(filtered_reads_by_rname):
+    """
+    Count the remaining reads after filtering.
+    Returns a dictionary of reference sequence names and the number of remaining reads.
+    """
     read_counts = {rname: len(reads) for rname, reads in filtered_reads_by_rname.items()}
 
     return read_counts
 
 
 def write_filtered_sam(filtered_reads_by_rname, header_lines, output_file):
+    """
+    Write the filtered reads to a new SAM file.
+    """
     with open(output_file, 'w', encoding='utf-8') as f:
         for line in header_lines:
             f.write(line)
@@ -180,6 +215,9 @@ def write_filtered_sam(filtered_reads_by_rname, header_lines, output_file):
 
 
 def main():
+    """
+    Main function for the script.
+    """
     args = parse_arguments()
     # Clean and convert paths to absolute paths
     fasta_file = os.path.abspath(args.reference.strip())
@@ -201,11 +239,13 @@ def main():
     # Parse FASTA in a separate thread (if it's not CPU-heavy)
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ref_sequences_future = executor.submit(parse_fasta, fasta_file)
-        grouped_reads_future = executor.submit(parse_sam, input_file)   
+        grouped_reads_future = executor.submit(parse_sam, input_file)
         ref_sequences = ref_sequences_future.result()
         grouped_reads, header_lines = grouped_reads_future.result()
         mutation_indel_summary = summarize_mutations_and_indels(grouped_reads, ref_sequences)
-        filtered_reads_by_rname,short_reads,large_indel, consecutive_mutation, cas_proto, skipped = filter_reads(grouped_reads, ref_sequences, mutation_indel_summary)
+        filtered_reads_by_rname,short_reads,large_indel,consecutive_mutation,cas_proto,skipped = filter_reads(grouped_reads,
+                                                                                                                 ref_sequences,
+                                                                                                                 mutation_indel_summary)
         #print(mutation_indel_summary)
 
     # Count total reads before filtering
