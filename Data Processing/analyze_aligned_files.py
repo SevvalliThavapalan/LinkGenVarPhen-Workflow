@@ -1,23 +1,16 @@
-from Bio import SeqIO
 import re
-from collections import defaultdict
 import argparse
-import pandas as pd
 import concurrent.futures
 import os
+from collections import defaultdict
+from Bio import SeqIO
+import pandas as pd
 
-"""
-def get_files():
-    parser = argparse.ArgumentParser(description='')
-    parser.add_argument('-i', '--input', help="sam file", required=True,nargs="+")
-    parser.add_argument('-r', '--reference', help="reference file with sgRNA list in fasta format", required= True)
-    #parser.add_argument('-o', '--output', help="path to output file, required=True")
-    args = parser.parse_args()
-    arguments = args.__dict__
-    return arguments
-"""
 
 def parse_arguments():
+    """
+    
+    """
     parser = argparse.ArgumentParser(description="Analyze aligned files.")
     parser.add_argument("-r", "--reference", required=True, help="Path to the reference FASTA file")
     parser.add_argument("-i", "--input", required=True, help="Path to the aligned SAM file")
@@ -26,8 +19,8 @@ def parse_arguments():
 
 def parse_fasta(fasta_file):
     ref_sequences = {}
-    RefFile = open(fasta_file, 'r')
-    for record in SeqIO.parse(RefFile, "fasta"):
+    reffile = open(fasta_file, 'r')
+    for record in SeqIO.parse(reffile, "fasta"):
         ref_sequences[record.id] = str(record.seq)
     return ref_sequences
 
@@ -44,8 +37,7 @@ def find_mutations_and_indels(read, ref_sequence, ref_start_pos):
     read_seq = read[9]
     read_pos = 0
     ref_pos = ref_start_pos
-    mutations_and_indels = []
-    
+    mutations_and_indels = []   
     for length, op in parse_cigar(cigar):
         if op == 'M':  # Match or mismatch
             for i in range(length):
@@ -79,21 +71,16 @@ def has_consecutive_mutations_or_indels(mutations_and_indels):
     """
     Check if there are more than two/three consecutive mutations or indels.
     """
-    
     if len(mutations_and_indels) < 2:    #adapt
-        return False
-    
-    
+        return False  
     for i in range(1, len(mutations_and_indels)):
         if mutations_and_indels[i][0] == mutations_and_indels[i - 1][0] + 1:
-            return True
-    
+            return True       
     return False
 
 def parse_sam(file_path):
     reads_by_rname = {}
-    header_lines = []
-    
+    header_lines = []  
     with open(file_path, 'r') as file:
         for line in file:
             if line.startswith('@'):
@@ -101,37 +88,27 @@ def parse_sam(file_path):
                 continue
             fields = line.strip().split('\t')
             rname = fields[2]  # Reference sequence name
-            pos = int(fields[3])  # 1-based leftmost mapping position
-            
+            pos = int(fields[3])  # 1-based leftmost mapping position           
             if rname not in reads_by_rname:
-                reads_by_rname[rname] = []
-                
+                reads_by_rname[rname] = []               
             reads_by_rname[rname].append((fields, pos))
-    
     return reads_by_rname, header_lines
 
 
 def summarize_mutations_and_indels(grouped_reads, ref_sequences):
-    mutation_indel_summary = defaultdict(lambda: defaultdict(set))  # Store sets of read identifiers
-    
+    mutation_indel_summary = defaultdict(lambda: defaultdict(set))  # Store sets of read identifiers  
     for rname, reads in grouped_reads.items():
         if rname not in ref_sequences:
             print(f"Reference sequence for {rname} not provided.")
-            continue
-        
-        ref_sequence = ref_sequences[rname]
-        
+            continue      
+        ref_sequence = ref_sequences[rname]     
         for read, start_pos in reads:
             read_id = read[0]  # Assuming the read ID is the first field in SAM format
-            mutations_and_indels = find_mutations_and_indels(read, ref_sequence, start_pos)
-            
+            mutations_and_indels = find_mutations_and_indels(read, ref_sequence, start_pos)          
             for mutation_or_indel in mutations_and_indels:
                 position = mutation_or_indel[0]
-                mutation_indel_summary[rname][position].add(read_id)  # Store unique read IDs
-                
+                mutation_indel_summary[rname][position].add(read_id)  # Store unique read IDs              
     return mutation_indel_summary
-
-    
 
 def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
 
@@ -154,7 +131,6 @@ def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
             print(f"Reference {rname} missing in FASTA. Skipping {len(reads)} reads.")
             skipped += len(reads)
             continue
-        
         for read, start_pos in reads:
             cigar = read[5]
             read_id = read[0]
@@ -183,8 +159,7 @@ def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
                 continue
 
             if not any(read_id in filtered_summary[rname].get(pos, set()) for pos in filtered_summary.get(rname, {})):
-                filtered_reads_by_rname[rname].append(read)
-            
+                filtered_reads_by_rname[rname].append(read)  
 
     return filtered_reads_by_rname, short, large_indel, consecutive_mutation, cas_proto, skipped
 
@@ -195,10 +170,10 @@ def count_remaining_reads(filtered_reads_by_rname):
 
 
 def write_filtered_sam(filtered_reads_by_rname, header_lines, output_file):
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         for line in header_lines:
             f.write(line)
-        for rname, reads in filtered_reads_by_rname.items():
+        for reads in filtered_reads_by_rname.values():
             for read in reads:
                 f.write('\t'.join(read) + '\n')
 
@@ -206,7 +181,6 @@ def write_filtered_sam(filtered_reads_by_rname, header_lines, output_file):
 
 def main():
     args = parse_arguments()
-    
     # Clean and convert paths to absolute paths
     fasta_file = os.path.abspath(args.reference.strip())
     input_file = os.path.abspath(args.input.strip())
@@ -221,15 +195,13 @@ def main():
         raise FileNotFoundError(f"FASTA file not found: {fasta_file}")
     if not os.path.isfile(input_file):
         raise FileNotFoundError(f"SAM file not found: {input_file}")
-    
 
     output_sam_file = output + "_filtered.sam"
 
     # Parse FASTA in a separate thread (if it's not CPU-heavy)
     with concurrent.futures.ThreadPoolExecutor() as executor:
         ref_sequences_future = executor.submit(parse_fasta, fasta_file)
-        grouped_reads_future = executor.submit(parse_sam, input_file)
-    
+        grouped_reads_future = executor.submit(parse_sam, input_file)   
         ref_sequences = ref_sequences_future.result()
         grouped_reads, header_lines = grouped_reads_future.result()
         mutation_indel_summary = summarize_mutations_and_indels(grouped_reads, ref_sequences)
@@ -250,7 +222,7 @@ def main():
      # Optionally, write the DataFrame to a CSV file
 
     log_file = output + "_summary.txt"
-    with open(log_file, "w") as file:
+    with open(log_file, "w", encoding="utf-8") as file:
         file.write(f"Using reference FASTA file: {fasta_file}\n")
         file.write(f"Using input SAM file: {input_file}\n")
         file.write(f"Using prefix for outputs: {output}\n")
@@ -277,5 +249,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
