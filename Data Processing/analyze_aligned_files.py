@@ -94,7 +94,8 @@ def parse_sam(file_path):
     """
     Parse the SAM file and return a dictionary of reads grouped by reference sequence name.
     The dictionary keys are the reference sequence names and the values are lists of reads.
-    Each read is a tuple (fields, start_pos), where fields is a list of fields and start_pos is the 1-based start position.
+    Each read is a tuple (fields, start_pos), where fields is a list of 
+    fields and start_pos is the 1-based start position.
     """
     reads_by_rname = {}
     header_lines = []
@@ -122,7 +123,7 @@ def summarize_mutations_and_indels(grouped_reads, ref_sequences):
     for rname, reads in grouped_reads.items():
         if rname not in ref_sequences:
             print(f"Reference sequence for {rname} not provided.")
-            continue      
+            continue
         ref_sequence = ref_sequences[rname]
         for read, start_pos in reads:
             read_id = read[0]  # Assuming the read ID is the first field in SAM format
@@ -185,7 +186,7 @@ def filter_reads(grouped_reads, ref_sequences, mutation_indel_summary):
                 consecutive_mutation += 1
                 continue
 
-            if not any(read_id in filtered_summary[rname].get(pos, set()) 
+            if not any(read_id in filtered_summary[rname].get(pos, set())
                        for pos in filtered_summary.get(rname, {})):
                 filtered_reads_by_rname[rname].append(read)
 
