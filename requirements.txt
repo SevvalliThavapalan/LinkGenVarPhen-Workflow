@@ -1,1 +1,5 @@
 pylint
+pandas
+numpy
+matplotlib
+Biopython
