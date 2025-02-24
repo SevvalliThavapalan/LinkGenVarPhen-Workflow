@@ -1,4 +1,6 @@
-
+"""
+This file contains dictionaries that are used in the program.
+"""
 
 three_one = { "A" : "ALA", "G" : "GLY", "I" : "ILE", "L" : "LEU", "P" : "PRO",
               "V" : "VAL", "F" : "PHE", "W" : "TRP", "Y" : "TYR", "D" : "ASP",
@@ -6,10 +8,14 @@ three_one = { "A" : "ALA", "G" : "GLY", "I" : "ILE", "L" : "LEU", "P" : "PRO",
               "T" : "THR", "C" : "CYS", "M" : "MET", "N" : "ASN", "Q" : "GLN"
     }
 
-aa_nt = { "ALA" : ["GCT","GCC","GCA","GCG"], "GLY" : ["GGT","GGC","GGA","GGG"], "ILE" : ["ATT","ATC","ATA"],
-          "LEU" : ["CTT","CTC","CTA","CTG","TTG","TTA"], "VAL" : ["GTT","GTC","GTA","GTG"], "PHE" : ["TTT","TTC"],
-          "TRP" : ["TGA","TGG"], "TYR" : ["TAT","TAC"], "ASP" : ["GAT","GAC"], "GLU" : ["GAA","GAG"],
-          "ARG" : ["AGA","AGG", "CGT", "CGC", "CGA", "CGG"], "HIS" : ["CAT", "CAC"], "LYS" : ["AAA","AAG"], "SER" : ["AGT","AGC","TCT","TCC", "TCA", "TCG"],
+aa_nt = { "ALA" : ["GCT","GCC","GCA","GCG"],
+         "GLY" : ["GGT","GGC","GGA","GGG"], "ILE" : ["ATT","ATC","ATA"],
+          "LEU" : ["CTT","CTC","CTA","CTG","TTG","TTA"], 
+          "VAL" : ["GTT","GTC","GTA","GTG"], "PHE" : ["TTT","TTC"],
+          "TRP" : ["TGA","TGG"], "TYR" : ["TAT","TAC"],
+          "ASP" : ["GAT","GAC"], "GLU" : ["GAA","GAG"],
+          "ARG" : ["AGA","AGG", "CGT", "CGC", "CGA", "CGG"], "HIS" : ["CAT", "CAC"],
+          "LYS" : ["AAA","AAG"], "SER" : ["AGT","AGC","TCT","TCC", "TCA", "TCG"],
           "THR" : ["ACT","ACC","ACA","ACG"], "CYS" : ["TGT","TGC"], "MET" : ["ATG"], 
           "ASN" : ["AAT", "AAC"], "GLN" : ["CAA","CAG"], "PRO" : ["CCT","CCC","CCA","CCG"]
     }
@@ -69,7 +75,7 @@ substitution_ncc = {"TCC" : "TCT",
                     "ACC" : "ACT",
                     "GCC" : "GCA"}
 
-#shift +2 
+#shift +2
 #bei negativen Distanzen
 substitution_cnn = {"CTA" : "TTA",
                     "CTG" : "TTG",
@@ -93,7 +99,7 @@ substitution_nnc = { "TTC" : "TTT",
                      "AGC" : "AGT",
                      "GGC" : "GGT"}
 
-  #shift +2 
+  #shift +2
     #bei negativen Distanzen
 substitution_cnn = {"CTA" : "TTA",
                     "CTG" : "TTG",
