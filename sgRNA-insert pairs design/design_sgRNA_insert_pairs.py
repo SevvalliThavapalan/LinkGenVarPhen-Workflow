@@ -111,17 +111,17 @@ def filter_pam(final_dict):
 
     """
     reduced_dict =  {}
-    exclusionPAMs = [
+    exclusion_pams = [
     'AAG','AGA','AGC','AGG','ATG','CAG','CGA','CGC','CGG','CTG','GAG',
     'GCG','GGA','GGC','GGG','GGT','GTG','TAG','TGA','TGC','TGG','CAT']    
     for key, values in final_dict.items():
         for entry in values:
             if len(entry) > 5:
-                if entry[7] not in exclusionPAMs:
+                if entry[7] not in exclusion_pams:
                     if key in reduced_dict.keys():
                         reduced_dict[key].extend([entry])
                     else:
-                        reduced_dict[key] = [entry]           
+                        reduced_dict[key] = [entry]
     return reduced_dict
 
 
@@ -142,13 +142,20 @@ def insert_target_mutations(final_dict, mut_dict):
                 for child_mut in child:
                     #print(child_mut)
                     if entry[1] < 0: #negative
-                        parent_nt = harm[42-math.floor(entry[1]/2):42-math.floor(entry[1]/2)+3:].upper()
+                        parent_nt = harm[42-math.floor(entry[1]/2):
+                                         42-math.floor(entry[1]/2)+3:].upper()
                         #print(parent_nt)
                         if key in adapted_dict.keys():
                             
-                            adapted_dict[key].extend([[entry[0],entry[1],harm[:42-math.floor(entry[1]/2)].lower()+ child_mut + harm[42-math.floor(entry[1]/2)+3:].lower(),parent_nt, child_mut]])
-                        else: 
-                            adapted_dict[key] = [[entry[0],entry[1],harm[:42-math.floor(entry[1]/2)].lower()+ child_mut + harm[42-math.floor(entry[1]/2)+3:].lower(),parent_nt, child_mut]]
+                            adapted_dict[key].extend([[entry[0],entry[1],
+                                                    harm[:42-math.floor(entry[1]/2)].lower()+
+                                                    child_mut+
+                                                    harm[42-math.floor(entry[1]/2)+3:].lower(),
+                                                    parent_nt, child_mut]])
+                        else:
+                            adapted_dict[key] = [[entry[0],entry[1],harm[:42-math.floor(entry[1]/2)].lower()+
+                                                  child_mut +
+                                                  harm[42-math.floor(entry[1]/2)+3:].lower(),parent_nt, child_mut]]
                            
                     else: #positive
                         
@@ -171,32 +178,32 @@ def insert_target_mutations(final_dict, mut_dict):
     return adapted_dict
 
 def get_files():
-	parser = argparse.ArgumentParser(description='')
-	parser.add_argument('-i', '--input', help="File with mutations", required=True, nargs="+")
-	parser.add_argument('-o', '--output', help='path to outfile', required=True , nargs="+")
-	
-	args = parser.parse_args()
-	arguments = args.__dict__
-	return arguments
+    """
+    Parse command line arguments.
+    """
+    parser = argparse.ArgumentParser(description='')
+    parser.add_argument('-i', '--input', help="File with mutations", required=True, nargs="+")
+    parser.add_argument('-o', '--output', help='path to outfile', required=True , nargs="+")
+    args = parser.parse_args()
+    arguments = args.__dict__
+    return arguments
 
 
 
 def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, flank_length=60):
+    """
+    Extracts flanking regions of a gene from a gene bank file.
+    """
     flanking_sequences = []
 
     for record in SeqIO.parse(gene_bank_file, "genbank"):
         for feature in record.features:
-            
-            
             if feature.type == "gene" and feature.qualifiers.get('gene')[0] == gene_name:
                 #print(feature.qualifiers.get('gene'))
                 start = feature.location.start
                 end = feature.location.end
                 sequence = record.seq
                 gene_sequence = sequence[start:end]
-               
-                
-                
                 merged_sequence = ""
                 # Extract flanking regions
                 upstream_flank = sequence[max(0, start - flank_length):start]
@@ -212,13 +219,17 @@ def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, fla
                 #else:
                 #    print(gene_sequence)
                 # Update positions
-                updated_positions = [((pos-1)*3) + len(upstream_flank)  for pos in positions_to_update]
+                updated_positions = [((pos-1)*3) +
+                                     len(upstream_flank)  for pos in positions_to_update]
                 #print(updated_positions)
 
                 flanking_sequences.append((merged_sequence, updated_positions, gene_sequence))
     return merged_sequence, updated_positions, gene_sequence
 
 def main():
+    """
+    Main function to design sgRNA and insert pairs for a given list of mutations.
+    """
 # load genome and mutation list
     infiles = get_files()
     out_path = infiles["output"][0]
@@ -232,7 +243,7 @@ def main():
 
     mutation_lists = mutation_df.groupby("Gene")["Mutation"].apply(list).to_dict()
 
-    for key, value in mutation_lists.items(): # gene + list of mutations 
+    for key, value in mutation_lists.items(): # gene + list of mutations
         parent_mutation = []
         child_mutation = []
 
@@ -297,7 +308,7 @@ def main():
         adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
          # mutate PAM
-        for key1, value2 in adapted_dict.items():
+        for value2 in adapted_dict.values():
             for entry in value2:
                 a = entry[2]
             #print(a)

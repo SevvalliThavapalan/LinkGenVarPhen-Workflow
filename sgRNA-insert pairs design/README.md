@@ -15,7 +15,7 @@ This script generates two files out of the sgRNA-insert pair table. First, a ref
 py generate_reference_files.py -i <file containing sgRNA-insert pairs in csv> -f <path to output fasta file> -p <path to output base pairing file >
 ```
 ## Mutagenesis
-This script performs mutagenesis over all amino acids of a provided protein sequence. You need a protein sequence and the gene name and the script will produce a table with all possible amino acid mutations, The resulting file can be used to design sgRNA-insert pairs.
+This script performs mutagenesis over all amino acids of a provided protein sequence. You need a protein sequence and the gene name and it will produce a table with all possible amino acid mutations, The resulting file can be used to design sgRNA-insert pairs.
 ```
 py mutagenesis.py <aa_sequence> <gene_name>
 ```
