@@ -33,11 +33,10 @@ def process_gene(gene, dictionary_values):
     """
     if gene:
         return gene[0]
-    else:
-        print(gene, dictionary_values)
-        for key, values in aa_nt.items():
-            if dictionary_values in values:
-                return key
+    print(gene, dictionary_values)
+    for key, values in aa_nt.items():
+        if dictionary_values in values:
+            return key
     return None
 
 
