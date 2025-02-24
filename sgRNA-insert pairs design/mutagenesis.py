@@ -1,5 +1,13 @@
-import pandas as pd
+"""
+This script generates a list of all possible single amino acid mutations 
+for a given protein sequence.
+The script takes two arguments: the protein sequence and the gene name.
+The script generates a list of all possible single amino acid mutations
+for the given protein sequence.
+The output is saved as an Excel file with the gene name and the list of mutations.
+"""
 import sys
+import pandas as pd
 
 def mutate_sequence(seq):
     """

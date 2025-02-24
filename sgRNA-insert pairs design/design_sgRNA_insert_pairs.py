@@ -121,10 +121,15 @@ def filter_pam(final_dict):
         for entry in values:
             if len(entry) > 5:
                 if entry[7] not in exclusion_pams:
-                    if key in reduced_dict.keys():
-                        reduced_dict[key].extend([entry])
-                    else:
-                        reduced_dict[key] = [entry]
+                    for key_2 in reduced_dict.items():
+                        if key == key_2:
+                            reduced_dict[key].extend([entry])
+                        else:
+                            reduced_dict[key] = [entry]
+                    #if key in reduced_dict.keys():
+                    #    reduced_dict[key].extend([entry])
+                    #else:
+                    #    reduced_dict[key] = [entry]
     return reduced_dict
 
 
