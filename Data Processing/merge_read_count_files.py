@@ -1,11 +1,18 @@
-import pandas as pd
+"""
+This script merges a primary table with multiple count tables and saves the output.
+"""
 import os
 import argparse
+import pandas as pd
 
 
 def parse_arguments():
+    """
+    Parse command-line arguments.
+    """
     parser = argparse.ArgumentParser(description="Analyze aligned files.")
-    parser.add_argument("-r", "--reference", required=True, help="Path to the reference sgRNA - insert file")
+    parser.add_argument("-r", "--reference", required=True,
+                        help="Path to the reference sgRNA - insert file")
     parser.add_argument("-i", "--input", required=True, help="Path to read count files", nargs="+")
     parser.add_argument("-o", "--output", required=True, help= "Path to output file")
     return parser.parse_args()
@@ -23,7 +30,6 @@ def merge_with_multiple_files(table1_path, count_files, output_path):
     # Load Table 1
     table1 = pd.read_excel(table1_path,  engine="openpyxl")
     print(table1.head())
-    
     # Add "Reference" column to Table 1 based on "oligo no." and "gene"
     table1["Reference"] = table1["oligo no."].astype(str) + "_" + table1["gene"]
 
@@ -46,7 +52,8 @@ def merge_with_multiple_files(table1_path, count_files, output_path):
         count_table.rename(columns={"Count": file_name}, inplace=True)
 
         # Merge with the primary table using the "Reference" column
-        merged_table = pd.merge(merged_table, count_table[["Reference", file_name]], on="Reference", how="left")
+        merged_table = pd.merge(merged_table,
+                                count_table[["Reference", file_name]], on="Reference", how="left")
 
     # Save the final merged table to the specified output path
     merged_table.to_excel(output_path, index=False)
@@ -62,9 +69,11 @@ def abspath(path):
 
 
 def main():
+    """
+    Main function.
+    """
     # Example Usage
     args = parse_arguments()
-    
     output = abspath(args.output)
     oligo_file = abspath(args.reference.strip())
     input_files = [os.path.abspath(file.strip()) for file in args.input]
@@ -77,4 +86,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

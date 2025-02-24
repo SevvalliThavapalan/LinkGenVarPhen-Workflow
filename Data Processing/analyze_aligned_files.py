@@ -1,3 +1,10 @@
+"""
+Analyze aligned files and filter reads based on various criteria.
+The script reads a reference FASTA file and an aligned SAM file.
+It parses the files, finds mutations and indels in the reads compared to the reference,
+and filters reads based on various criteria.
+The script writes a summary of the analysis and a new SAM file with filtered reads.
+"""
 import re
 import argparse
 import concurrent.futures
@@ -244,9 +251,8 @@ def main():
         ref_sequences = ref_sequences_future.result()
         grouped_reads, header_lines = grouped_reads_future.result()
         mutation_indel_summary = summarize_mutations_and_indels(grouped_reads, ref_sequences)
-        filtered_reads_by_rname,short_reads,large_indel,consecutive_mutation,cas_proto,skipped = filter_reads(grouped_reads,
-                                                                                                                 ref_sequences,
-                                                                                                                 mutation_indel_summary)
+        (filtered_reads_by_rname,short_reads,large_indel,consecutive_mutation,
+         cas_proto,skipped) = filter_reads(grouped_reads,ref_sequences,mutation_indel_summary)
         #print(mutation_indel_summary)
 
     # Count total reads before filtering
