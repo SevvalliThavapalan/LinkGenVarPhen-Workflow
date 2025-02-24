@@ -1,0 +1,76 @@
+"""
+This script finds potential off-targets in the E. coli genome for a set of protospacers.
+The protospacers are loaded from a TSV file, and the E. coli genome is loaded from a GenBank file.
+The off-target search is performed using regex with fuzzy matching, allowing up to 4 mismatches.
+The results are written to an Excel file, which includes the protospacer, the off-target sequence,
+the position in the genome, and the number of mismatches.
+The off-target search is performed in parallel using the multiprocessing module to improve 
+performance.
+"""
+from multiprocessing import Pool
+import regex as re
+import pandas as pd
+from Bio import SeqIO
+
+# Load the protospacers from a TSV file
+PROTOSPACER_FILE= "Example Data/protospacers.csv"
+protospacers_df = pd.read_csv(PROTOSPACER_FILE, sep='[,;]', engine='python')
+protospacers = protospacers_df['protospacer'].tolist()
+
+# Load the E. coli genome from a GenBank file
+ECOLI_GENOME_FILE = "Example Data/BW25113.gb"
+ecoli_genome = SeqIO.read(ECOLI_GENOME_FILE, "genbank")
+
+# Convert genome sequence to a string (for performance)
+GENOME_SEQ = str(ecoli_genome.seq)
+
+# Function to find potential off-targets for a single protospacer
+def process_protospacer(protospacer, genome_seq, max_mismatches=4):
+    """
+    Find potential off-targets in the genome sequence for a given protospacer
+    """
+    print(f"Checking protospacer: {protospacer}")
+    off_targets = []
+
+    # Use regex with fuzzy matching (up to max_mismatches)
+    pattern = f"({protospacer}){{e<={max_mismatches}}}"
+    for match in re.finditer(pattern, genome_seq, overlapped=True):
+        off_targets.append((match.group(), match.start(), match.fuzzy_counts[0]))
+
+    return (protospacer, off_targets)
+
+
+def main():
+    """
+    Main function to find off-targets for all protospacers
+    """
+# Run the off-target search in parallel
+
+    with Pool() as pool:
+        results = pool.starmap(process_protospacer, [(p, GENOME_SEQ) for p in protospacers])
+
+    # Convert results into a dictionary
+    off_targets_dict = dict(results)
+
+    # Prepare data for Excel
+    data = []
+    for protospacer, targets in off_targets_dict.items():
+        if targets:
+            for target in targets:
+                data.append([protospacer, target[0], target[1], target[2]])
+        else:
+            data.append([protospacer, "", "", ""])
+
+    # Create DataFrame
+    df = pd.DataFrame(data, columns=['Protospacer',
+                                     'Off-Target Sequence', 'Position', 'Mismatches'])
+
+    # Write DataFrame to Excel
+    output_file = "Example Data/off_targets.xlsx"
+    df.to_excel(output_file, index=False)
+
+    print(f"Results have been written to {output_file}")
+
+
+if __name__ == "__main__":
+    main()
