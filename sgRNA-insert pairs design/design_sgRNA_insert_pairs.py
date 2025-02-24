@@ -4,13 +4,13 @@ Created on Thursday Jan 25 13:25:43 2024
 
 @author: Sevvalli Thavapalan
 """
-from Bio import SeqIO
-from Bio.Seq import Seq
+import math
 import argparse
 import re
-import pandas as pd 
-import math
-from write_data_frame import * 
+from Bio import SeqIO
+import pandas as pd
+from write_data_frame import write_df
+from dictionaries import *
 
 
 
@@ -55,7 +55,8 @@ def get_dist(position_dict):
     - position_dict (dict): A dictionary containing positions and matched strings.
 
     Returns:
-    - pam (list): A list of lists, where each inner list contains the matched string and its distance from position 29.
+    - pam (list): A list of lists, where each inner list contains the matched
+    string and its distance from position 29.
 
     Example:
     >>> position_dict = {3: 'CGG', 10: 'CGG'}
@@ -93,15 +94,15 @@ def get_homology_arm(example_gene, final_dict):
     >>> example_gene = "ATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGATCG"
     >>> final_dict = {1: [['CGG', -5]], 4: [['TAA', 8], ['GGC', -6]]}
     >>> get_homology_arm(example_gene, final_dict)
-    {1: [['CGG', -5, 'GATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT'], 4: [['TAA', 8, 'GATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT'], ['GGC', -6, 'GATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT']]}
+    {1: [['CGG', -5, 'GATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT'],
+      4: [['TAA', 8, 'GATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT'], 
+      ['GGC', -6, 'GATCGATCGATCGATCGATCGATCGATCGATCGATCGATCGAT']]}
     """
     for key, value in final_dict.items():
-        pos_in_gene = (key)
+        pos_in_gene = key
         for pam in value:
             center = math.floor(pos_in_gene + pam[1] / 2) if pam[1] < 0 else math.ceil(pos_in_gene + pam[1] / 2)
             pam.append(example_gene[center - 42:center + 43].lower())
-            
-           
     return final_dict
 
 def filter_pam(final_dict):
@@ -113,7 +114,6 @@ def filter_pam(final_dict):
     exclusionPAMs = [
     'AAG','AGA','AGC','AGG','ATG','CAG','CGA','CGC','CGG','CTG','GAG',
     'GCG','GGA','GGC','GGG','GGT','GTG','TAG','TGA','TGC','TGG','CAT']    
-    
     for key, values in final_dict.items():
         for entry in values:
             if len(entry) > 5:
@@ -121,12 +121,14 @@ def filter_pam(final_dict):
                     if key in reduced_dict.keys():
                         reduced_dict[key].extend([entry])
                     else:
-                        reduced_dict[key] = [entry]
-                    
+                        reduced_dict[key] = [entry]           
     return reduced_dict
 
 
-def insert_target_mutations(final_dict, mut_dict, example_gene):
+def insert_target_mutations(final_dict, mut_dict):
+    """
+    Insert target mutations into the final dictionary.
+    """
     adapted_dict = {}
     for key, value in final_dict.items():
         #print(mut_dict)
@@ -242,12 +244,11 @@ def main():
         #print(len(child_mutation))
         #print(len(pos_lists[key]))
         print(key)
-
-        merged_sequence, updated_positions, gene = extract_flanking_regions(nucleotide_sequences,key,pos_lists[key])
+        merged_sequence, updated_positions, gene_sequence = extract_flanking_regions(
+            nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
         #print(updated_positions)
-        pos_dict = {} # triplets to get exact pos in
-        
+        pos_dict = {} # triplets to get exact pos in   
         for i in range(0, len(merged_sequence), 3):
             pos_dict[i] = str(merged_sequence[i]) + str(merged_sequence[i + 1])+ str(merged_sequence[i+2])
         #print(pos_dict)
@@ -287,13 +288,13 @@ def main():
             for j in dictionaries.aa_nt[child_mutation[k]]:
                 mismatches = sum(c1 != c2 for c1, c2 in zip(mut_nt[k], j))
                 if 1 <= mismatches <= 3:
-                        unique_values.add(j)
+                    unique_values.add(j)
 
             # Convert back to list
             mut_dict[current_key] = list(unique_values)
             #print(mut_dict)
 
-        adapted_dict = insert_target_mutations(final_dict, mut_dict,str(merged_sequence))
+        adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
          # mutate PAM
         for key1, value2 in adapted_dict.items():
