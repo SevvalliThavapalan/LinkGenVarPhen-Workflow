@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Created on Thursday Jan 25 13:25:43 2024
 
@@ -10,7 +9,7 @@ import re
 from Bio import SeqIO
 import pandas as pd
 from write_data_frame import write_df
-from dictionaries import *
+from important_dictionaries import three_one
 
 
 
@@ -248,9 +247,9 @@ def main():
         child_mutation = []
 
         for mutation in value:
-            if mutation[-1] in dictionaries.three_one.keys():
-                parent_mutation.append(dictionaries.three_one[mutation[0]])
-                child_mutation.append(dictionaries.three_one[mutation[-1]])
+            if mutation[-1] in three_one.keys():
+                parent_mutation.append(three_one[mutation[0]])
+                child_mutation.append(three_one[mutation[-1]])
         #print(parent_mutation)
         #print(len(child_mutation))
         #print(len(pos_lists[key]))
@@ -259,7 +258,7 @@ def main():
             nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
         #print(updated_positions)
-        pos_dict = {} # triplets to get exact pos in   
+        pos_dict = {} # triplets to get exact pos in gene
         for i in range(0, len(merged_sequence), 3):
             pos_dict[i] = str(merged_sequence[i]) + str(merged_sequence[i + 1])+ str(merged_sequence[i+2])
         #print(pos_dict)
@@ -281,13 +280,12 @@ def main():
             ccn = get_dist(ccn_dict)
             final_dict[i] = ngg
             final_dict[i].extend(ccn)
-        
         final_dict = get_homology_arm(str(merged_sequence), final_dict)
         mut_dict = {}
         unique_values = set()
         for k in range(len(pos_lists[key])):
-            current_key = ((pos_lists[key][k]-1)*3 )+ 60 # comes from the function extract_flanking_regions
-            
+            # comes from the function extract_flanking_regions
+            current_key = ((pos_lists[key][k]-1)*3 )+ 60
             if current_key not in mut_dict:
                 mut_dict[current_key] = [mut_nt[k]]  # Initialize with mut_nt[i]
             else:
