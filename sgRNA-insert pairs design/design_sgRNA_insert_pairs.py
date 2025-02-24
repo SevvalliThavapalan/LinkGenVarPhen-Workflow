@@ -196,7 +196,7 @@ def insert_target_mutations(final_dict, mut_dict):
                                                     harm[:42-math.floor(entry[1]/2)-1].lower()+
                                                     child_mut +
                                                     harm[42-math.floor(entry[1]/2)+2:].lower(),
-                                                    parent_nt,child_mut]]                   
+                                                    parent_nt,child_mut]]
     return adapted_dict
 
 def get_files():
@@ -237,17 +237,14 @@ def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, fla
                 if "ATG"  not in gene_sequence[0:3]:
                     merged_sequence = merged_sequence.reverse_complement()
                     gene_sequence = gene_sequence.reverse_complement()
-                    #print(gene_sequence.reverse_complement())
-                #else:
-                #    print(gene_sequence)
-                # Update positions
+                # Update positions to account for the flanking regions
                 updated_positions = [((pos-1)*3) +
                                      len(upstream_flank)  for pos in positions_to_update]
                 #print(updated_positions)
 
                 flanking_sequences.append((merged_sequence, updated_positions, gene_sequence))
-    return merged_sequence, updated_positions, gene_sequence
-
+                #print(gene_sequence)
+    return merged_sequence, updated_positions
 def main():
     """
     Main function to design sgRNA and insert pairs for a given list of mutations.
@@ -277,7 +274,7 @@ def main():
         #print(len(child_mutation))
         #print(len(pos_lists[key]))
         print(key)
-        merged_sequence, updated_positions, gene_sequence = extract_flanking_regions(
+        merged_sequence, updated_positions = extract_flanking_regions(
             nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
         #print(updated_positions)
@@ -339,12 +336,12 @@ def main():
                 for char in range(len(a)):
                     if a[char].isupper():
                         pos = char
-                        break     
+                        break
                 ha = entry[2]
                 if abs(entry[1]) < 56 :
                     if entry[1] == 3:
                         k = ha[pos + entry[1]:pos + entry[1]+3].upper()
-                        if k in substitution_nng.keys(): 
+                        if k in substitution_nng.keys():
                             j = ha[pos+entry[1]-3 :pos+entry[1]] + substitution_nng[k]# shift = 1
                             if not "GG" in j:
                                 if not "CC" in j:
@@ -380,15 +377,16 @@ def main():
                                     #print(k)
                                     if k in substitution_ncc.keys():
                                         #print(ha, entry[1])
-                                        #print(ha[:pos + entry[1]-2]+ dictionaries.substitution_ncc[k] + ha[pos + entry[1]+1:])
-                                        entry.append(ha[:pos + entry[1]-2]+ substitution_ncc[k] + ha[pos + entry[1]+1:])
-                                        entry.append(substitution_ncc[k][1:]+entry[0][-1]) #changed pam
+                                        entry.append(ha[:pos +
+                                                    entry[1]-2]+ substitution_ncc[k] +
+                                                    ha[pos + entry[1]+1:])
+                                        entry.append(substitution_ncc[k][1:]
+                                                     +entry[0][-1]) #changed pam
                                         entry.append(substitution_ncc[k])
-                                    
                                     if k in substitution_nng.keys():
                                         #print(ha, entry[0],k,entry[1])
-                                        #print(ha[:pos + entry[1]-2]+ dictionaries.substitution_nng[k] + ha[pos + entry[1]+1:])
-                                        entry.append(ha[:pos + entry[1]-2]+ substitution_nng[k] + ha[pos + entry[1]+1:])
+                                        entry.append(ha[:pos + entry[1]-2]+
+                                                     substitution_nng[k] + ha[pos + entry[1]+1:])
                                         entry.append(substitution_nng[k][1:]+entry[0][-1])
                                         entry.append(substitution_nng[k])
                                         #print(dictionaries.substitution_nng[k],entry[0])
