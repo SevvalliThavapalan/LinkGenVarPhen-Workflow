@@ -63,8 +63,7 @@ Mismatch filtering is recommended so that only high quality reads are retained f
 |Cutadapt|4.9           |
 |Minimap2| 2.28-r1209   |
 |Python  |3.10.4        |
-|Samtools|1.10          |
-|Streamlit|1.30.0        | 
+|Streamlit|1.30.0       | 
 
 
 
