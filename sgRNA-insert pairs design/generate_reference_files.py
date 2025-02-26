@@ -12,7 +12,8 @@ def create_fasta_from_table(csv_file, output_file, protospacer_file):
     """
     # Read file into a pandas DataFrame
     df = pd.read_csv(csv_file)
-    protospacer_df = df[['gene', 'aa position', 'mutated aa', 'protospacer']]
+    protospacer_df = df[['gene', 'aa position', 'mutated aa','child codon',
+                          'nt position', 'dist mut pam', 'mutated pam','protospacer']]
 
     with open(output_file, 'w', encoding='utf-8') as fasta_file:
         # Iterate over rows in DataFrame
@@ -24,7 +25,7 @@ def create_fasta_from_table(csv_file, output_file, protospacer_file):
 
             # Write header and sequence to FASTA file
             fasta_file.write(f'>{header_info}\n{sequence}\n')
-    protospacer_df.to_csv(protospacer_file, index=True)
+    protospacer_df.to_csv(protospacer_file, index=False)
 
 def get_files():
     """
@@ -46,7 +47,7 @@ def main():
     Main function.
     """
     args = get_files()
-    create_fasta_from_table(args['input'], args['output'], args['protospacer'])
+    create_fasta_from_table(args['input'], args['fasta'], args['protospacer'])
 
 if __name__ == "__main__":
     main()

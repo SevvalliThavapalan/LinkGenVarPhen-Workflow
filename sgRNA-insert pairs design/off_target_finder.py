@@ -12,10 +12,14 @@ import regex as re
 import pandas as pd
 from Bio import SeqIO
 
+
 # Load the protospacers from a TSV file
-PROTOSPACER_FILE= "Example Data/protospacers.csv"
+PROTOSPACER_FILE= "Example Data/protospacer.csv"
 protospacers_df = pd.read_csv(PROTOSPACER_FILE, sep='[,;]', engine='python')
+protospacers_df['oligo'] = protospacers_df.index.astype(str) + '_' + protospacers_df['gene']
 protospacers = protospacers_df['protospacer'].tolist()
+protospacer_dict = dict(zip(protospacers_df['protospacer'], protospacers_df['oligo']))
+
 
 # Load the E. coli genome from a GenBank file
 ECOLI_GENOME_FILE = "Example Data/BW25113.gb"
@@ -39,6 +43,16 @@ def process_protospacer(protospacer, genome_seq, max_mismatches=4):
 
     return (protospacer, off_targets)
 
+def highlight_protospacers(df):
+    """
+    Highlight protospacers with 4 mismatches or more
+    """
+    def highlight_row(row):
+        if row['Mismatches'] == 4 or pd.isnull(row['Mismatches']):
+            return ['font-weight: bold; background-color: yellow'] * len(df.columns)
+        return [''] * len(df.columns)
+
+    return df.style.apply(highlight_row, axis=1)
 
 def main():
     """
@@ -57,17 +71,19 @@ def main():
     for protospacer, targets in off_targets_dict.items():
         if targets:
             for target in targets:
-                data.append([protospacer, target[0], target[1], target[2]])
+                data.append([protospacer_dict[protospacer],protospacer, target[0],
+                             target[1], target[2]])
         else:
-            data.append([protospacer, "", "", ""])
+            data.append([protospacer_dict[protospacer],protospacer, "", "", ""])
 
     # Create DataFrame
-    df = pd.DataFrame(data, columns=['Protospacer',
+    df = pd.DataFrame(data, columns=['Oligo no','Protospacer',
                                      'Off-Target Sequence', 'Position', 'Mismatches'])
+    styled_df = highlight_protospacers(df)
 
     # Write DataFrame to Excel
     output_file = "Example Data/off_targets.xlsx"
-    df.to_excel(output_file, index=False)
+    styled_df.to_excel(output_file, index=False)
 
     print(f"Results have been written to {output_file}")
 
