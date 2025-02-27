@@ -8,7 +8,7 @@ import pandas as pd
 
 def create_fasta_from_table(csv_file, output_file, protospacer_file):
     """
-    Create a FASTA file from a table containing sequences.
+    Create a FASTA and protospacer file from a table containing sequences.
     """
     # Read file into a pandas DataFrame
     df = pd.read_csv(csv_file)
