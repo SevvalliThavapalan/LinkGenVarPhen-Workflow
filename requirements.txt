@@ -4,3 +4,4 @@ numpy
 matplotlib
 Biopython
 pip
+regex
