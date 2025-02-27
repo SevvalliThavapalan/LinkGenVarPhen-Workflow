@@ -7,10 +7,10 @@ generate all possible sgRNA-insert pairs needed for CRISPR-assisted recombineeri
 ```
 py design_sgRNA_insert_pairs.py -i <input file containing target amino acid mutation> -o <path to output table>
 ```
-An example table for the input mutation table can be found in the folder Example Data. The *write_data_frame.py* is used by the main script. Make sure it is in the same directory and it should 
+An example table for the input mutation table can be found in the folder **Example Data**. The *write_data_frame.py* is used by the main script. Make sure it is in the same directory as the main script.
 
 ## Generate reference files
-This script generates two files out of the sgRNA-insert pair table. First, a reference fasta file is generated which is necessary to perform sequence alignment during the data processing step. Second, a list of base piring regions is provided, which can be used to find potential off-targets.
+This script generates two files out of the sgRNA-insert pair table. First, a reference fasta file, which is necessary to perform sequence alignment during the data processing step. Second, a list of base pairing regions is provided, which can be used to find potential off-targets.
 ```
 py generate_reference_files.py -i <file containing sgRNA-insert pairs in csv> -f <path to output fasta file> -p <path to output base pairing file >
 ```
@@ -21,3 +21,9 @@ py mutagenesis.py <aa_sequence> <gene_name>
 ```
 
 ## Off-target finder
+The generate_reference_files.py script produces as a file containing all base pairing regions. This can be used as input to find potential off targets. This file and a genome file in .gb format are needed to run the script. 
+```
+py off_target_finder.py -i <input_file> -g <genome_file> -o <output_file>
+```
+#### Note
+As each base pairing region needs to be compared to the whole genome, the script is will have a long computational time based on the size of your list. 
