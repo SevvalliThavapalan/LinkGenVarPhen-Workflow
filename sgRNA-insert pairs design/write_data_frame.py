@@ -171,11 +171,11 @@ def write_df(name,example_gene, reduced_dict):
     oligo_df["pam"] = pam_mutation
     oligo_df["mutated pam"] = mutated_pam
     oligo_df["homology arm"] = homology_arm
-    oligo_df["target strand of protospacer"] = target_strand
-    oligo_df["protospacer"] = protospacer
+    oligo_df["target strand of base pairing region"] = target_strand
+    oligo_df["base pairing region"] = protospacer
     oligo_df["oligo"] = oligo
 
-    oligo_df = oligo_df.drop(oligo_df[oligo_df['protospacer'].map(len) < 20].index)
+    oligo_df = oligo_df.drop(oligo_df[oligo_df['base pairing region'].map(len) < 20].index)
     oligo_df = oligo_df.drop(oligo_df[oligo_df['oligo'].map(len) < 150].index)
     columns_to_clean = ["parent aa", "mutated aa"]
     # Check if values in Column_A and Column_B are the same
