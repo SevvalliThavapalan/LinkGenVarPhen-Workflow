@@ -22,7 +22,7 @@ As most database are not curated we recommend a filtering step to remove unwante
 After adding the sequence of a reference protein of your choosing, multiple sequence alignment (MSA) using muscle can be performed. The resulting file can be used to retrieve amino acid mutations compared to the reference and their frequency.
 
 ### Extract list of mutations
-After generating the MSA, mutations can be extracted by providing the accession of the reference protein. We recommend checking the generated list of mutations. If there are too many gaps in the alignment, this indicates that there is still a wrong protein sequence in the protein fasta file. Another option is to inspect the MSA by using for example the [Alignmentviewer](https://alignmentviewer.org/)
+After generating the MSA, mutations can be extracted by providing the accession of the reference protein. We recommend checking the generated list of mutations. If there are too many gaps in the alignment, this indicates that there is still a wrong protein sequence in the protein fasta file. Another option is to inspect the MSA by using for example the [Alignmentviewer](https://alignmentviewer.org/).
 
 
 
@@ -80,7 +80,8 @@ Mismatch filtering is recommended so that only high quality reads are retained f
 | Name   | Version      |
 |--------|------------  |
 |Cutadapt|4.9           |
-|Minimap2| 2.28-r1209   |
+|Minimap2|2.28-r1209    |
+|Muscle  |5.1.win64     |
 |Python  |3.10.4        |
 |Streamlit|1.30.0       | 
 
