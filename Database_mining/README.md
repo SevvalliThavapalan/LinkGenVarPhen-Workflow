@@ -45,3 +45,10 @@ The outpufile is saced in the same direction as the multiple sequence alignment 
 ```
 py extract_mutations.py -i <path to input afa file> -r <reference protein accession>
 ```
+
+### 7. Check list of mutations
+We recommend checking if the list of mutations matches the reference files. In some instances faulty sequences can lead to wrong positions of mutations. The script *check_mutations.py* offers an option to find potential issues.
+```
+py check_mutations.py -i <fasta file containing protein sequences> -g <gene name> -r <reference protein accession> -m <list of mutations in excel format>
+```
+This script reports back if there are mismatched mutations, meaning if the parent aa in the mutation list is different than the one in the reference sequence. This is an indication that you should have a closer look ino the MSA again.
