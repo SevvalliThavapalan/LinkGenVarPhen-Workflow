@@ -121,11 +121,10 @@ def filter_pam(final_dict):
         for entry in values:
             if len(entry) > 5:
                 if entry[7] not in exclusion_pams:
-                    for key_2 in reduced_dict.items():
-                        if key == key_2:
-                            reduced_dict[key].extend([entry])
-                        else:
-                            reduced_dict[key] = [entry]
+                    if key in reduced_dict.keys():
+                        reduced_dict[key].extend([entry])
+                    else:
+                        reduced_dict[key] = [entry]
                     #if key in reduced_dict.keys():
                     #    reduced_dict[key].extend([entry])
                     #else:
@@ -217,21 +216,24 @@ def get_files():
 
 
 
-def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, flank_length=60):
+def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, flank_length=0):
     """
     Extracts flanking regions of a gene from a gene bank file.
     """
     flanking_sequences = []
-
+    merged_sequence = ""
+    updated_positions = []
+    gene_sequence = ""
+    print(positions_to_update)
     for record in SeqIO.parse(gene_bank_file, "genbank"):
         for feature in record.features:
             if feature.type == "gene" and feature.qualifiers.get('gene')[0] == gene_name:
-                #print(feature.qualifiers.get('gene'))
+                print(feature.qualifiers.get('gene'))
                 start = feature.location.start
                 end = feature.location.end
                 sequence = record.seq
+                print(sequence[0:10])
                 gene_sequence = sequence[start:end]
-                merged_sequence = ""
                 # Extract flanking regions
                 upstream_flank = sequence[max(0, start - flank_length):start]
                 #print(len(upstream_flank))
@@ -239,17 +241,22 @@ def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, fla
                 #print(len(downstream_flank))
                 # Merge flanking regions with gene sequence
                 merged_sequence = upstream_flank + gene_sequence + downstream_flank
+                print(len(merged_sequence)/3)
                 if "ATG"  not in gene_sequence[0:3]:
                     merged_sequence = merged_sequence.reverse_complement()
                     gene_sequence = gene_sequence.reverse_complement()
+                    print(gene_sequence)
                 # Update positions to account for the flanking regions
-                updated_positions = [((pos-1)*3) +
-                                     len(upstream_flank)  for pos in positions_to_update]
-                #print(updated_positions)
-
+                updated_positions = [((pos*3)) + len(upstream_flank)  for pos in positions_to_update]
+                for pos in positions_to_update:
+                    print((pos*3-1)+len(upstream_flank))
+                    
                 flanking_sequences.append((merged_sequence, updated_positions, gene_sequence))
                 #print(gene_sequence)
+            
+    #print(flanking_sequences)
     return merged_sequence, updated_positions
+
 def main():
     """
     Main function to design sgRNA and insert pairs for a given list of mutations.
@@ -257,12 +264,12 @@ def main():
 # load genome and mutation list
     infiles = get_files()
     out_path = infiles["output"][0]
-    mutation_df =  pd.read_csv(infiles['input'][0])
+    mutation_df =  pd.read_excel(infiles['input'][0])
     #mutation_df = pd.read_excel("combined_mutations_pur.xlsx")
     oligo_df = []
     nucleotide_sequences = "BW25113.gb" #gene bank file
 
-    pos_lists = mutation_df.groupby("Gene")["Position"].apply(list).to_dict()
+    pos_lists = mutation_df.groupby("Gene")["aa position"].apply(list).to_dict()
     #print(pos_lists)
 
     mutation_lists = mutation_df.groupby("Gene")["Mutation"].apply(list).to_dict()
@@ -277,17 +284,15 @@ def main():
                 child_mutation.append(three_one[mutation[-1]])
         #print(parent_mutation)
         #print(len(child_mutation))
-        #print(len(pos_lists[key]))
-        print(key)
+        print(pos_lists[key])
+        #print(key)
         merged_sequence, updated_positions = extract_flanking_regions(
             nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
-        #print(updated_positions)
+        print(updated_positions)
         pos_dict = {} # triplets to get exact pos in gene
         for i in range(0, len(merged_sequence), 3):
-            pos_dict[i] = (str(merged_sequence[i])
-                           + str(merged_sequence[i + 1])+
-                           str(merged_sequence[i+2]))
+            pos_dict[i] = (str(merged_sequence[i]) + str(merged_sequence[i + 1])+ str(merged_sequence[i+2]))
         #print(pos_dict)
         #pam = {}
         mut_nt = []
@@ -477,6 +482,7 @@ def main():
                                             entry.append(ha)
                                             entry.append("-")
                                             entry.append("-")
+        
         reduced_dict = filter_pam(adapted_dict)
         #print(reduced_dict)
         oligo_df.append(write_df(key,merged_sequence,reduced_dict))

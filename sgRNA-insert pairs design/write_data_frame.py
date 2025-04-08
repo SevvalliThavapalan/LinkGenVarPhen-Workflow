@@ -68,7 +68,7 @@ def write_df(name,example_gene, reduced_dict):
     target_strand = []
     for key, value in reduced_dict.items():
         #print(key, value)
-        position = key -60
+        position = key -60 # from flanking genes
         for entry in value:
             if len(entry) > 5:
                 position_aa.append(position/3+1)

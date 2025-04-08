@@ -31,11 +31,11 @@ def merge_with_multiple_files(table1_path, count_files, output_path):
     table1 = pd.read_excel(table1_path,  engine="openpyxl")
     print(table1.head())
     # Add "Reference" column to Table 1 based on "oligo no." and "gene"
-    table1["Reference"] = table1["oligo no."].astype(str) + "_" + table1["gene"]
+    #table1["Reference"] = table1["oligo no."].astype(str) + "_" + table1["gene"]
 
     # Reorder columns to place "Reference" at the beginning
-    reordered_columns = ["Reference"] + [col for col in table1.columns if col != "Reference"]
-    table1 = table1[reordered_columns]
+    #reordered_columns = ["Reference"] + [col for col in table1.columns if col != "Reference"]
+    #table1 = table1[reordered_columns]
 
     # Initialize merged table with Table 1
     merged_table = table1.copy()
@@ -46,7 +46,7 @@ def merge_with_multiple_files(table1_path, count_files, output_path):
         file_name = os.path.splitext(os.path.basename(count_file))[0]
 
         # Load the count file
-        count_table = pd.read_csv(count_file)
+        count_table = pd.read_csv(count_file,skipfooter=1, engine="python")
 
         # Rename the "Count" column to only include the file name
         count_table.rename(columns={"Count": file_name}, inplace=True)

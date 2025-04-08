@@ -13,13 +13,13 @@ def create_fasta_from_table(csv_file, output_file, protospacer_file):
     # Read file into a pandas DataFrame
     df = pd.read_csv(csv_file)
     protospacer_df = df[['gene', 'aa position', 'mutated aa','child codon',
-                          'nt position', 'dist mut pam', 'mutated pam','base pairing region']]
+                          'nt position', 'dist mut pam', 'mutated pam','protospacer']]
 
     with open(output_file, 'w', encoding='utf-8') as fasta_file:
         # Iterate over rows in DataFrame
         for index, row in df.iterrows():
             # Extract header information from columns before the sequence column
-            header_info = f"{index}_{row.iloc[0]}"
+            header_info = f"{row.iloc[0]}"
             # Extract sequence from the 'oligo column and remove the first part
             sequence = str(row['oligo']).upper()
 
