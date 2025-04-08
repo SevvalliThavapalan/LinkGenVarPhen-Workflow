@@ -9,6 +9,8 @@ py design_sgRNA_insert_pairs.py -i <input file containing target amino acid muta
 ```
 An example table for the input mutation table can be found in the folder **Example Data**. The *write_data_frame.py* is used by the main script. Make sure it is in the same directory as the main script.
 
+To check if the generated sgRNA-insert pairs match to the input mutations we recommend to run the python script *map_mutations_back.py*. This script serves as a control to make sure that there is no issue in the design step.
+
 ## Generate reference files
 This script generates two files out of the sgRNA-insert pair table. First, a reference fasta file, which is necessary to perform sequence alignment during the data processing step. Second, a list of base pairing regions is provided, which can be used to find potential off-targets.
 ```
