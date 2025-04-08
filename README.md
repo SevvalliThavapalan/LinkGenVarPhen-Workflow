@@ -1,13 +1,28 @@
-# CRISPRFlow
-This repository contains relevant code and scripts for the publication: **CRISPRFlow: A CRISPR-assisted recombineering workFlow for high throughput genome editing in bacteria**. 
+# A repository-scale workflow for linking bacterial genetic variation to phenotypes
+This repository contains relevant code and scripts for the publication: **A repository-scale workflow for linking bacterial genetic variation to phenotypes**. 
 The workflow consists of computational and laboratory parts. In this repisotory we provide
-all relevant information for the computational parts: 
-1. Design of sgRNA-insert pairs
-2. Data processing and visualization
+all relevant information for the computational parts:
+1. Database mining for amino acid mutations
+2. Design of sgRNA-insert pairs
+3. Data processing and visualization
+
+## Database mining for amino acid mutations
+The first step of this workflow is to mine genomes from databases for amino acid mutations. In this study we used the [NCBI Pathogen Detection database](https://www.ncbi.nlm.nih.gov/pathogens/). If you want to use other databases it is important that you obtain genome assembly files (.gbff) in the end. All the downstream steps are based on these files.
+
+### Retrieve genome assembly files
+A file containing target isolates is retrieved from the database. Using identifiers from this file and the information from the NCBI ftp site, gene assembly files are downloaded.
+
+### Protein accessions and sequences
+Here, protein accessions for target genes are retrieved from the genome assembly files and saved into one file. In the next step these accessions are used to download protein fasta sequences and are saved into a file. For each gene one file is generated containing the available protein sequences from the previously obtained genome assembly files.
+
+### Sequence filtering
+As most database are not curated we recommend a filtering step to remove unwanted protein sequences. This can be done by taking the length of a reference protein so that sequences which are too long or too short are removed.
+
+###
 
 
 ## Designing sgRNA-insert pairs
-The design of sgRNA-insert pairs can be performed using the CRISPRFlow web application or the original python scripts. The web appliation is more user friendly, as no prior bioinformatic knowledge and 
+The design of sgRNA-insert pairs can be performed using the web application or the original python scripts. The web appliation is more user friendly, as no prior bioinformatic knowledge and 
 installations are neccessary. You can find the web application *here*. All instruction on how to use the individual tabs and functions can be found on the website.
 
 ### Overview of the functions in the web application
