@@ -18,7 +18,12 @@ Here, protein accessions for target genes are retrieved from the genome assembly
 ### Sequence filtering
 As most database are not curated we recommend a filtering step to remove unwanted protein sequences. This can be done by taking the length of a reference protein so that sequences which are too long or too short are removed.
 
-###
+### Multiple sequence alignment
+After adding the sequence of a reference protein of your choosing, multiple sequence alignment (MSA) using muscle can be performed. The resulting file can be used to retrieve amino acid mutations compared to the reference and their frequency.
+
+### Extract list of mutations
+After generating the MSA, mutations can be extracted by providing the accession of the reference protein. We recommend checking the generated list of mutations. If there are too many gaps in the alignment, this indicates that there is still a wrong protein sequence in the protein fasta file. Another option is to inspect the MSA by using for example the [Alignmentviewer](https://alignmentviewer.org/)
+
 
 
 ## Designing sgRNA-insert pairs
