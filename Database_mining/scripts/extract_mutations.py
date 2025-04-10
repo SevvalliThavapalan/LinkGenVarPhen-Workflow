@@ -40,19 +40,12 @@ def extract_mutations(msa_file, accession):
     return sorted_mutations
 
 
-def get_gene_name(file_name):
-    """Extract gene name from the file name
-    """
-    parts = file_name.split("_")
-    if len(parts) >= 2:
-        return parts[0]
-    return "Unknown"
 
-def process_file(msa_file, accession):
+def process_file(msa_file, accession, gene_name):
     """
     process files, extract mutations and write into a new file
     """
-    gene_name = get_gene_name(os.path.basename(msa_file))
+    # Extract mutations from the MSA file
     sorted_mutations = extract_mutations(msa_file, accession)
 
     # Create a DataFrame
@@ -90,6 +83,7 @@ def get_files():
     parser.add_argument("-i", "--input" ,
                         help='Path(s) to the multiple sequence alignment file(s) (FASTA format)')
     parser.add_argument("-r","--ref", help='Accession of protein')
+    parser.add_argument("-g","--gene", help='Gene name')
     args = parser.parse_args()
     arguments = args.__dict__
 
@@ -102,8 +96,9 @@ def main():
     infiles = get_files()
     infile = infiles['input']
     ref = infiles['ref']
+    gene = infiles['gene']
 
-    process_file(infile,ref)
+    process_file(infile,ref,gene)
 
 if __name__ == "__main__":
     main()

@@ -34,7 +34,7 @@ def main():
         if seqLen < int(infiles['length']) -0 or seqLen > int(infiles['length']) +0:
             #print(seqLen)
             filtered_accessions.append(name)
-    print(len(filtered_accessions))
+    print("Filtered_out_sequences: ", len(filtered_accessions))
     with open(out_path, 'w', encoding='utf-8') as f:
         for rec in SeqIO.parse(infiles['input'], 'fasta'):
             name = rec.id

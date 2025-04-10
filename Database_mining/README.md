@@ -13,6 +13,7 @@ The first step to retrieve the genome assembly files will vary depending on the 
 
 ### 2. Extract gene list
 The final list of genes was extracted from the genome-scale model iML1515 of *E. coli*. The script *get_all_genes.py* generates a table with genes, their b number, and the pathway.
+Genome scale model can be downloaded [here](http://bigg.ucsd.edu/models/iML1515).
 
 ### 3. Protein accessions and sequences
 Protein accessions are collected using the bash script called *filter_assembly_files.sh*. The first argument is the directory containing gene assembly files and the second argument 
@@ -45,9 +46,9 @@ Before mutations can be extracted new lines in the aligned  fasta file need to b
 seqtk seq <path to input .afa file> > <$path to output .afa file>
 ```
 Amino acid mutations can be extracted using the script *extract_mutations.py*. The script takes the aligned afa file and the accession of the reference protein file to extract mutations and their frequencies.
-The outpufile is saced in the same direction as the multiple sequence alignment file.
+The outpufile is saved in the same direction as the multiple sequence alignment file.
 ```
-py extract_mutations.py -i <path to input afa file> -r <reference protein accession>
+py extract_mutations.py -i <path to input afa file> -r <reference protein accession> -g <gene name>
 ```
 
 ### 7. Check list of mutations
