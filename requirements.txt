@@ -1,7 +1,8 @@
+pip
 pylint
 pandas
 numpy
 matplotlib
 Biopython
-pip
+seqkt
 regex
