@@ -61,7 +61,7 @@ def process_file(msa_file, accession):
         position = mutation[1:-1]  # Extract position from mutation
         data.append([gene_name, mutation, position, frequency])
 
-    columns = ["Gene Name", "Mutation", "Position", "Frequency"]
+    columns = ["gene", " aa mutation", "position", "Frequency"]
     df = pd.DataFrame(data, columns=columns)
 
     # Determine the output directory

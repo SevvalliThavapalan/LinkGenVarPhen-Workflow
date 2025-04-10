@@ -48,8 +48,8 @@ if __name__ == "__main__":
 
     mutagenesis_df = pd.DataFrame()
 
-    mutagenesis_df["Gene"] = gene_tab
-    mutagenesis_df["Mutation"] = mutations
-    mutagenesis_df["Position"] = pos_values
+    mutagenesis_df["gene"] = gene_tab
+    mutagenesis_df["aa mutation"] = mutations
+    mutagenesis_df["position"] = pos_values
 
-    mutagenesis_df.to_excel("output_mutagenesis.xlsx", index = False)
+    mutagenesis_df.to_excel("Example_Data/example_mutagenesis.xlsx", index = False)

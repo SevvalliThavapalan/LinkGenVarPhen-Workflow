@@ -275,12 +275,12 @@ def main():
     mutation_df =  pd.read_excel(infiles['input'][0])
     #mutation_df = pd.read_excel("combined_mutations_pur.xlsx")
     oligo_df = []
-    nucleotide_sequences = "BW25113.gb" #gene bank file
+    nucleotide_sequences = "Example_Data/BW25113.gb" #gene bank file
 
-    pos_lists = mutation_df.groupby("Gene")["aa position"].apply(list).to_dict()
+    pos_lists = mutation_df.groupby("gene")["aa position"].apply(list).to_dict()
     #print(pos_lists)
 
-    mutation_lists = mutation_df.groupby("Gene")["Mutation"].apply(list).to_dict()
+    mutation_lists = mutation_df.groupby("gene")["mutation"].apply(list).to_dict()
 
     for key, value in mutation_lists.items(): # gene + list of mutations
         parent_mutation = []
@@ -305,14 +305,14 @@ def main():
         final_dict = {}
 
         for i in updated_positions:
-            print(i)
+            #print(i)
             searchspace=""
             searchspace = str(merged_sequence[(i)-30:(i)+33])
             #print(i)
             #print(pos_dict[i])
             #print(len(searchspace))
             mut_nt.append(pos_dict[(i)])
-            print(mut_nt)
+            #print(mut_nt)
             #print((i-1), pos_dict[(i-1)])
             #mut_pos = (i-1)
             ngg_dict, ccn_dict = get_pams(searchspace)
@@ -322,10 +322,10 @@ def main():
             final_dict[i].extend(ccn)
         final_dict = get_homology_arm(str(merged_sequence), final_dict)
         mut_dict = {}
-        unique_values = set()
+
         for k in range(len(pos_lists[key])):
             current_key = (((pos_lists[key][k])-1) * 3) + 60
-            print(pos_dict[current_key])
+            #print(pos_dict[current_key])
             # Ensure each key starts with its own fresh value
             if current_key not in mut_dict:
                 mut_dict[current_key] = set([mut_nt[k]])  # Start with only mut_nt[k]
@@ -342,7 +342,7 @@ def main():
             # Convert back to a list at the end of processing this key
             mut_dict[current_key] = list(mut_dict[current_key])
 
-            print(mut_dict)  # Debugging
+            #print(mut_dict)  # Debugging
         adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
          # mutate PAM
@@ -496,8 +496,10 @@ def main():
         oligo_df.append(write_df(key,merged_sequence,reduced_dict))
     df = pd.concat(oligo_df, axis = 0)
     df.reset_index(drop=True, inplace=True)
+    new_col = df.index.astype(str) + '_' + df['gene']
+    df.insert(0, 'reference', new_col)
     out_str = out_path + ".csv"
-    df.to_csv(out_str)
+    df.to_csv(out_str, index=False)
     print("Output saved at: "+ out_str)
 
 if __name__ == "__main__":

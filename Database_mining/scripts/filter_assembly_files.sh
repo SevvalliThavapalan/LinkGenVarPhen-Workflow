@@ -4,7 +4,7 @@
 # second argument: search term e-g: gene name 
 # redirect output to file using >  file_name.txt
 
-for f in $1/*gbff.gz; #path needs to be adapted
+for f in $1/*gbff.gz; #path to genome assembly files
 do
     declare x #makes X an integer
     declare -i y

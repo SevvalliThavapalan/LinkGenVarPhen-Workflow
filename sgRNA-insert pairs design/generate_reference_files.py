@@ -13,7 +13,7 @@ def create_fasta_from_table(csv_file, output_file, protospacer_file):
     # Read file into a pandas DataFrame
     df = pd.read_csv(csv_file)
     protospacer_df = df[['gene', 'aa position', 'mutated aa','child codon',
-                          'nt position', 'dist mut pam', 'mutated pam','protospacer']]
+                          'nt position', 'dist mut pam', 'mutated pam','base pairing region']]
 
     with open(output_file, 'w', encoding='utf-8') as fasta_file:
         # Iterate over rows in DataFrame

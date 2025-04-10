@@ -8,7 +8,7 @@ def parser():
     Parse input file and parameters 
     """
     parser = argparse.ArgumentParser(description='A given fasta file is filtered by lenght.')
-    parser.add_argument('-i', '--input', help="fastafile", required=True) 
+    parser.add_argument('-i', '--input', help="fastafile", required=True)
     parser.add_argument('-o', '--output', help='path and name to outfile', required=True)
     parser.add_argument('-l', '--length', help=' min length of sequence', required=True)
 
