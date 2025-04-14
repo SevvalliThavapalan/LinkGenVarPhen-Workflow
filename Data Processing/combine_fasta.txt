@@ -1,3 +1,0 @@
-# You can use this command on a directory using your ubuntu/WSL terminal, This will also work for fastq files you just have to 
-# change the file ending
-awk '/^>/ && NR > 1 { printf("\n") } { printf("%s", $0) } END { printf("\n") }' *.fasta > combined.fasta

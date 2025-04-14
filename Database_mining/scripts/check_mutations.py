@@ -37,7 +37,6 @@ def main():
     fasta_sequences = SeqIO.parse(open(infile[0], encoding="utf-8"), 'fasta')
     mutations = infiles['mutations']
     mutation_df = pd.read_excel(mutations)
-    #mutation_df = pd.read_excel("mutations_list.xlsx", sheet_name="kleiner10")  # Adapt!!!
     ref_seq = ""
 
     fasta_dict = {}
@@ -50,8 +49,8 @@ def main():
 
     print(ref_seq)
 
-    pos = mutation_df.loc[mutation_df['Gene Name'] == gene, "Reference "]
-    muts = mutation_df.loc[mutation_df['Gene Name'] == gene, "Mutation"]
+    pos = mutation_df.loc[mutation_df['gene'] == gene, "position"]
+    muts = mutation_df.loc[mutation_df['gene'] == gene, "aa mutation"]
     ref_pos = []
     aa_pos = []
 

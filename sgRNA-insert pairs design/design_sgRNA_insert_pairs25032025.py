@@ -272,8 +272,13 @@ def main():
 # load genome and mutation list
     infiles = get_files()
     out_path = infiles["output"][0]
-    mutation_df =  pd.read_excel(infiles['input'][0])
-    #mutation_df = pd.read_excel("combined_mutations_pur.xlsx")
+    file_path = infiles["input"][0]
+    if file_path.endswith(".xlsx"):
+        mutation_df = pd.read_excel(file_path)
+    elif file_path.endswith(".csv"):
+        mutation_df = pd.read_csv(file_path)
+    else:
+        raise ValueError("Unsupported file format. Please provide an Excel or CSV file.")
     oligo_df = []
     nucleotide_sequences = "Example_Data/BW25113.gb" #gene bank file
 
@@ -490,7 +495,7 @@ def main():
                                             entry.append(ha)
                                             entry.append("-")
                                             entry.append("-")
-        
+
         reduced_dict = filter_pam(adapted_dict)
         #print(reduced_dict)
         oligo_df.append(write_df(key,merged_sequence,reduced_dict))
