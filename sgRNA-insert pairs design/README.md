@@ -28,4 +28,7 @@ The generate_reference_files.py script produces as a file containing all base pa
 py off_target_finder.py -i <input_file> -g <genome_file> -o <output_file>
 ```
 #### Note
-As each base pairing region needs to be compared to the whole genome, the script is will have a long computational time based on the size of your list. 
+As each base pairing region needs to be compared to the whole genome, the script is will have a long computational time based on the size of your list.
+
+## Map Mutations back
+To check if the sgRNA-insert design was running correctly, we provide the script *map_mutations_to_sgRNAs.py*. This makes sure that there are no sgRNA-insert pairs which do not match the original list of mutations. 
