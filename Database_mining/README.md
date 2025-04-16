@@ -38,22 +38,27 @@ Before a multiple sequence alignment can be performed. The reference protein seq
 ```
 muscle -super5 <path to input fasta file> -output <path to aligned afa file>
 ```
-The super5 option is used for files containing more than 1000 sequences. More details can be found in the documentation of the alignment tool
+The super5 option is used for files containing more than 1000 sequences. More details can be found in the documentation of the alignment tool. 
+
 
 ### 6. Extract list of mutations
 Before mutations can be extracted new lines in the aligned  fasta file need to be removed. This is performed using the following command:
 ```
 seqtk seq <path to input .afa file> > <$path to output .afa file>
 ```
+#### Note 
+We recommend to check the MSA latest at this stage to make sure that no faulty sequence remains in the file. For that the [Alignmentviewer](https://alignmentviewer.org/) can be used. This is an fast way to chek your alignment.
 Amino acid mutations can be extracted using the script *extract_mutations.py*. The script takes the aligned afa file and the accession of the reference protein file to extract mutations and their frequencies.
 The outpufile is saved in the same direction as the multiple sequence alignment file.
 ```
 py extract_mutations.py -i <path to input afa file> -r <reference protein accession> -g <gene name>
 ```
 
+
 ### 7. Check list of mutations
-We recommend checking if the list of mutations matches the reference files. In some instances faulty sequences can lead to wrong positions of mutations. The script *check_mutations.py* offers an option to find potential issues.
+We recommend checking if the list of mutations matches the reference files. In some instances gaps in the alignment can lead to shifted positions from the reference. The script *check_mutations.py* offers an option to find potential issues and correct them. The output file will generate a corrected list with the right positions in the reference sequence.
 ```
-py check_mutations.py -i <fasta file containing protein sequences> -g <gene name> -r <reference protein accession> -m <list of mutations in excel format>
+py check_mutations.py -a <alignment file> -r <reference accession> -m <list of mutations in excel format from extract mutations> -o <path to output excel file (.xlsx extension does not need to be typed)>
 ```
-This script reports back if there are mismatched mutations, meaning if the parent aa in the mutation list is different than the one in the reference sequence. This is an indication that you should have a closer look ino the MSA again.
+### 8. Merge multiple list of mutations
+If you have more than one list of mutation you can use the *merge_mutations_files.py* to combine them into one single file. The resulting table can be used to design sgRNA-insert pairs.
