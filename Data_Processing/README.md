@@ -30,19 +30,10 @@ For more details about individual parameters and options check out the documenta
 cutadapt.exe -m 175 -M 500 -o <path to output file> --cores 4 <path to input file>
 ```
 
-### 4. Aligning reads against reference sgRNA-insert pairs using minimap2
-[Minimap2](https://github.com/lh3/minimap2) is a commandline tool to align sequencing reads for various purposes. We used the follwing command to align the sequenced reads to the reference sgRNA-insert pairs:
+### 4. Finding perfectly matching reads
+Filtered reads are matched against the original list of sgRNA-insert pairs. The previously generated fasta file of the sgRNA-insert pairs is used to find perfect matches in a .fastq file. A read count table is generated mapping each read to a reference. The python script can be used with the following command:
 ```
-minimap2 -a -x sr -A 2 -B 6 -O 5,56 -E 4,1 -z 400,50 -t 4 <reference fasta file> <input .fastq file> > <path to output .sam file>
-```
-For more details on the parameters have a look into our publication or the documentation of minimap2. **Important:** You will need a reference fasta file before aligning the reads. Either create your own file or see step 1 for details.
-
-### 5. Filtering reads
-Aligned reads can be analyzed and filtered using a custom python script. It will filter out reads following a set of parameters we defined and will return the filtered reads and a read count table. 
-Besides a read count table a detailed analysis of the filtered reads is generated and saved to a file. Because of that a path and prefix for the output files in necessary, indicated by the -o option.
-Please refer to the method section of the publication for more details about the filtering parameters. 
-```
-py analyze_aligned_files.py -i <input .sam file> -r <reference fasta file> -o <path to output files>
+py find_perfect_matches.py -f <Input FASTQ file> -s <fasta file with sgRNA-insert sequences> -o <output file with read counts> -mf <output FASTQ file of matched reads> (optional)
 ```
 
 ### 6. Merging read count tables
