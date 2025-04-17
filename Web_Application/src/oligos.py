@@ -8,8 +8,8 @@ import math
 import re
 import pandas as pd
 from Bio import SeqIO
-from write_df import write_df
-import dictionaries
+from src.write_df import *
+from src.dictionaries import *
 
 
 
