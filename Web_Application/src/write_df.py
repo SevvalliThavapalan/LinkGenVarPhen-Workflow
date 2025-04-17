@@ -5,7 +5,7 @@ Created on Thu Dec  1 12:37:26 2022
 @author: Sevvalli Thavapalan
 """
 import pandas as pd
-import dictionaries
+from src.dictionaries import *
 
 
 def get_keys_by_value(my_dict, search_value):
