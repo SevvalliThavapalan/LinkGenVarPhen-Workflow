@@ -4,15 +4,8 @@ import os
 import sys
 import base64
 import streamlit as st
-# Insert the parent directory into the system path
-sys.path.insert(1, os.path.realpath(os.path.pardir))
 
-# Try to import the mutagenesis module
-try:
-    from mutagenesis import mutagenesis
-except ImportError as e:
-    st.error(f"Error importing mutagenesis module: {e}")
-    st.stop()
+from src.mutagenesis import *
 
 # Streamlit app layout
 st.set_page_config(page_title="Mutagenesis")

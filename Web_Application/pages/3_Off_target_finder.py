@@ -12,10 +12,9 @@ from Bio import SeqIO
 import pandas as pd
 import streamlit as st
 
-# Insert the parent directory into the system path
-sys.path.insert(1, os.path.realpath(os.path.pardir))
 
-from off_target_finder import off_target
+
+from src.off_target_finder import off_target
 
 def read_file(input_file):
     """
