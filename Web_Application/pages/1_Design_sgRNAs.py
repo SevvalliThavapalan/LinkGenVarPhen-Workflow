@@ -95,15 +95,15 @@ else:
                                     "P. aeruginosa PA01", "P. aeruginosa PA14"])
     # Load the selected provided genome
     if selected_genome == "E. coli BW25113":
-        genome_file = "data/BW25113.gb"
+        genome_file = "Web_Application/data/BW25113.gb"
     elif selected_genome == "E. coli K-12 substr. MG1655":
-        genome_file = "data/MG1655.gb"
+        genome_file = "Web_Application/data/MG1655.gb"
     elif selected_genome == "S. aureus USA 300":
-        genome_file= "data/saureus_USA300_FPR3757.gb"
+        genome_file= "Web_Application/data/saureus_USA300_FPR3757.gb"
     elif selected_genome == "P. aeruginosa PA01":
-        genome_file= "data/pa01.gb"
+        genome_file= "Web_Application/data/pa01.gb"
     elif selected_genome == "P. aeruginosa PA14":
-        genome_file= "data/pa14.gb"
+        genome_file= "Web_Application/data/pa14.gb"
     # Parse the uploaded genome file
     try:
         record = SeqIO.read(genome_file, "genbank")
