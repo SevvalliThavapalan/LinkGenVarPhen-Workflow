@@ -1,6 +1,6 @@
 setuptools
 Bio==1.7.1
-biopython==1.79
+biopython==1.80
 matplotlib==3.5.2
 matplotlib_venn==0.11.9
 numpy==1.23.1
