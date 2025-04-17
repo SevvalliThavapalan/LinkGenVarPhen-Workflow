@@ -292,9 +292,9 @@ def generate_oligos(df, input_genome):
         child_mutation = []
 
         for mutation in value:
-            if mutation[-1] in dictionaries.three_one.keys():
-                parent_mutation.append(dictionaries.three_one[mutation[0]])
-                child_mutation.append(dictionaries.three_one[mutation[-1]])
+            if mutation[-1] in three_one.keys():
+                parent_mutation.append(three_one[mutation[0]])
+                child_mutation.append(three_one[mutation[-1]])
         #print(len(child_mutation))
         #print(len(pos_lists[key]))
        #print(pos_lists[key])
@@ -344,7 +344,7 @@ def generate_oligos(df, input_genome):
                 mut_dict[current_key] = set(mut_dict[current_key])  # Ensure unique values
 
             # Now, update with new values that meet the condition
-            for j in dictionaries.aa_nt[child_mutation[k]]:
+            for j in aa_nt[child_mutation[k]]:
                 mismatches = sum(c1 != c2 for c1, c2 in zip(mut_nt[k], j))
                 if 1 <= mismatches <= 3:
                     mut_dict[current_key].add(j)
@@ -370,33 +370,33 @@ def generate_oligos(df, input_genome):
                 if abs(entry[1]) < 56 :
                     if entry[1] == 3:
                         k = ha[pos + entry[1]:pos + entry[1]+3].upper()
-                        if k in dictionaries.substitution_nng.keys():
-                            j = ha[pos+entry[1]-3 :pos+entry[1]] + dictionaries.substitution_nng[k]# shift = 1
+                        if k in substitution_nng.keys():
+                            j = ha[pos+entry[1]-3 :pos+entry[1]] + substitution_nng[k]# shift = 1
                             if not "GG" in j:
                                 if not "CC" in j:
                                     entry.append((ha[:pos+entry[1]]+
-                                                  dictionaries.substitution_nng[k] +ha[pos+entry[1]+3:]))
+                                                  substitution_nng[k] +ha[pos+entry[1]+3:]))
                                     entry.append(j[2:5])
-                                    entry.append(dictionaries.substitution_nng[k])
-                        if k in dictionaries.substitution_ncc.keys():
-                            j = ha[pos+entry[1]-3 :pos+entry[1]] + dictionaries.substitution_ncc[k]# shift = 1
+                                    entry.append(substitution_nng[k])
+                        if k in substitution_ncc.keys():
+                            j = ha[pos+entry[1]-3 :pos+entry[1]] + substitution_ncc[k]# shift = 1
                             if not "GG" in j:
                                 if not "CC" in j:
                                     entry.append((ha[:pos+entry[1]]+
-                                                  dictionaries.substitution_ncc[k] +ha[pos+entry[1]+3:]))
+                                                  substitution_ncc[k] +ha[pos+entry[1]+3:]))
                                     entry.append(j[2:5])
-                                    entry.append(dictionaries.substitution_ncc[k])
+                                    entry.append(substitution_ncc[k])
                     elif entry[1] > 2: #positive distances (2oder3)
                         if (entry[1] % 3) == 0: #shift +2 OKAY
                             if entry[0].startswith("CC"):
                                 k = ha[pos+entry[1]-3:pos+entry[1]].upper()
-                                if k in dictionaries.substitution_nnc.keys():
+                                if k in substitution_nnc.keys():
                                     #print(ha,entry[0],k,entry[1])
                                     entry.append(ha[:pos-3+entry[1]]+
-                                                 dictionaries.substitution_nnc[k] +ha[pos+entry[1]:])
+                                                 substitution_nnc[k] +ha[pos+entry[1]:])
                                     #print(len(ha))
-                                    entry.append(dictionaries.substitution_nnc[k][-1]+entry[0][1:])
-                                    entry.append(dictionaries.substitution_nnc[k])#changed pam
+                                    entry.append(substitution_nnc[k][-1]+entry[0][1:])
+                                    entry.append(substitution_nnc[k])#changed pam
                                 # GGN does not work
                             else:
                                 #print(entry[1])
@@ -404,94 +404,94 @@ def generate_oligos(df, input_genome):
                                     #print(entry[1])
                                     k = ha[pos + entry[1]:pos + entry[1]+3].upper()
                                     #print(k)
-                                    if k in dictionaries.substitution_ncc.keys():
+                                    if k in substitution_ncc.keys():
                                         #print(ha, entry[1])
                                         entry.append(ha[:pos +
-                                                    entry[1]-2]+ dictionaries.substitution_ncc[k] +
+                                                    entry[1]-2]+ substitution_ncc[k] +
                                                     ha[pos + entry[1]+1:])
-                                        entry.append(dictionaries.aa_ntsubstitution_ncc[k][1:]
+                                        entry.append(aa_ntsubstitution_ncc[k][1:]
                                                      +entry[0][-1]) #changed pam
-                                        entry.append(dictionaries.substitution_ncc[k])
-                                    if k in dictionaries.substitution_nng.keys():
+                                        entry.append(substitution_ncc[k])
+                                    if k in substitution_nng.keys():
                                         #print(ha, entry[0],k,entry[1])
                                         entry.append(ha[:pos + entry[1]-2]+
-                                                     dictionaries.substitution_nng[k] + ha[pos + entry[1]+1:])
-                                        entry.append(dictionaries.substitution_nng[k][1:]+entry[0][-1])
-                                        entry.append(dictionaries.substitution_nng[k])
+                                                     substitution_nng[k] + ha[pos + entry[1]+1:])
+                                        entry.append(substitution_nng[k][1:]+entry[0][-1])
+                                        entry.append(substitution_nng[k])
                                         #print(dictionaries.substitution_nng[k],entry[0])
                                 else:
-                                    if entry[0] in dictionaries.substitution_1.keys(): # shift = 0
+                                    if entry[0] in substitution_1.keys(): # shift = 0
                                         #print(ha, entry[0],entry[1])
                                         entry.append(ha[:pos+entry[1]-1]+
-                                                     dictionaries.substitution_1[entry[0]] +ha[pos+entry[1]+2:])
-                                        entry.append(dictionaries.substitution_1[entry[0]])
-                                        entry.append(dictionaries.substitution_1[entry[0]])
+                                                     substitution_1[entry[0]] +ha[pos+entry[1]+2:])
+                                        entry.append(substitution_1[entry[0]])
+                                        entry.append(substitution_1[entry[0]])
                     elif entry[1] < 0: # negative distances
                         if (entry[1] % 3) == 0: #shift 2
                             k = ha[pos+entry[1]:pos+entry[1]+3].upper()
 
                             if entry[0].startswith("CC"):
-                                if  k in dictionaries.substitution_cnn.keys():
+                                if  k in substitution_cnn.keys():
                                     #print(ha, entry[1],entry[0])
                                     entry.append(ha[:pos+entry[1]]+
-                                                 dictionaries.substitution_cnn[k]+ha[pos+entry[1]+3:])
-                                    entry.append(entry[0][0]+dictionaries.substitution_cnn[k][:-1]) #changed pam
-                                    entry.append(dictionaries.substitution_cnn[k])
+                                                 substitution_cnn[k]+ha[pos+entry[1]+3:])
+                                    entry.append(entry[0][0]+substitution_cnn[k][:-1]) #changed pam
+                                    entry.append(substitution_cnn[k])
                                     #ggn not possible
 
                         else:
                             if (entry[1] % 2 ) != 0:
                                 frame = entry[1]+2 # shift 1
                                 if (frame % 3) == 0:
-                                    if entry[0] in dictionaries.substitution_1.keys():
+                                    if entry[0] in substitution_1.keys():
                                         #print(ha,entry[1],entry[0])
                                         entry.append(ha[:pos+entry[1]-1]+
-                                                     dictionaries.substitution_1[entry[0]] +ha[pos+entry[1]+2:])
-                                        entry.append(dictionaries.substitution_1[entry[0]])
-                                        entry.append(dictionaries.substitution_1[entry[0]])
+                                                     substitution_1[entry[0]] +ha[pos+entry[1]+2:])
+                                        entry.append(substitution_1[entry[0]])
+                                        entry.append(substitution_1[entry[0]])
                                 else:
                                     k = ha[pos + entry[1]-2:pos + entry[1]+1].upper()
-                                    if k in dictionaries.substitution_nng.keys(): #shift 1 ungerade
+                                    if k in substitution_nng.keys(): #shift 1 ungerade
                                           #print(ha, entry[1],entry[0],pos)
                                           #shift 0
                                         entry.append(ha[:pos-2+entry[1]]+
-                                                     dictionaries.substitution_nng[k]+ ha[pos+1+entry[1]:])
-                                        entry.append(dictionaries.substitution_nng[k][1:]+entry[0][-1])
-                                        entry.append(dictionaries.substitution_nng[k])
-                                    if k in dictionaries.substitution_ncc.keys(): #shift 1 ungerade
+                                                     substitution_nng[k]+ ha[pos+1+entry[1]:])
+                                        entry.append(substitution_nng[k][1:]+entry[0][-1])
+                                        entry.append(substitution_nng[k])
+                                    if k in substitution_ncc.keys(): #shift 1 ungerade
                                         #print(ha, entry[1],entry[0],pos)
                                              # shift 0
                                         entry.append(ha[:pos-2+entry[1]]+
-                                                     dictionaries.substitution_ncc[k]+ ha[pos+1+entry[1]:])
-                                        entry.append(dictionaries.substitution_ncc[k][1:]+entry[0][-1])
-                                        entry.append(dictionaries.substitution_ncc[k])
+                                                     substitution_ncc[k]+ ha[pos+1+entry[1]:])
+                                        entry.append(substitution_ncc[k][1:]+entry[0][-1])
+                                        entry.append(substitution_ncc[k])
 
                             else:
                                 frame = entry[1]-2 #shift = 1
                                 if (frame % 3) == 0:
                                     #print(k)
                                     k = ha[pos + entry[1]-2:pos + entry[1]+1].upper()
-                                    if k in dictionaries.substitution_nng.keys(): #shift 1 ungerade
+                                    if k in substitution_nng.keys(): #shift 1 ungerade
                                         #print(ha, entry[1],entry[0],pos)
                                         #shift 0
                                         entry.append(ha[:pos-2+entry[1]]+
-                                                     dictionaries.substitution_nng[k]+ ha[pos+1+entry[1]:])
-                                        entry.append(dictionaries.substitution_nng[k][1:]+entry[0][-1])
-                                        entry.append(dictionaries.substitution_nng[k])
-                                    if k in dictionaries.substitution_ncc.keys(): #shift 1 ungerade
+                                                     substitution_nng[k]+ ha[pos+1+entry[1]:])
+                                        entry.append(substitution_nng[k][1:]+entry[0][-1])
+                                        entry.append(substitution_nng[k])
+                                    if k in substitution_ncc.keys(): #shift 1 ungerade
                                         #print(ha, entry[1],entry[0],pos)
                                         #shift 0
                                         entry.append(ha[:pos-2+entry[1]] +
-                                                     dictionaries.substitution_ncc[k] + ha[pos+1+entry[1]:])
-                                        entry.append(dictionaries.substitution_ncc[k][1:]+entry[0][-1])
-                                        entry.append(dictionaries.substitution_ncc[k])
+                                                     substitution_ncc[k] + ha[pos+1+entry[1]:])
+                                        entry.append(substitution_ncc[k][1:]+entry[0][-1])
+                                        entry.append(substitution_ncc[k])
                                 else:
-                                    if entry[0] in dictionaries.substitution_1.keys():
+                                    if entry[0] in substitution_1.keys():
                                         #print(ha,entry[1],entry[0])
                                         entry.append(ha[:pos+entry[1]-1]+
-                                                     dictionaries.substitution_1[entry[0]] +ha[pos+entry[1]+2:])
-                                        entry.append(dictionaries.substitution_1[entry[0]])
-                                        entry.append(dictionaries.substitution_1[entry[0]])
+                                                     substitution_1[entry[0]] +ha[pos+entry[1]+2:])
+                                        entry.append(substitution_1[entry[0]])
+                                        entry.append(substitution_1[entry[0]])
                         if not ("gg" or "cc")in ha[pos-2:pos+6]:
                             if not "Gg" in ha[pos-2:pos+6]:
                                 if not "Cc" in ha[pos-2:pos+6]:

@@ -35,7 +35,7 @@ def process_gene(gene, dictionary_values):
         return gene[0]
     else:
         print(gene, dictionary_values)
-        for key, values in dictionaries.aa_nt.items():
+        for key, values in aa_nt.items():
             if dictionary_values in values:
                 return key
     return None
@@ -151,11 +151,11 @@ def write_df(name,example_gene, reduced_dict):
                                      spacer + pj23119 + complement + cas_handle)
     mutated_aa = []
     for i in child_codon:
-        keys_for_codon = get_keys_by_value(dictionaries.aa_nt, i)
+        keys_for_codon = get_keys_by_value(aa_nt, i)
         mutated_aa.append(keys_for_codon)
     parent_aa = []
     for j in parent_codon:
-        keys_for_codon = get_keys_by_value(dictionaries.aa_nt, j)
+        keys_for_codon = get_keys_by_value(aa_nt, j)
         parent_aa.append(keys_for_codon)
     gene_name = []
     for i in range(len(parent_aa)):

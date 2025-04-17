@@ -4,8 +4,6 @@ Perform mutagenesis on a given protein sequence.
 import pandas as pd
 
 
-
-
 def mutate_sequence(seq):
     """
     Function to generate all possible amino acid mutations for a given protein sequence.
