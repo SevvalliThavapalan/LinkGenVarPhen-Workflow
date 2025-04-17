@@ -9,7 +9,6 @@ st.set_page_config(
 )
 
 st.title("Introduction")
-st.sidebar.success("Menu")
 
 st.markdown("""
 
