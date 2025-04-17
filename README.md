@@ -6,6 +6,8 @@ all relevant information for the computational parts:
 2. Design of sgRNA-insert pairs
 3. Data processing and visualization
 
+More details for each step can be found in the indivdual folders.
+
 ## Database mining for amino acid mutations
 The first step of this workflow is to mine genomes from databases for amino acid mutations. In this study we used the [NCBI Pathogen Detection database](https://www.ncbi.nlm.nih.gov/pathogens/). If you want to use other databases it is important that you obtain genome assembly files (.gbff) in the end. All the downstream steps are based on these files.
 
@@ -67,20 +69,18 @@ After sequencing is performed, the resulting fastq files should be processed. He
 If you use the web application you will get a file containing all reference sgRNA-insert pairs in a fasta file. This file is important in the later steps of the data processing.
 
 ### 2. Trimming and filtering of sequencing reads using cutadapt
-During the experimental procedure primers are added before sequencing. These primers need to be removed before the alignment of the reads can be performed. If the sub-library spacer is not utilized or needed, we recommend trimming that sequence as well. Cutadapt can also be used to filter short reads for higher quality reads. Detailed commands can be found in the method section of the publication as well as in the **Data Processing** folder.
+During the experimental procedure primers are added before sequencing. These primers need to be removed before the alignment of the reads can be performed. If the sub-library spacer is not utilized or needed, we recommend trimming that sequence as well. Cutadapt can also be used to filter reads to get a high quality data set. Detailed commands can be found in the method section of the publication as well as in the **Data Processing** folder.
 
-### 3. Aligning sequenced reads with minimap2
-After trimming and filtering, the sequenced reads are aligned to the earlier mentioned fasta file containing the  refernece sgRNA-insert pairs. We decided to use minimap2, but you are free to use other available tools if you want. The resulting alignment file can be used to create a read count table for downstream data analysis and visualization.
+### 3. Finding perfect matches
+After trimming and filtering is performed, reads are matched against the initial list of sgRNA-insert pairs to find perfect matches. A read count table is generated counting the number of matches for each reference.
+The previously generated reference file is taken as input to run the  python script.
 
-### 4. Mismatch filtering 
-Mismatch filtering is recommended so that only high quality reads are retained for the final read count table. The python script takes the aligned files and the generated sgRNA- insert pairs as input and generates a read count table assigned to each sgRNA-insert, a detailed description of the filtered reads as well as a filtered alignment file. Some parameters for the filtering steps can be adjusted in the script if needed. Detailed descriptions can be found in the publication as well as in the Data Proccessing folder.
 
 ### Most important programs and versions
 
 | Name   | Version      |
 |--------|------------  |
 |Cutadapt|4.9           |
-|Minimap2|2.28-r1209    |
 |Muscle  |5.1.win64     |
 |Python  |3.10.4        |
 |Streamlit|1.30.0       | 
