@@ -45,7 +45,7 @@ st.markdown(
 st.markdown("### Contribute and Follow Us")
 
 st.markdown("""
-- Interested in contributing? Check out our [GitHub personal page].
+- Interested in contributing? Check out our [GitHub personal page](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main).
 - For more about our work, visit our [homepage](https://www.linkmetabolism.com/).
 - Follow us on [X](https://twitter.com/LinkLabs) for the latest updates.
 """)
