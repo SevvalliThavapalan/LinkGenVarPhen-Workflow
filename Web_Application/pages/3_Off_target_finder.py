@@ -12,8 +12,6 @@ from Bio import SeqIO
 import pandas as pd
 import streamlit as st
 
-
-
 from src.off_target_finder import off_target
 
 def read_file(input_file):
@@ -82,7 +80,7 @@ else:
         GENOME_FILE = "data/BW25113.gb"
 
     elif selected_genome == "E. coli K-12 substr. MG1655":
-        GENOME_FILE = "data/MG1655.gb"
+        GENOME_FILE = "./Web_Application/data/BW25113.gb'"
 
     elif selected_genome == "S. aureus USA 300":
         GENOME_FILE= "data/saureus_USA300_FPR3757.gb"
