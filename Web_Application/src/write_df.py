@@ -6,7 +6,7 @@ Created on Thu Dec  1 12:37:26 2022
 """
 import pandas as pd
 from src.dictionaries import *
-
+import Bio.Seq
 
 def get_keys_by_value(my_dict, search_value):
     """
