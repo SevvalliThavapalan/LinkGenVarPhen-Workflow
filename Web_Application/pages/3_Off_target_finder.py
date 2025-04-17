@@ -77,7 +77,7 @@ else:
                                     "P. aeruginosa PA14"])
     # Load the selected provided genome
     if selected_genome == "E. coli BW25113":
-        GENOME_FILE = "data/BW25113.gb"
+        GENOME_FILE = "Web_application/data/BW25113.gb"
 
     elif selected_genome == "E. coli K-12 substr. MG1655":
         GENOME_FILE = "data/MG1655.gb"
