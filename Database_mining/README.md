@@ -61,4 +61,7 @@ We recommend checking if the list of mutations matches the reference files. In s
 py check_mutations.py -a <alignment file> -r <reference accession> -m <list of mutations in excel format from extract mutations> -o <path to output excel file (.xlsx extension does not need to be typed)>
 ```
 ### 8. Merge multiple list of mutations
-If you have more than one list of mutation you can use the *merge_mutations_files.py* to combine them into one single file. The resulting table can be used to design sgRNA-insert pairs.
+If you have more than one list of mutation you can use the *merge_mutations_files.py* to combine them into one single file. The resulting table can be used to design sgRNA-insert pairs. The files should be in the same folder and end with .xlsx. The script will take all of the present files and merge them, so make sure that no other files with the .xlsx extension are present.
+```
+py merge_mutations_files.py -i <path to input  folder> -o <path to output file>
+```
