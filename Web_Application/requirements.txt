@@ -8,4 +8,4 @@ pandas==2.2.1
 plotly==5.20.0
 regex==2024.4.16
 streamlit==1.30.0
-openpyxl==3.0.9
+openpyxl==3.1.0
