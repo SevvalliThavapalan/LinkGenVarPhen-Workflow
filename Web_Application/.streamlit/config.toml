@@ -5,6 +5,5 @@ secondaryBackgroundColor = "#e0e0ef"
 textColor = "#262730"
 font = "sans serif"
 
-[server]
-enableXsrfProtection = false
-enableCORS = false
+[global]
+developmentMode = false
