@@ -77,10 +77,10 @@ else:
                                     "P. aeruginosa PA14"])
     # Load the selected provided genome
     if selected_genome == "E. coli BW25113":
-        GENOME_FILE = "data/BW25113.gb"
+        GENOME_FILE = "./Web_Application/data/BW25113.gb'"
 
     elif selected_genome == "E. coli K-12 substr. MG1655":
-        GENOME_FILE = "./Web_Application/data/BW25113.gb'"
+        GENOME_FILE = "data/MG1655.gb"
 
     elif selected_genome == "S. aureus USA 300":
         GENOME_FILE= "data/saureus_USA300_FPR3757.gb"
