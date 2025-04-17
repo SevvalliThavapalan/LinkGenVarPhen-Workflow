@@ -47,7 +47,7 @@ def off_target(protospacers_file, genome_file):
     protospacers_file['oligo'] = (protospacers_file.index.astype(str) +
                                    '_' + protospacers_file['gene'])
     protospacers = protospacers_file['base pairing region'].tolist()
-    protospacer_dict = dict(zip(protospacers_file['base region region'],
+    protospacer_dict = dict(zip(protospacers_file['base pairing region'],
                                 protospacers_file['oligo']))
     genome = SeqIO.read(genome_file, "genbank")
     genome_seq = str(genome.seq)
