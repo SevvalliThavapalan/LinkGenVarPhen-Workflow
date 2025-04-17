@@ -174,21 +174,7 @@ if uploaded_file:
                          second_column_comparison: second_column_comparison},
                 hover_data={"Reference": True}  # Include the 'Reference' column in the hover data
             )
-            # add diagonal line (y=x)
-            scatter_fig.add_shape(
-                type="line",
-                x0=comparison_df[column_comparison].min(),
-                y0=comparison_df[second_column_comparison].min(),
-                x1=comparison_df[column_comparison].max(),
-                y1=comparison_df[second_column_comparison].max(),
-                line=dict(
-                    color="Grey",
-                    width = 2,
-                    dash="dash"
-                ),
-                name="Diagonal Line"
 
-            )
             # Set log scale for both axes
             scatter_fig.update_layout(
                 xaxis_type="log",
