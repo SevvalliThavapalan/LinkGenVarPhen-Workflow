@@ -4,7 +4,7 @@ The workflow consists of computational and laboratory parts. In this repisotory 
 all relevant information for the computational parts:
 1. Database mining for amino acid mutations
 2. Design of sgRNA-insert pairs
-3. Data processing and visualization
+3. Data processing and visualisation
 
 More details for each step can be found in the indivdual folders.
 
@@ -39,7 +39,7 @@ installations are neccessary. You can find the web application [here](https://li
 | Design sgRNA-insert pairs for targeted aa mutations | List of aa mutation, genome file (.gb)  |
 | Perform mutagenesis on a protein sequence           | Protein sequence, gene name|
 | Off-target finder for potential binding sites       | List of base pairing regions, genome file (.gb)|
-| Visualization of read count tables                  | Readcount table, list of sgRNA-insert pairs  |
+| Visualisation of read count tables                  | Readcount table, list of sgRNA-insert pairs  |
 
 The following functions are optional features with the intention of improving the workflow.
 
@@ -52,8 +52,8 @@ We recommend using this function to find the most suited sgRNA-insert pair for s
 #### Note
 We recommed to run this only for a few base pairing regions. If you have a lot of them the local python version is more suited, as the computational time can get quite high.
 
-### Visualization of read count tables
-The visualization tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
+### Visualisation of read count tables
+The visualisation tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
 This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
 
 

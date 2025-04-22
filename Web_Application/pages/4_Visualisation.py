@@ -1,5 +1,5 @@
 """
-This script is used to visualize the read count data from the merged data file.
+This script is used to visualise the read count data from the merged data file.
 """
 import streamlit as st
 import pandas as pd
@@ -11,14 +11,14 @@ from io import BytesIO
 
 
 # Set the page configuration
-st.set_page_config(page_title="Read Count Visualization")
+st.set_page_config(page_title="Read Count Visualisation")
 
 # Function title and description
-st.title("Read Count Visualization")
+st.title("Read Count Visualisation")
 with st.expander(" :bar_chart: Detailed Description"):
     st.markdown(
         "After constructing your library and amplicon seequencing you can \
-        reintroduce your read count tables here. Some basic visualization and \
+        reintroduce your read count tables here. Some basic visualisation and \
         statistical analysis can be performed to get a first overview of your data.\
         We recommend to use the merged data file for this analysis.")
 
@@ -50,13 +50,13 @@ if uploaded_file:
 
 
     st.subheader("Select read count columns")
-    st.write("Select the columns containing read counts for visualization:")
+    st.write("Select the columns containing read counts for visualisation:")
 
     # List all columns for selection
     selected_columns = st.multiselect(
         "Available columns:",
         options=df.columns,
-        help="Select one or more columns that contain numeric data for visualization."
+        help="Select one or more columns that contain numeric data for visualisation."
     )
 
 
@@ -120,7 +120,7 @@ if uploaded_file:
                             x="aa position",
                             y=col,
                             color="Reference",  # Coloring by Reference
-                            barmode="stack",  # Stacked bars for better visualization
+                            barmode="stack",  # Stacked bars for better visualisation
                             title=f"AA Position vs {col} for {selected_gene}",
                             labels={"aa position": "AA Position", col: col},
                         )
@@ -185,7 +185,7 @@ if uploaded_file:
         fig.update_layout(autosize=True)
 
     else:
-        st.warning("Please select at least one column to visualize.")
+        st.warning("Please select at least one column to visualise.")
 
 else:
     st.info("Upload a file to begin.")

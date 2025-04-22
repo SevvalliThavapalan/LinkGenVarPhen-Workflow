@@ -57,7 +57,7 @@ with st.expander(" 🧬 Detailed Description"):
 st.markdown(
     " #### Example Input")
 st.markdown("The following table shows an example input table. The table should  "
-            "file containing three columns named : Gene, Mutation and Position.\
+            "contain three columns named : gene, mutation and position.\
             It is important that the input table includes these three columns in this exact format.\
             **Otherwise the function will not work properly.** \
             Also make sure that the genes in the input table are present \
