@@ -30,7 +30,7 @@ After generating the MSA, mutations can be extracted by providing the accession 
 
 ## Designing sgRNA-insert pairs
 The design of sgRNA-insert pairs can be performed using the web application or the original python scripts. The web appliation is more user friendly, as no prior bioinformatic knowledge and 
-installations are neccessary. You can find the web application *here*. All instruction on how to use the individual tabs and functions can be found on the website.
+installations are neccessary. You can find the web application [here](https://linkgenvarphen-workflow-fmtmodttijhjuucxbvr9z7.streamlit.app/). All instruction on how to use the individual tabs and functions can be found on the website.
 
 ### Overview of the functions in the web application
 

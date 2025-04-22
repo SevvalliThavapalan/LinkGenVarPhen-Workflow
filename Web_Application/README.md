@@ -3,7 +3,7 @@ Here details about the web application of the workflow can be found. The indivdu
 
 ## Installation
 
-The online version  of the app can be found [here](Link).
+The online version  of the app can be found [here](https://linkgenvarphen-workflow-fmtmodttijhjuucxbvr9z7.streamlit.app/).
 
 #### Local installation
 - Clone the repisotory
