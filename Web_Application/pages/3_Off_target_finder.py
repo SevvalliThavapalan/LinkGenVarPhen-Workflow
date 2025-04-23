@@ -102,7 +102,7 @@ else:
     except (ValueError, IOError) as e:
         st.error(f"An error occurred while parsing the genome file: {e}")
 
-    st.subheader("Please upload your list of protospacers:")
+    st.subheader("Please upload your list of base pairing regions:")
     st.write("Upload your file containing the base pairing regions file below:")
     uploaded_file = st.file_uploader("Upload Excel, CSV, or TSV File",
                                      type=["xlsx", "xls", "csv", "tsv"])
