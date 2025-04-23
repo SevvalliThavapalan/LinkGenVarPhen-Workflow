@@ -60,7 +60,7 @@ def highlight_protospacers(df):
     Highlight base pairing regions with 4 mismatches or less
     """
     def highlight_row(row):
-        if row['Mismatches'] == 4 or row['Mismatches'] == 0:
+        if row['Mismatches'] == 4 or row['Mismatches'] == "None":
             return ['font-weight: bold; background-color: yellow'] * len(df.columns)
         return [''] * len(df.columns)
 
@@ -107,7 +107,7 @@ def main():
             for target in targets:
                 data.append([reference, protospacer, target[0], target[1], target[2]])
         else:
-            data.append([reference, protospacer, "", "", 0])
+            data.append([reference, protospacer, "", "", "None"])
 
 
     # Create DataFrame

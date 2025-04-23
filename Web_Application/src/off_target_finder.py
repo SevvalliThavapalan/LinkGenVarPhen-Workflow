@@ -41,7 +41,7 @@ def highlight_protospacers(df):
     Highlight base regionss with 4 mismatches or more
     """
     def highlight_row(row):
-        if row['Mismatches'] == 4 or row['Mismatches'] == 0:
+        if row['Mismatches'] == 4 or row['Mismatches'] == "None":
             return ['font-weight: bold; background-color: yellow'] * len(df.columns)
         return [''] * len(df.columns)
 
@@ -78,7 +78,7 @@ def off_target(protospacers_file, genome_file):
             for target in targets:
                 data.append([reference, protospacer, target[0], target[1], target[2]])
         else:
-            data.append([reference, protospacer, "", "", 0])
+            data.append([reference, protospacer, "", "", "None"])
 
     # Create DataFrame
     df = pd.DataFrame(data, columns=['reference','base pairing region',
