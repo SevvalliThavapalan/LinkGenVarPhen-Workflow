@@ -73,7 +73,7 @@ def off_target(protospacers_file, genome_file):
 
     # Prepare data for Excel
     data = []
-    for reference, protospacer, targets in results.items():
+    for reference, protospacer, targets in results:
         if targets:
             for target in targets:
                 data.append([reference, protospacer, target[0], target[1], target[2]])
