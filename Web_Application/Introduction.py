@@ -37,7 +37,7 @@ st.markdown(
     """
     - The web application has a 200 MB data limit. Larger datasets might lead to \
     issues such as long runtimes or crushing the server.
-    - This part of CRISPRFlow only allows to generate and design sgRNA and insert \
+    - This part of the workflowonly allows to generate and design sgRNA and insert \
     pools. Sequenced data to investigate the library composition can not be processed here. \
     But there are scripts available on GitHub and can be cloned to perform the processing.
     """
