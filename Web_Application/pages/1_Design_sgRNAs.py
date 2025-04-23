@@ -48,7 +48,7 @@ output = BytesIO()
 st.title("sgRNA and Insert Design")
 with st.expander(" 🧬 Detailed Description"):
     st.markdown(
-        "This is the main function of the CRISPRFlow web application. By providing a \
+        "This is the main function of the web application. By providing a \
         list of potential amino acid mutations as well as a genome you can generate "
         "a list of sgRNA -insert pairs. If you do not want to use all sgRNAs and "
         "inserts you can filter the generated table by PAMs or codons. The generated "
@@ -116,7 +116,7 @@ else:
 
 st.subheader("Please upload your list of mutations:")
 st.write("Upload your file below:")
-uploaded_file = st.file_uploader("Upload Excel File", type=["xlsx", "xls", "csv"])
+uploaded_file = st.file_uploader("Upload your file", type=["xlsx", "xls", "csv"])
 
 if uploaded_file is not None:
     st.session_state.df = read_excel_file(uploaded_file)
@@ -124,11 +124,11 @@ if uploaded_file is not None:
 
 # Display the first 5 rows of the uploaded Excel file
 if st.session_state.get('df') is not None:
-    st.write("### First 5 rows of the uploaded Excel file:")
+    st.write("### First 5 rows of the uploaded file:")
     st.write(st.session_state.df.head(5))
 
     # Generate oligos if the button is clicked
-    if st.button('Generate Oligos'):
+    if st.button('Generate oligos'):
         st.write('Processing...')
         st.session_state.oligos_df, st.session_state.missing_genes = generate_oligos(
             st.session_state.df, genome_file)
