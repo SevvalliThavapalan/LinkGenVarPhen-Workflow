@@ -25,7 +25,7 @@ st.markdown(
     - **Design sgRNA and insert sequences** for a list of amino acid mutations.
     - **Mutagenesis** of a single protein sequence. The resulting table \
     can be used to design sgRNAs and inserts.
-    - **Off-target finder** for a list of base pairing regions. \
+    - **Off target finder** for a list of base pairing regions. \
     They are compared to the target genome to find potential binding sites.
     - The **Visualisation** tab can be used to reintroduce read counting tables. \
     The purpose is to provide a first insight into the results after performing experiments. 
