@@ -85,6 +85,10 @@ The previously generated reference file is taken as input to run the  python scr
 |Python  |3.12.10        |
 |Streamlit|1.30.0       | 
 
+### Feedback
+We appreciate any feedback or suggestions you can provide. The initial versions of the computational workflows was developed by one person. and even though we tried to think of every potential issue and bug there
+is always the possibility that we missed something. If you have any feedback or run into any issues, feel free to open an issue on our GitHub repository.
+
 
 
 
