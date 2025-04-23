@@ -44,12 +44,12 @@ def process_protospacer(reference,protospacer, genome_seq, max_mismatches=4):
     print(f"Checking base pairing region for {reference}: {protospacer}")
     off_targets = []
 
-    pattern = f"({protospacer}){{e<={max_mismatches}}}"
+    pattern = f"({protospacer}){{s<={max_mismatches}}}"
 
     for match in re.finditer(pattern, genome_seq, overlapped=True):
         matched_seq = match.group()
         position = match.start()
-        mismatches = sum(match.fuzzy_counts)
+        mismatches = match.fuzzy_counts[0]
         off_targets.append((matched_seq, position, mismatches))
 
     return (reference, protospacer, off_targets)
