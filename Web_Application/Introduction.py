@@ -41,7 +41,7 @@ st.markdown(
     """
 )
 
-st.markdown("### Contribute and Follow Us")
+st.markdown("### Contribute and follow us")
 
 st.markdown("""
 - Interested in contributing? Check out our [GitHub personal page](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main).

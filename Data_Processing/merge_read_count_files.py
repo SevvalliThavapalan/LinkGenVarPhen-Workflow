@@ -12,7 +12,7 @@ def parse_arguments():
     """
     parser = argparse.ArgumentParser(description="Analyze aligned files.")
     parser.add_argument("-r", "--reference", required=True,
-                        help="Path to the reference sgRNA - insert file in excel format")
+                        help="Path to the reference sgRNA - insert file")
     parser.add_argument("-i", "--input", required=True, help="Path to read count files", nargs="+")
     parser.add_argument("-o", "--output", required=True, help= "Path to output file")
     return parser.parse_args()
@@ -30,7 +30,12 @@ def merge_with_multiple_files(table1_path, count_files, output_path):
     # Load Table 1
     table1 = pd.read_excel(table1_path,  engine="openpyxl")
     print(table1.head())
+    # Add "Reference" column to Table 1 based on "oligo no." and "gene"
+    #table1["Reference"] = table1["oligo no."].astype(str) + "_" + table1["gene"]
 
+    # Reorder columns to place "Reference" at the beginning
+    #reordered_columns = ["Reference"] + [col for col in table1.columns if col != "Reference"]
+    #table1 = table1[reordered_columns]
 
     # Initialize merged table with Table 1
     merged_table = table1.copy()
@@ -40,17 +45,28 @@ def merge_with_multiple_files(table1_path, count_files, output_path):
         # Extract file name (without extension) to use as column name
         file_name = os.path.splitext(os.path.basename(count_file))[0]
 
-        # Load the count file
-        count_table = pd.read_csv(count_file,skipfooter=1, engine="python")
+        # Load the count file check if it is a csv or excel file
+        if count_file.endswith(".xlsx") or count_file.endswith(".xls"):
+            count_table = pd.read_excel(count_file, engine="openpyxl")
+        elif count_file.endswith(".csv"):
+            count_table = pd.read_csv(count_file, engine="python")
+        else:
+            print(f"Unsupported file format for {count_file}. Skipping.")
+            continue
 
         # Rename the "Count" column to only include the file name
-        count_table.rename(columns={"Count": file_name}, inplace=True)
+        count_table.rename(columns={"count": file_name}, inplace=True)
 
         # Merge with the primary table using the "Reference" column
         merged_table = pd.merge(merged_table,
                                 count_table[["reference", file_name]], on="reference", how="left")
 
-    # Save the final merged table to the specified output path
+ 
+    # fill NaN values with 1
+    merged_table.fillna(1, inplace=True)
+    # Replace all 0s with 1s
+    merged_table.replace(0, 1, inplace=True)
+    # Save the merged table to an Excel file
     merged_table.to_excel(output_path, index=False)
 
     print(f"Merged table saved to {output_path}")

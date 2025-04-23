@@ -82,7 +82,7 @@ The previously generated reference file is taken as input to run the  python scr
 |--------|------------  |
 |Cutadapt|4.9           |
 |Muscle  |5.1.win64     |
-|Python  |3.10.4        |
+|Python  |3.12.10        |
 |Streamlit|1.30.0       | 
 
 
