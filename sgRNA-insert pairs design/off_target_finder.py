@@ -11,6 +11,7 @@ performance.
 """
 from multiprocessing import Pool
 import argparse
+from collections import defaultdict
 import regex as re
 import pandas as pd
 from Bio import SeqIO
@@ -75,7 +76,10 @@ def main():
     print("Loaded protospacers:")
     print(protospacers_df[['reference', 'base pairing region']].head(12))
     protospacers = protospacers_df['base pairing region'].tolist()
-    protospacer_dict = dict(zip(protospacers_df['base pairing region'], protospacers_df['reference']))
+    print(len(protospacers), "protospacers loaded")
+    protospacer_dict = defaultdict(list)
+    for _, row in protospacers_df.iterrows():
+        protospacer_dict[row['base pairing region']].append(row['reference'])
 
 
     # Load the E. coli genome from a GenBank file
@@ -87,19 +91,18 @@ def main():
 # Run the off-target search in parallel
 
     with Pool() as pool:
-        #results = pool.starmap(process_protospacer, [(p, genome_seq) for p in protospacers])
-        # This preserves both ref and sequence
-        tasks = [(ref, protospacer, genome_seq) for protospacer, ref in zip(protospacer_dict.keys(), protospacer_dict.values())]
+        tasks = []
+        for protospacer, refs in protospacer_dict.items():
+            for ref in refs:
+                tasks.append((ref, protospacer, genome_seq))
         results = pool.starmap(process_protospacer, tasks)
 
 
 
-    # Convert results into a dictionary
-    off_targets_dict = dict(results)
 
     # Prepare data for Excel
     data = []
-    for reference, protospacer, targets in off_targets_dict.items():
+    for reference, protospacer, targets in results:
         if targets:
             for target in targets:
                 data.append([reference, protospacer, target[0], target[1], target[2]])
@@ -111,9 +114,6 @@ def main():
     df = pd.DataFrame(data, columns=['reference','base pairing region',
                                      'Off-Target Sequence', 'aa position', 'Mismatches'])
     styled_df = highlight_protospacers(df)
-    df = pd.DataFrame(data, columns=['reference', 'base pairing region',
-                                 'Off-Target Sequence', 'aa position', 'Mismatches'])
-
     print(f"Number of unique references processed: {df['reference'].nunique()}")
     print(f"Number of total rows: {len(df)}")
     print(df['reference'].value_counts())
