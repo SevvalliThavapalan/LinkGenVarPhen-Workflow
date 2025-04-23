@@ -103,16 +103,16 @@ def main():
     # Prepare data for Excel
     data = []
     for reference, protospacer, targets in results:
-        if targets:
+        if targets and len(targets) > 0:
             for target in targets:
                 data.append([reference, protospacer, target[0], target[1], target[2]])
         else:
-            data.append([reference, protospacer, "", "", ""])
+            data.append([reference, protospacer, "", "", 0])
 
 
     # Create DataFrame
     df = pd.DataFrame(data, columns=['reference','base pairing region',
-                                     'Off-Target Sequence', 'aa position', 'Mismatches'])
+                                     'Off-Target Sequence', 'Position', 'Mismatches'])
     styled_df = highlight_protospacers(df)
     print(f"Number of unique references processed: {df['reference'].nunique()}")
     print(f"Number of total rows: {len(df)}")
