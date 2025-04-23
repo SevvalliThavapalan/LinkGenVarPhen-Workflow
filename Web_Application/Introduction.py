@@ -41,10 +41,16 @@ st.markdown(
     """
 )
 
-st.markdown("### Contribute and follow us")
+st.markdown("### Feedback")
+st.markdown(""""
+
+We appreciate any feedback or suggestions you can provide. The initial versions of the computational workflows was developed by one person. and even though we tried to think of every potential issue and bug there
+is always the possibility that we missed something. If you have any feedback or run into any issues, feel free to open an issue on our [GitHub repository](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main).
+            """
+)
 
 st.markdown("""
-- Interested in contributing? Check out our [GitHub personal page](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main).
 - For more about our work, visit our [homepage](https://www.linkmetabolism.com/).
+- Our Github [page](https://github.com/LinkMetabolism)
 - Follow us on [X](https://twitter.com/LinkLabs) for the latest updates.
 """)

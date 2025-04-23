@@ -32,3 +32,6 @@ As each base pairing region needs to be compared to the whole genome, the script
 
 ## Map Mutations back
 To check if the sgRNA-insert design was running correctly, we provide the script *map_mutations_to_sgRNAs.py*. This makes sure that there are no sgRNA-insert pairs which do not match the original list of mutations. 
+
+### Potential issues
+We highly recommend that you check some of the generated sgRNA-insert pairs randomly to make sure everything is in order before you purchase the DNA-oligomers. If you encounter any problems feel free to open an issue on our GitHub repository.
