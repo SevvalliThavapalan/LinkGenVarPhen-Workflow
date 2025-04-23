@@ -9,7 +9,7 @@ st.set_page_config(
 )
 
 st.sidebar.image(
-    "https://raw.githubusercontent.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/main/logo/LinkMetabolism_logo.png",use_column_width=True)
+    "https://raw.githubusercontent.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/main/logo/LinkMetabolism_logo.png",use_column_width=False)
 st.title("Introduction")
 
 st.markdown("""
