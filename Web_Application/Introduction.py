@@ -8,6 +8,8 @@ st.set_page_config(
     page_title="Introduction"
 )
 
+st.sidebar.image(
+    "https://raw.githubusercontent.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/main/logo/LinkMetabolism_logo.png",use_column_width=True)
 st.title("Introduction")
 
 st.markdown("""
@@ -42,9 +44,9 @@ st.markdown(
 )
 
 st.markdown("### Feedback")
-st.markdown(""""
+st.markdown("""
 
-We appreciate any feedback or suggestions you can provide. The initial versions of the computational workflows was developed by one person. and even though we tried to think of every potential issue and bug there
+We appreciate any feedback or suggestions you can provide. The initial versions of the computational workflows was developed by one person And even though we tried to think of every potential issue and bug there
 is always the possibility that we missed something. If you have any feedback or run into any issues, feel free to open an issue on our [GitHub repository](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main).
             """
 )
