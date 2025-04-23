@@ -5,6 +5,7 @@ Created on Thu Dec  1 12:37:26 2022
 @author: Sevvalli Thavapalan
 """
 import pandas as pd
+import Bio.Seq
 from important_dictionaries import aa_nt
 
 
@@ -184,5 +185,8 @@ def write_df(name,example_gene, reduced_dict):
     # Remove rows where values in Column_A and Column_B are the same
     oligo_df = oligo_df[~mask]
     oligo_df[columns_to_clean] = oligo_df[columns_to_clean].applymap(clean_values)
+    for col in oligo_df.columns:
+        if oligo_df[col].apply(lambda x: isinstance(x, Bio.Seq.Seq)).any():
+            oligo_df[col] = oligo_df[col].apply(str)
     oligo_df = oligo_df[~oligo_df['parent codon'].isin(['TAA', 'TAG'])]
     return oligo_df

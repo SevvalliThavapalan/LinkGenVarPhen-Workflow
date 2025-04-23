@@ -1,6 +1,6 @@
 """
-This script finds potential off-targets in the E. coli genome for a set of base pairing regions.
-The base pairing regions are loaded from a TSV file, and the E. coli genome is loaded from 
+This script finds potential off-targets for a set of base pairing regions.
+The base pairing regions are loaded from a TSV file, and the genome is loaded from 
 a GenBank file.
 The off-target search is performed using regex with fuzzy matching, allowing up to 4 mismatches.
 The results are written to an Excel file, which includes the base pairing regions, 
@@ -32,27 +32,34 @@ def get_files():
     return arguments
 
 
-# Function to find potential off-targets for a single base pairing region
-def process_protospacer(protospacer, genome_seq, max_mismatches=4):
+
+
+def process_protospacer(reference,protospacer, genome_seq, max_mismatches=4):
     """
-    Find potential off-targets in the genome sequence for a given base pairing region
+    Find potential off-targets in the genome sequence for a given base pairing region.
+    Returns the protospacer and a list of tuples: (matched_seq, position, mismatches).
+    Includes protospacers with no matches (empty off-target list).
     """
-    print(f"Checking base pairing region: {protospacer}")
+    print(f"Checking base pairing region for {reference}: {protospacer}")
     off_targets = []
 
-    # Use regex with fuzzy matching (up to max_mismatches)
     pattern = f"({protospacer}){{e<={max_mismatches}}}"
-    for match in re.finditer(pattern, genome_seq, overlapped=True):
-        off_targets.append((match.group(), match.start(), match.fuzzy_counts[0]))
 
-    return (protospacer, off_targets)
+    for match in re.finditer(pattern, genome_seq, overlapped=True):
+        matched_seq = match.group()
+        position = match.start()
+        mismatches = match.fuzzy_counts[0]
+        off_targets.append((matched_seq, position, mismatches))
+
+    return ((reference, protospacer), off_targets)
+
 
 def highlight_protospacers(df):
     """
     Highlight base pairing regions with 4 mismatches or less
     """
     def highlight_row(row):
-        if row['Mismatches'] == 4 or pd.isnull(row['Mismatches']):
+        if row['Mismatches'] == 4 or row['Mismatches'] == 0:
             return ['font-weight: bold; background-color: yellow'] * len(df.columns)
         return [''] * len(df.columns)
 
@@ -64,10 +71,11 @@ def main():
     """
     # Load the base pairing regions from a TSV file
     args = get_files()
-    protospacers_df = pd.read_csv(args['input'], sep='[,;]', engine='python')
-    protospacers_df['oligo'] = protospacers_df.index.astype(str) + '_' + protospacers_df['gene']
+    protospacers_df = pd.read_csv(args['input'], engine='python')
+    print("Loaded protospacers:")
+    print(protospacers_df[['reference', 'base pairing region']].head(12))
     protospacers = protospacers_df['base pairing region'].tolist()
-    protospacer_dict = dict(zip(protospacers_df['base pairing region'], protospacers_df['oligo']))
+    protospacer_dict = dict(zip(protospacers_df['base pairing region'], protospacers_df['reference']))
 
 
     # Load the E. coli genome from a GenBank file
@@ -79,24 +87,26 @@ def main():
 # Run the off-target search in parallel
 
     with Pool() as pool:
-        results = pool.starmap(process_protospacer, [(p, genome_seq) for p in protospacers])
+        #results = pool.starmap(process_protospacer, [(p, genome_seq) for p in protospacers])
+        results = pool.starmap(process_protospacer, [(ref, p, genome_seq) for ref, p in zip(protospacer_dict.values(), protospacer_dict.keys())])
+
 
     # Convert results into a dictionary
     off_targets_dict = dict(results)
 
     # Prepare data for Excel
     data = []
-    for protospacer, targets in off_targets_dict.items():
+    for (reference, protospacer), targets in off_targets_dict.items():
         if targets:
             for target in targets:
-                data.append([protospacer_dict[protospacer],protospacer, target[0],
-                             target[1], target[2]])
+                data.append([reference, protospacer, target[0], target[1], target[2]])
         else:
-            data.append([protospacer_dict[protospacer],protospacer, "", "", ""])
+            data.append([reference, protospacer, "", "", ""])
+
 
     # Create DataFrame
-    df = pd.DataFrame(data, columns=['Oligo no','base pairing region',
-                                     'Off-Target Sequence', 'Position', 'Mismatches'])
+    df = pd.DataFrame(data, columns=['reference','base pairing region',
+                                     'Off-Target Sequence', 'aa position', 'Mismatches'])
     styled_df = highlight_protospacers(df)
 
     # Write DataFrame to Excel
