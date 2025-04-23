@@ -31,7 +31,7 @@ def process_protospacer(reference, protospacer, genome_seq, max_mismatches=4):
     for match in re.finditer(pattern, genome_seq, overlapped=True):
         matched_seq = match.group()
         position = match.start()
-        mismatches = match.fuzzy_counts[0]
+        mismatches = sum(match.fuzzy_counts)
         off_targets.append((matched_seq, position, mismatches))
 
     return (reference, protospacer, off_targets)
