@@ -51,7 +51,7 @@ def process_protospacer(reference,protospacer, genome_seq, max_mismatches=4):
         mismatches = match.fuzzy_counts[0]
         off_targets.append((matched_seq, position, mismatches))
 
-    return ((reference, protospacer), off_targets)
+    return (reference, protospacer, off_targets)
 
 
 def highlight_protospacers(df):
@@ -88,7 +88,10 @@ def main():
 
     with Pool() as pool:
         #results = pool.starmap(process_protospacer, [(p, genome_seq) for p in protospacers])
-        results = pool.starmap(process_protospacer, [(ref, p, genome_seq) for ref, p in zip(protospacer_dict.values(), protospacer_dict.keys())])
+        # This preserves both ref and sequence
+        tasks = [(ref, protospacer, genome_seq) for protospacer, ref in zip(protospacer_dict.keys(), protospacer_dict.values())]
+        results = pool.starmap(process_protospacer, tasks)
+
 
 
     # Convert results into a dictionary
@@ -96,7 +99,7 @@ def main():
 
     # Prepare data for Excel
     data = []
-    for (reference, protospacer), targets in off_targets_dict.items():
+    for reference, protospacer, targets in off_targets_dict.items():
         if targets:
             for target in targets:
                 data.append([reference, protospacer, target[0], target[1], target[2]])
@@ -108,6 +111,13 @@ def main():
     df = pd.DataFrame(data, columns=['reference','base pairing region',
                                      'Off-Target Sequence', 'aa position', 'Mismatches'])
     styled_df = highlight_protospacers(df)
+    df = pd.DataFrame(data, columns=['reference', 'base pairing region',
+                                 'Off-Target Sequence', 'aa position', 'Mismatches'])
+
+    print(f"Number of unique references processed: {df['reference'].nunique()}")
+    print(f"Number of total rows: {len(df)}")
+    print(df['reference'].value_counts())
+
 
     # Write DataFrame to Excel
     output_file = args['output']
