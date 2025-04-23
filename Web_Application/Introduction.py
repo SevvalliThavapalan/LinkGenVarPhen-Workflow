@@ -51,6 +51,7 @@ is always the possibility that we missed something. If you have any feedback or 
             """
 )
 
+st.markdown("### LinkMetabolism(LinkLabs)")
 st.markdown("""
 - For more about our work, visit our [homepage](https://www.linkmetabolism.com/).
 - Our Github [page](https://github.com/LinkMetabolism)
