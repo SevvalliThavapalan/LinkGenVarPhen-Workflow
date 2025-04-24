@@ -1,5 +1,5 @@
 
-## Step 2 - sgRNA-insert pair design
+# Step 2 - sgRNA-insert pair design
 
 Here all required python scripts to generate sgRNA-insert pairs for a list of amino acid mutations can be found. The main script for this is *design_sgRNA_insert_pairs.py* By providing a list of mutations you can 
 generate all possible sgRNA-insert pairs needed for CRISPR-assisted recombineering. At the moment the script is generating sgRNA-insert pairs for genes of *E. coli*. If you need another organism please download the
