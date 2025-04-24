@@ -34,9 +34,11 @@ st.markdown(
 st.markdown("## Example data")
 st.markdown(
 """
-You can find example data in the GitHub repository:\
-    - For the design, mutagenesis and off target finder, you can use the example data provided in \
-    the [example data](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main/sgRNA-insert%20pairs%20design/Example_Data).
+    - For the design, mutagenesis and off target finder, you can use the example data provided \
+    [here](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main/sgRNA-insert%20pairs%20design/Example_Data).
+    - For the visualization of read counts you can use the example data provided \
+    [here](https://github.com/SevvalliThavapalan/LinkGenVarPhen-Workflow/tree/main/Data_Processing/Example%20Data).
+    - The example data are small subsets of the data used in our publication. \
 """)
 st.markdown("### Limitations")
 st.markdown(
