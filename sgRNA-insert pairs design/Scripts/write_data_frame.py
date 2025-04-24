@@ -177,7 +177,7 @@ def write_df(name,example_gene, reduced_dict):
     oligo_df["oligo"] = oligo
 
     oligo_df = oligo_df.drop(oligo_df[oligo_df['base pairing region'].map(len) < 20].index)
-    oligo_df = oligo_df.drop(oligo_df[oligo_df['oligo'].map(len) < 150].index)
+    oligo_df = oligo_df.drop(oligo_df[oligo_df['oligo'].map(len) < 200].index)
     columns_to_clean = ["parent aa", "mutated aa"]
     # Check if values in Column_A and Column_B are the same
     mask = oligo_df['parent aa'] == oligo_df['mutated aa']

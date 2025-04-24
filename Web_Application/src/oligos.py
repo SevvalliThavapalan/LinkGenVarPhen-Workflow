@@ -138,12 +138,8 @@ def filter_pam(final_dict):
                         reduced_dict[key].extend([entry])
                     else:
                         reduced_dict[key] = [entry]
-                    #if key in reduced_dict.keys():
-                    #    reduced_dict[key].extend([entry])
-                    #else:
-                    #    reduced_dict[key] = [entry]
+                   
     return reduced_dict
-
 
 def insert_target_mutations(final_dict, mut_dict):
     """
@@ -216,7 +212,6 @@ def insert_target_mutations(final_dict, mut_dict):
                                                     harm[42-math.floor(entry[1]/2)+2:].lower(),
                                                     parent_nt,child_mut]]
     return adapted_dict
-
 
 def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, flank_length=60):
     """
@@ -295,33 +290,28 @@ def generate_oligos(df, input_genome):
             if mutation[-1] in three_one.keys():
                 parent_mutation.append(three_one[mutation[0]])
                 child_mutation.append(three_one[mutation[-1]])
+        #print(parent_mutation)
         #print(len(child_mutation))
-        #print(len(pos_lists[key]))
-       #print(pos_lists[key])
-        print(key)
+        #print(key)
         merged_sequence, updated_positions = extract_flanking_regions(
             nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
-        #print(merged_sequence, updated_positions, gene)
-        pos_dict = {} # triplets to get exact pos in
-
+        pos_dict = {} # triplets to get exact pos in gene
         for i in range(0, len(merged_sequence), 3):
-            pos_dict[i] = (str(merged_sequence[i]) +
-            str(merged_sequence[i + 1])+ str(merged_sequence[i+2]))
-        #print(pos_dict)
-        #pam = {}
+            pos_dict[i] = (str(merged_sequence[i]) + str(merged_sequence[i + 1])+ str(merged_sequence[i+2]))
+
         mut_nt = []
         final_dict = {}
 
         for i in updated_positions:
             #print(i)
-            #print(key)
             searchspace=""
             searchspace = str(merged_sequence[(i)-30:(i)+33])
             #print(i)
             #print(pos_dict[i])
             #print(len(searchspace))
             mut_nt.append(pos_dict[(i)])
+            #print(mut_nt)
             #print((i-1), pos_dict[(i-1)])
             #mut_pos = (i-1)
             ngg_dict, ccn_dict = get_pams(searchspace)
@@ -329,10 +319,9 @@ def generate_oligos(df, input_genome):
             ccn = get_dist(ccn_dict)
             final_dict[i] = ngg
             final_dict[i].extend(ccn)
-
-
         final_dict = get_homology_arm(str(merged_sequence), final_dict)
         mut_dict = {}
+
         for k in range(len(pos_lists[key])):
             current_key = (((pos_lists[key][k])-1) * 3) + 60
             #print(pos_dict[current_key])
@@ -352,10 +341,10 @@ def generate_oligos(df, input_genome):
             # Convert back to a list at the end of processing this key
             mut_dict[current_key] = list(mut_dict[current_key])
 
-        #print(mut_dict)
+
+        #print(mut_dict)  # Debugging
         adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
-
          # mutate PAM
         for value2 in adapted_dict.values():
             for entry in value2:
@@ -409,7 +398,7 @@ def generate_oligos(df, input_genome):
                                         entry.append(ha[:pos +
                                                     entry[1]-2]+ substitution_ncc[k] +
                                                     ha[pos + entry[1]+1:])
-                                        entry.append(aa_ntsubstitution_ncc[k][1:]
+                                        entry.append(substitution_ncc[k][1:]
                                                      +entry[0][-1]) #changed pam
                                         entry.append(substitution_ncc[k])
                                     if k in substitution_nng.keys():

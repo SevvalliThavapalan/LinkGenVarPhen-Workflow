@@ -125,10 +125,7 @@ def filter_pam(final_dict):
                         reduced_dict[key].extend([entry])
                     else:
                         reduced_dict[key] = [entry]
-                    #if key in reduced_dict.keys():
-                    #    reduced_dict[key].extend([entry])
-                    #else:
-                    #    reduced_dict[key] = [entry]
+                   
     return reduced_dict
 
 
@@ -304,8 +301,7 @@ def main():
         pos_dict = {} # triplets to get exact pos in gene
         for i in range(0, len(merged_sequence), 3):
             pos_dict[i] = (str(merged_sequence[i]) + str(merged_sequence[i + 1])+ str(merged_sequence[i+2]))
-        #print(pos_dict)
-        #pam = {}
+
         mut_nt = []
         final_dict = {}
 
@@ -347,7 +343,7 @@ def main():
             # Convert back to a list at the end of processing this key
             mut_dict[current_key] = list(mut_dict[current_key])
 
-            #print(mut_dict)  # Debugging
+        #print(mut_dict)  # Debugging
         adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
          # mutate PAM

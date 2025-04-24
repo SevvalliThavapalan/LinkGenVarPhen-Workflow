@@ -52,12 +52,12 @@ codon_usage = { "GGG" : 0.13, "GGA" : 0.09,"GGC" : 0.4, "GGT" : 0.38, #Gly
 }
 
 
-#NGG, CCN shift 0
+
 substitution_1 = {"CGG" : "CGT",
                   "AGG" : "AGA",
                   "GGG" : "GGT"}
 
-# NNG, NCC shift +1
+
 substitution_nng = {"TTG" : "TTA",
                   "CTG" : "CTA",
                   "GTG" : "GTT",
@@ -75,14 +75,13 @@ substitution_ncc = {"TCC" : "TCT",
                     "ACC" : "ACT",
                     "GCC" : "GCA"}
 
-#shift +2
-#bei negativen Distanzen
+
 substitution_cnn = {"CTA" : "TTA",
                     "CTG" : "TTG",
                     "CGA" : "AGA",
                     "CGG" : "AGG"}
 
-#bei positiven Distanzen
+
 substitution_nnc = { "TTC" : "TTT",
                      "CTC" : "CTT",
                      "ATC" : "ATT",
@@ -99,33 +98,7 @@ substitution_nnc = { "TTC" : "TTT",
                      "AGC" : "AGT",
                      "GGC" : "GGT"}
 
-  #shift +2
-    #bei negativen Distanzen
 substitution_cnn = {"CTA" : "TTA",
                     "CTG" : "TTG",
                     "CGA" : "AGA",
                     "CGG" : "AGG"}
-
-codon_usage = { "GGG" : 0.13, "GGA" : 0.09,"GGC" : 0.4, "GGT" : 0.38, #Gly
-                "AGG" : 0.03, "AGA" : 0.04,  #Arg
-                "CGG" : 0.08, "CGA" : 0.05,"CGC" : 0.37, "CGT" : 0.42,
-                "CCC" : 0.1,  "CCT" : 0.16,"CCA" : 0.2,"CCG" : 0.55,#Pro
-                "TGG" : 1.0,   #Trp
-                "ACC" : 0.43, "ACT" : 0.21,"ACA" : 0.3,"ACG" : 0.23, #Thr
-                "GCT" : 0.19, "GCC" : 0.25, "GCA" : 0.22, "GCG" : 0.34, #Ala
-                "TCT" : 0.19, "TCC" : 0.17, "TCA" : 0.12, "TCG" : 0.13, #Ser
-                "AGC" : 0.27, "AGT" : 0.13,
-                "CTT" : 0.1,  "CTC": 0.1, "CTA" : 0.3, "CTG" : 0.55, #Leu
-                "TTA" : 0.11, "TTG" : 0.11,
-                "ATG" : 1, #Met
-                "GTT" : 0.29, "GTC" : 0.2, "GTG" : 0.34, "GTA" : 0.17, #Val
-                "CAA" : 0.31, "CAG" : 0.69, #Gln
-                "AAA" : 0.76, "AAG" : 0.24, #Lys
-                "GAA" : 0.7, "GAG": 0.3, #Glu
-                "ATT" : 0.47, "ATC": 0.46, "ATA": 0.07, #Ile
-                "TAT" : 0.53, "TAC": 0.47, #Tyr
-                "CAT" : 0.52, "CAC": 0.48, #His
-                "AAT" : 0.39, "AAC" : 0.61, #Asn
-                "GAT" : 0.59, "GAC" : 0.41, #Asp
-                "TGT" : 0.43, "TGC" : 0.57 # Cys
-    }
