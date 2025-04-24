@@ -46,5 +46,6 @@ def mutagenesis(gene_name, sequence):
     mutagenesis_df["gene"] = gene_tab
     mutagenesis_df["aa mutation"] = mutations
     mutagenesis_df["position"] = positions
+    mutagenesis_df = mutagenesis_df[mutagenesis_df["aa mutation"].str[0] != mutagenesis_df["aa mutation"].str[-1]]
 
     return mutagenesis_df
