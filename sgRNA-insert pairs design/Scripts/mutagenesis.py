@@ -53,4 +53,4 @@ if __name__ == "__main__":
     mutagenesis_df["position"] = pos_values
     mutagenesis_df = mutagenesis_df[mutagenesis_df["aa mutation"].str[0] != mutagenesis_df["aa mutation"].str[-1]]
 
-    mutagenesis_df.to_excel("Example_Data/example_mutagenesis.xlsx", index = False)
+    mutagenesis_df.to_csv("Example_Data/example_mutagenesis.csv", index = False)
