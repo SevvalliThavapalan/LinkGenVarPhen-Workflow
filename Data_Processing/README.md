@@ -1,6 +1,6 @@
 # Data Processing
-Due to the 200 MB upper data limit  of Streamlit, we recommend that the processing of sequencing reads is done locally.
-Details can also be found in the method section of the publication.
+Due to the 200 MB upper data limit  of Streamlit, we the processing of sequencing reads has to be done locally.
+Details can also be found in the method section of the publication. This is the last step of the workflow after sequencing is performed.
 
 #### Note
 
