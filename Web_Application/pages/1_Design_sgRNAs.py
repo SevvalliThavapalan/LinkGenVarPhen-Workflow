@@ -151,14 +151,14 @@ if st.session_state.get('df') is not None:
 
         # Write DataFrame to temporary Excel file
         temp_file_path = "sgRNA_insert_list.csv"
-        st.session_state.oligos_df.to_csv(temp_file_path, index=True)
+        st.session_state.oligos_df.to_csv(temp_file_path, index=False)
 
         # Create an in-memory ZIP file
         zip_buffer = io.BytesIO()
         with zipfile.ZipFile(zip_buffer, "w") as zip_file:
         # Save DataFrame to Excel in memory
             csv_buffer = io.BytesIO()
-            st.session_state.oligos_df.to_csv(csv_buffer, index=True)
+            st.session_state.oligos_df.to_csv(csv_buffer, index=False)
             csv_buffer.seek(0)
             zip_file.writestr("sgRNA_insert_list.csv", csv_buffer.read())
        # Add reference file to the ZIP
@@ -166,7 +166,7 @@ if st.session_state.get('df') is not None:
                 zip_file.writestr("reference_file.fasta", ref_file.read())
         # Add protospacer DataFrame to the ZIP
             proto_buffer = io.BytesIO()
-            st.session_state.proto_file.to_csv(proto_buffer, index=True)
+            st.session_state.proto_file.to_csv(proto_buffer, index=False)
             proto_buffer.seek(0)
             zip_file.writestr("bpregion_file.csv", proto_buffer.read())
         # Reset buffer position to the beginning
@@ -211,7 +211,7 @@ if st.session_state.get('df') is not None:
             if st.button('Filter by PAM'):
                 if filter_threshold_pam != st.session_state.filter_threshold_pam:
                     st.session_state.filter_threshold_pam = filter_threshold_pam
-                    st.session_state.filtered_df = filter_pam(st.session_state.oligos_df, 
+                    st.session_state.filtered_df = filter_pam(st.session_state.oligos_df,
                                                               filter_threshold_pam)
 
         # Display filtered data
@@ -221,7 +221,7 @@ if st.session_state.get('df') is not None:
                     st.write("First five rows of the filtered table:")
                     st.write(st.session_state.filtered_df.head(5))
                     temp_file_path = "output_filtered_by_pam.csv"
-                    st.session_state.filtered_df.to_csv(temp_file_path, index=True)
+                    st.session_state.filtered_df.to_csv(temp_file_path, index=False)
             # Set up download button
                     with open(temp_file_path, "rb") as file:
                         file_content = file.read()
