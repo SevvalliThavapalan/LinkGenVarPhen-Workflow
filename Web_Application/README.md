@@ -21,7 +21,7 @@ streamlit run Introduction.py
 | Design sgRNA-insert pairs for targeted aa mutations | List of aa mutation, genome file (.gb)  |
 | Perform mutagenesis on a protein sequence           | Protein sequence, gene name|
 | Off-target finder for potential binding sites       | List of base pairing regions, genome file (.gb)|
-| Visualization of read count tables                  | Readcount table, list of sgRNA-insert pairs  |
+| Visualisation of read count tables                  | Readcount table, list of sgRNA-insert pairs  |
 
 More Details on each function can be found in the web application.
 
@@ -34,13 +34,13 @@ This function allows the mutagenesis of a single protein sequence. Each amino ac
 be used as input for the sgRNA-insert pair design. It takes a gene name and the corresponding protein sequence as input.
 
 ### Off-target finder for potential binding sites
-We recommend using this function to find the most suited sgRNA-insert pair for specific mutations. Especially if you want only one sgRNA-insert pair per mutation The design tab in the web application provides a table with all protospacers. This table can be used as input to find potentail off-targets. The application finds all regions in the genome with up to four mismatches and provides the original base pairing region, the position in the genome, the off-target sequence, and the number of found mismatches.
+We recommend using this function to find the most suited sgRNA-insert pair for specific mutations. Especially if you want only one sgRNA-insert pair per mutation The design tab in the web application provides a table with all base pairing regions. This table can be used as input to find potentail off-targets. The application finds all regions in the genome with up to four mismatches and provides the original base pairing region, the position in the genome, the off-target sequence, and the number of found mismatches.
 #### Note
 We recommed to run this only for a few base pairing regions. If you have a lot of them the local python version is more suited, as the computational time can get quite high.
 
-### Visualization of read count tables
-The visualization tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can be found below. 
-This interactive tab allows users to choose individual columns to visualize. Summaries, read count distribution, and replicate analysis can be performed. 
+### Visualisation of read count tables
+The visualisation tab allows to gain a first look into the sequenced reads, after experimental procedures and data proccessing is performed. More details to the proccessing of the sequencing data can in the corresponding folder. 
+This interactive tab allows users to choose individual columns to visualise. Summaries, read count distribution, and replicate analysis can be performed. 
 
 
 #### Note
