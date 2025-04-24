@@ -6,6 +6,7 @@ Created on Thursday Jan 25 13:25:43 2024
 import math
 import argparse
 import re
+from collections import defaultdict
 from Bio import SeqIO
 import pandas as pd
 from write_data_frame import write_df
@@ -136,14 +137,13 @@ def insert_target_mutations(final_dict, mut_dict):
     adapted_dict = {}
     for key, value in final_dict.items():
         #print(mut_dict)
-        #print(final_dict)
         #if (key-1) > 42 and (key-1) < len(example_gene)-42:# take care of the other cases
         for entry in value:
             
             harm = entry[2]
             if key in mut_dict.keys():
                 child = mut_dict[key][1:]
-                #print(child)
+                
                 for child_mut in child:
                     #print(child_mut)
                     if entry[1] < 0: #negative
@@ -290,11 +290,12 @@ def main():
 
         for mutation in value:
             if mutation[-1] in three_one.keys():
+                
                 parent_mutation.append(three_one[mutation[0]])
                 child_mutation.append(three_one[mutation[-1]])
         #print(parent_mutation)
-        #print(len(child_mutation))
-        #print(key)
+        
+        
         merged_sequence, updated_positions = extract_flanking_regions(
             nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
@@ -324,26 +325,46 @@ def main():
         final_dict = get_homology_arm(str(merged_sequence), final_dict)
         mut_dict = {}
 
+        intended_aas_per_pos = defaultdict(set)
         for k in range(len(pos_lists[key])):
-            current_key = (((pos_lists[key][k])-1) * 3) + 60
-            #print(pos_dict[current_key])
-            # Ensure each key starts with its own fresh value
-            if current_key not in mut_dict:
-                mut_dict[current_key] = set([mut_nt[k]])  # Start with only mut_nt[k]
-                #print(mut_nt[k])
-            else:
-                mut_dict[current_key] = set(mut_dict[current_key])  # Ensure unique values
+            aa = child_mutation[k].upper()
+            current_key = ((pos_lists[key][k] - 1) * 3) + 60
+            intended_aas_per_pos[current_key].add(aa)
 
-            # Now, update with new values that meet the condition
-            for j in aa_nt[child_mutation[k]]:
-                mismatches = sum(c1 != c2 for c1, c2 in zip(mut_nt[k], j))
-                if 1 <= mismatches <= 3:
-                    mut_dict[current_key].add(j)
+        # Build mut_dict with strict checks
+        for k in range(len(pos_lists[key])):
+            current_key = ((pos_lists[key][k] - 1) * 3) + 60
+            mut_codon = mut_nt[k].upper()
+            aa = child_mutation[k].upper()
+
+            if aa not in aa_nt:
+                print(f"Warning: {aa} not in aa_nt")
+                continue
+
+            if current_key not in mut_dict:
+                mut_dict[current_key] = set()
+            else:
+            # Convert list to set if needed
+                if isinstance(mut_dict[current_key], list):
+                    mut_dict[current_key] = set(mut_dict[current_key])
+
+            # Add the explicitly given mutated codon
+            mut_dict[current_key].add(mut_codon)
+
+            # Add only codons corresponding to *intended* amino acids for that position
+            for allowed_aa in intended_aas_per_pos[current_key]:
+                if allowed_aa in aa_nt:
+                    for j in aa_nt[allowed_aa]:
+                        if len(j) == 3 and len(mut_codon) == 3:
+                            mismatches = sum(c1 != c2 for c1, c2 in zip(mut_codon, j))
+                            if 1 <= mismatches <= 3:
+                                mut_dict[current_key].add(j)
 
             # Convert back to a list at the end of processing this key
             mut_dict[current_key] = list(mut_dict[current_key])
+        print(mut_dict)
 
-        #print(mut_dict)  # Debugging
+
         adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
          # mutate PAM
