@@ -119,7 +119,7 @@ if uploaded_file:
                             filtered_df,
                             x="aa position",
                             y=col,
-                            color="Reference",  # Coloring by Reference
+                            color="reference",  # Coloring by Reference
                             barmode="stack",  # Stacked bars for better visualisation
                             title=f"AA Position vs {col} for {selected_gene}",
                             labels={"aa position": "AA Position", col: col},
@@ -158,7 +158,7 @@ if uploaded_file:
         # Display the selected columns for comparison
         if column_comparison and second_column_comparison:
             st.write(f"Comparing **{column_comparison}** with **{second_column_comparison}**:")
-            comparison_df = df[['aa position', 'Reference',
+            comparison_df = df[['aa position', 'reference',
                                 column_comparison, second_column_comparison]]
 
             # Create a parity plot (scatter plot) comparing the two columns
@@ -172,7 +172,7 @@ if uploaded_file:
                 title=f"Parity Plot: {column_comparison} vs {second_column_comparison}",
                 labels={column_comparison: column_comparison,
                          second_column_comparison: second_column_comparison},
-                hover_data={"Reference": True}  # Include the 'Reference' column in the hover data
+                hover_data={"reference": True}  # Include the 'Reference' column in the hover data
             )
 
             # Set log scale for both axes
