@@ -493,7 +493,7 @@ def main():
                                             entry.append("-")
 
         reduced_dict = filter_pam(adapted_dict)
-        #print(reduced_dict)
+        print(len(reduced_dict))
         oligo_df.append(write_df(key,merged_sequence,reduced_dict))
     df = pd.concat(oligo_df, axis = 0)
     df.reset_index(drop=True, inplace=True)
