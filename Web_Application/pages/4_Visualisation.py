@@ -97,7 +97,7 @@ if uploaded_file:
         st.write("The bar plot below shows the selected columns with respect to the AA position.")
 
         # Ensure the necessary columns exist before proceeding
-        if 'gene' in df.columns and 'aa position' in df.columns and 'Reference' in df.columns:
+        if 'gene' in df.columns and 'aa position' in df.columns and 'reference' in df.columns:
             # User selects a gene
             selected_gene = st.selectbox("Select a gene:", df["gene"].unique())
 
