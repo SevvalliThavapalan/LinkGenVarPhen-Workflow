@@ -154,7 +154,7 @@ def insert_target_mutations(final_dict, mut_dict):
             
             harm = entry[2]
             if key in mut_dict.keys():
-                child = mut_dict[key][1:]
+                child = mut_dict[key]
                 #print(child)
                 for child_mut in child:
                     #print(child_mut)

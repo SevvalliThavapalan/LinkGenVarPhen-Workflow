@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Created on Thursday Jan 25 13:25:43 2024
 
@@ -12,7 +13,6 @@ import pandas as pd
 from write_data_frame import write_df
 from write_data_frame import *
 from important_dictionaries import *
-
 
 
 def get_pams(searchspace):
@@ -137,11 +137,13 @@ def insert_target_mutations(final_dict, mut_dict):
 
         #if (key-1) > 42 and (key-1) < len(example_gene)-42:# take care of the other cases
         for entry in value:
-            
+
             harm = entry[2]
             if key in mut_dict.keys():
-                child = mut_dict[key][1:]
-                
+                child = mut_dict[key]
+                print(mut_dict[key])
+                print(child)
+
                 for child_mut in child:
                     #print(child_mut)
                     if entry[1] < 0: #negative
@@ -210,7 +212,6 @@ def get_files():
     arguments = args.__dict__
     return arguments
 
-
 def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, flank_length=60):
     """
     Extracts flanking regions of a gene from a gene bank file, properly handling reverse strands.
@@ -276,9 +277,9 @@ def main():
         raise ValueError("Unsupported file format. Please provide an Excel or CSV file.")
     oligo_df = []
     nucleotide_sequences = "Example_Data/BW25113.gb" #gene bank file
+ 
 
     pos_lists = mutation_df.groupby("gene")["aa position"].apply(list).to_dict()
-    #print(pos_lists)
 
     mutation_lists = mutation_df.groupby("gene")["mutation"].apply(list).to_dict()
 
@@ -291,8 +292,7 @@ def main():
                 parent_mutation.append(three_one[mutation[0]])
                 child_mutation.append(three_one[mutation[-1]])
         #print(parent_mutation)
-        
-        
+
         merged_sequence, updated_positions = extract_flanking_regions(
             nucleotide_sequences,key,pos_lists[key])
         # Print the flanking sequences and updated positions
@@ -322,46 +322,27 @@ def main():
         final_dict = get_homology_arm(str(merged_sequence), final_dict)
         mut_dict = {}
 
-        intended_aas_per_pos = defaultdict(set)
         for k in range(len(pos_lists[key])):
-            aa = child_mutation[k].upper()
-            current_key = ((pos_lists[key][k] - 1) * 3) + 60
-            intended_aas_per_pos[current_key].add(aa)
-
-        # Build mut_dict with strict checks
-        for k in range(len(pos_lists[key])):
-            current_key = ((pos_lists[key][k] - 1) * 3) + 60
-            mut_codon = mut_nt[k].upper()
-            aa = child_mutation[k].upper()
-
-            if aa not in aa_nt:
-                print(f"Warning: {aa} not in aa_nt")
-                continue
-
+            current_key = (((pos_lists[key][k]) -1 ) * 3) + 60
+            #print(pos_dict[current_key])
+            # Ensure each key starts with its own fresh value
             if current_key not in mut_dict:
-                mut_dict[current_key] = set()
+                mut_dict[current_key] = set([mut_nt[k]])  # Start with only mut_nt[k]
+                #print(mut_nt[k])
             else:
-            # Convert list to set if needed
-                if isinstance(mut_dict[current_key], list):
-                    mut_dict[current_key] = set(mut_dict[current_key])
+                mut_dict[current_key] = set(mut_dict[current_key])  # Ensure unique values
 
-            # Add the explicitly given mutated codon
-            mut_dict[current_key].add(mut_codon)
-
-            # Add only codons corresponding to *intended* amino acids for that position
-            for allowed_aa in intended_aas_per_pos[current_key]:
-                if allowed_aa in aa_nt:
-                    for j in aa_nt[allowed_aa]:
-                        if len(j) == 3 and len(mut_codon) == 3:
-                            mismatches = sum(c1 != c2 for c1, c2 in zip(mut_codon, j))
-                            if 1 <= mismatches <= 3:
-                                mut_dict[current_key].add(j)
+            # Now, update with new values that meet the condition
+            for j in aa_nt[child_mutation[k]]:
+                mismatches = sum(c1 != c2 for c1, c2 in zip(mut_nt[k], j))
+                if 1 <= mismatches <= 3:
+                    mut_dict[current_key].add(j)
 
             # Convert back to a list at the end of processing this key
             mut_dict[current_key] = list(mut_dict[current_key])
-        print(mut_dict)
 
 
+        #print(mut_dict)  # Debugging
         adapted_dict = insert_target_mutations(final_dict, mut_dict)
         #print(adapted_dict)
          # mutate PAM
@@ -511,7 +492,7 @@ def main():
                                             entry.append("-")
 
         reduced_dict = filter_pam(adapted_dict)
-        print(len(reduced_dict))
+        #print(reduced_dict)
         oligo_df.append(write_df(key,merged_sequence,reduced_dict))
     df = pd.concat(oligo_df, axis = 0)
     df.reset_index(drop=True, inplace=True)
