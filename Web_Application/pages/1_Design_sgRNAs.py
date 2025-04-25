@@ -59,7 +59,7 @@ st.markdown(
 st.markdown("The following table shows an example input table. The table should  "
             "contain three columns named : gene, mutation and position.\
             It is important that the input table includes these three columns in this exact format.\
-            **Otherwise the function will not work properly.** \
+            **First letters should be lowercase, otherwise the function will not work properly.** \
             Also make sure that the genes in the input table are present \
             in the target genome file.")
 st.markdown(EXAMPLE_TABLE,unsafe_allow_html=True)
