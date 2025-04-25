@@ -291,7 +291,7 @@ def generate_oligos(df, input_genome):
                 parent_mutation.append(three_one[mutation[0]])
                 child_mutation.append(three_one[mutation[-1]])
         #print(parent_mutation)
-        #print(len(child_mutation))
+        print(child_mutation)
         #print(key)
         merged_sequence, updated_positions = extract_flanking_regions(
             nucleotide_sequences,key,pos_lists[key])
