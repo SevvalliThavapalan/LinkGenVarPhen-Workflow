@@ -140,7 +140,7 @@ if st.session_state.get('df') is not None:
             #st.write(st.session_state.missing_genes)
         st.write("### Results:")
         st.write(st.session_state.oligos_df)
-        st.write("Please check double check the resulting table for any errors before ordering the DNA oligomers. If you encounter any errors please contact us.")
+        st.write("Please double check the resulting table for any errors before ordering the DNA oligomers. If you encounter any issues please contact us.")
 
         #set up fasta file and protospacer list
         fasta_output_path = "reference_file.fasta"
