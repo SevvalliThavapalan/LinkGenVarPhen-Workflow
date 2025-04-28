@@ -75,16 +75,6 @@ During the experimental procedure primers are added before sequencing. These pri
 After trimming and filtering is performed, reads are matched against the initial list of sgRNA-insert pairs to find perfect matches. A read count table is generated counting the number of matches for each reference.
 The previously generated reference file is taken as input to run the  python script.
 
-
-### Most important programs and versions
-
-| Name   | Version      |
-|--------|------------  |
-|Cutadapt|4.9           |
-|Muscle  |5.1.win64     |
-|Python  |3.12.10        |
-|Streamlit|1.30.0       | 
-
 ### Feedback
 We appreciate any feedback or suggestions you can provide. The initial versions of the computational workflows was developed by one person. and even though we tried to think of every potential issue and bug there
 is always the possibility that we missed something. If you have any feedback or run into any issues, feel free to open an issue on our GitHub repository.
