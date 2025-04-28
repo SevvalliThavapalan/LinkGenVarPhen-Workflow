@@ -12,6 +12,8 @@ from Bio import SeqIO
 from src.write_df import *
 from src.dictionaries import *
 
+
+
 def extract_genes(gb_file):
     """
     Extract all gene names from a GenBank file.
@@ -25,7 +27,6 @@ def extract_genes(gb_file):
                         # Extract gene name
                         genes.add(feature.qualifiers["gene"][0])
     return genes
-
 
 def get_pams(searchspace):
     """
@@ -140,6 +141,9 @@ def filter_pam(final_dict):
 
 
 def insert_target_mutations(final_dict, mut_dict):
+    """
+    Insert target mutations into the final dictionary.
+    """
     adapted_dict = {}
     for key, value in final_dict.items():
         #print(mut_dict)
@@ -221,7 +225,7 @@ def extract_flanking_regions(gene_bank_file, gene_name, positions_to_update, fla
     return merged_sequence, updated_positions
 
 def generate_oligos(df, input_genome):
-# load genome and mutation list
+    # load genome and mutation list
     mutation_df =  df
     oligo_df = []
 
