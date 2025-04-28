@@ -10,7 +10,7 @@ def create_fasta_and_protospacer_file(file, fasta_output_file):
 
     # Read Excel file into a pandas DataFrame
     df = file
-    protospacer_df = df[['gene', 'aa position', 'mutated aa','child codon',
+    protospacer_df = df[['reference','gene', 'aa position', 'mutated aa','child codon',
                           'nt position', 'dist mut pam', 'mutated pam','base pairing region']]
 
     # Write the FASTA file

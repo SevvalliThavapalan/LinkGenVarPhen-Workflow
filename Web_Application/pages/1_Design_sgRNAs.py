@@ -35,7 +35,7 @@ def read_excel_file(uploaded_file):
 
 
 EXAMPLE_TABLE = """
-| gene | mutation | position |
+| gene | mutation | aa position |
 |:---------:|:--------:|:--------:|
 | aaeA      | T5S      | 5        |
 | aaeA      | L102Q    | 102      |
