@@ -45,4 +45,4 @@ py merge_read_count_files.py -r <reference sgRNA-insert table> -o <path to outpu
 You can reintroduce the final table into the visualisation tab of the web application to gain first insight of your data.
 
 ### Data availability
-As sequencing data files are rather big, we did not include any of the files here in the repository. Fastq files can be found *here*
+As sequencing data files are rather big, we did not include any of the files here in the repository. Fastq files can be found [here](https://www.ebi.ac.uk/ena/browser/view/PRJEB88511).
