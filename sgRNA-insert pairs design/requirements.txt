@@ -1,4 +1,11 @@
+setuptools>=69.0.0
 Bio==1.7.1
-biopython==1.79
-pandas==1.4.2
-regex==2024.11.6
+biopython==1.83
+matplotlib==3.8.2
+matplotlib_venn==0.11.10
+numpy==1.26.0
+pandas==2.2.1
+plotly==5.20.0
+regex==2024.4.16
+streamlit==1.30.0
+openpyxl==3.1.0
