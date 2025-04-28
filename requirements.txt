@@ -1,8 +1,0 @@
-pip
-pylint
-pandas
-numpy
-matplotlib
-Biopython
-seqkt
-regex

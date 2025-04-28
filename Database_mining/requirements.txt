@@ -1,0 +1,6 @@
+Biopython==1.79
+cobra==0.25.0
+openpyxl==3.0.9
+pandas==1.4.2
+wget==3.2
+

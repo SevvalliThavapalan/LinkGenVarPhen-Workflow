@@ -3,7 +3,6 @@ Combine all fastq files with the same barcode into a single file
 """
 import os
 import gzip
-
 import argparse
 
 def get_files():
