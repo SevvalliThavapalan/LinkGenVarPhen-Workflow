@@ -141,8 +141,8 @@ def insert_target_mutations(final_dict, mut_dict):
             harm = entry[2]
             if key in mut_dict.keys():
                 child = mut_dict[key]
-                print(mut_dict[key])
-                print(child)
+                #print(mut_dict[key])
+                #print(child)
 
                 for child_mut in child:
                     #print(child_mut)
@@ -277,7 +277,7 @@ def main():
         raise ValueError("Unsupported file format. Please provide an Excel or CSV file.")
     oligo_df = []
     nucleotide_sequences = "../Example_Data/BW25113.gb" #gene bank file
- 
+
 
     pos_lists = mutation_df.groupby("gene")["aa position"].apply(list).to_dict()
 
