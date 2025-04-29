@@ -17,7 +17,7 @@ st.set_page_config(page_title="Read Count Visualisation")
 st.title("Read Count Visualisation")
 with st.expander(" :bar_chart: Detailed Description"):
     st.markdown(
-        "After constructing your library and amplicon seequencing you can \
+        "After constructing your library and amplicon sequencing you can \
         reintroduce your read count tables here. Some basic visualisation and \
         statistical analysis can be performed to get a first overview of your data.\
         We recommend to use the merged data file for this analysis.")
