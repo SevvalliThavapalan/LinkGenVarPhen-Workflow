@@ -40,12 +40,12 @@ def read_file(input_file):
 st.set_page_config(page_title="Off targets")
 output = BytesIO()
 
-st.title("Off target finder")
+st.title("Off Target Finder")
 with st.expander(" 🔍 Detailed Description"):
     st.markdown(
         "This function can be used to find potential off targets for designed base \
         pairing regions. \
-        they are checked against the whole genome of your target organism and all\
+        They are checked against the whole genome of your target organism and all\
         sequences with upto 4 mismatches are reported back. As each base pairing region is \
         checked against the whole genome, this function can take a while to run. We recommend \
         to run this function with a small number of base pairing regions at a time."
