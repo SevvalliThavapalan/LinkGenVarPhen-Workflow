@@ -8,7 +8,7 @@ The python script *get_genome_files.py* uses the information about the clinical 
 assembly files. To run the script with our data you can use the following as arguments
 
 ```
-py get_genome_files.py --isolates ../Example_Data/ncbi_dataset.tsv --assemblies ../Example_Data/assembly_summary_genbank.txt --outdir clinical
+py get_genome_files.py --isolates <path to ncbi_dataset.tsv> --assemblies <path to assembly_summary_genbank.txt> --outdir <path to output directory>
 ```
 #### Note
 The first step to retrieve the genome assembly files will vary depending on the database you want to use. But all other steps can be performed using the retrieved genome assembly files. 
