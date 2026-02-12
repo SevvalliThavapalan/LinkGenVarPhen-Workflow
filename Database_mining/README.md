@@ -5,14 +5,20 @@
 ### 1. Retrieve genome assembly files
 The first step is to retrieve genome assembly files from a database of your choosing. Here, we used the NCBI Pathogen Detection DB to retrieve clinical *E. coli* genomes.
 The python script *get_genome_files.py* uses the information about the clinical isolates together with the information about the assembly files from NCBI to retrieve genome 
-assembly files.
+assembly files. To run the script with our data you can use the following as arguments
 
+```
+py get_genome_files.py --isolates ../Example_Data/ncbi_dataset.tsv --assemblies ../Example_Data/assembly_summary_genbank.txt --outdir clinical
+```
 #### Note
 The first step to retrieve the genome assembly files will vary depending on the database you want to use. But all other steps can be performed using the retrieved genome assembly files. 
-
+The *assembly_summary_genebank.txt* file was uploaded as .zip file, due to size limitations. Please unzip the file before running the script.
 ### 2. Extract gene list
 The final list of genes was extracted from the genome-scale model iML1515 of *E. coli*. The script *get_all_genes.py* generates a table with genes, their b number, and the pathway.
-Genome scale model can be downloaded [here](http://bigg.ucsd.edu/models/iML1515).
+Genome scale model is included in the Example_Data folder together with the file to  b numbers to their respective genes.
+```
+py get_all_genes.py
+```
 ### 3. Protein accessions and sequences
 Protein accessions are collected using the bash script called *filter_assembly_files.sh*. The first argument is the directory containing gene assembly files and the second argument 
 is the name of the target gene. The output is redirected into a .txt file:

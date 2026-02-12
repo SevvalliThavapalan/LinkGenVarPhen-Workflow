@@ -10,8 +10,8 @@ import pandas as pd
 
 
 
-model =  cobra.io.read_sbml_model('iML1515.mat')
-xl_file = pd.read_excel("gene_bnum.xlsx", dtype='str')
+model =  cobra.io.read_sbml_model('../Example_Data/iML1515.mat')
+xl_file = pd.read_excel("../Example_Data/gene_bnum.xlsx", dtype='str')
 all_rxns = model.reactions
 
 
